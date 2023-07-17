@@ -1,0 +1,29 @@
+//
+//  URL_SESSION_RESOURCE.txt
+//  weatherApp
+//
+//  Created by Pranav Pratap on 13/07/23.
+//
+
+import Foundation
+
+https://cocoacasts.com/networking-fundamentals-how-to-make-an-http-request-in-swift
+
+https://www.hackingwithswift.com/read/7/3/parsing-json-using-the-codable-protocol
+
+https://youtu.be/RiuvxmoU37E
+
+https://betterprogramming.pub/implement-a-networking-layer-using-combine-in-swift-5-8a83e3ac9bae
+
+https://mdcode2021.medium.com/api-call-in-swift-part-1-urlsession-c013fd9e575f
+
+https://www.hackingwithswift.com/example-code/system/how-to-run-code-after-a-delay-using-asyncafter-and-perform
+
+
+PASS DATA TO VC
+https://betterprogramming.pub/5-ways-to-pass-data-between-view-controllers-18acb467f5ec
+
+10,800 difference of for 3 hr
+
+Building Reusable iOS Components in Swift
+https://www.twilio.com/blog/build-reusable-ios-components-swift-html

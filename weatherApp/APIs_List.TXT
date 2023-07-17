@@ -1,0 +1,36 @@
+
+
+// THIS FILE IS JUST TO STORE THE RESOURCES FOR API
+
+lat = 28.45
+lon = 28.45
+api = c79b6cb39826aca9755ade5999cd13bd
+
+FOR SCREEN1 TO GET WEATHER INFO
+WITH COORDINATES
+https://api.openweathermap.org/data/2.5/weather?lat=28.45&lon=28.45&appid=c79b6cb39826aca9755ade5999cd13bd&units=metric
+
+WITH CITY NAME
+https://api.openweathermap.org/data/2.5/weather?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric&q=gurugram
+
+
+
+
+
+FOR SCREEN2 TO GET HOURLY FORECAST
+https://api.openweathermap.org/data/2.5/forecast?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric&lat=28.45&lon=77.02
+
+
+
+
+
+FOR SCREEN3 TO GET DAILY DATA
+
+// HAVE TO PARSE THIS TO GET DATA ON DAILY BASIS
+https://api.openweathermap.org/data/2.5/forecast?lat=28.45&lon=77.02&appid=c79b6cb39826aca9755ade5999cd13bd&units=metric
+
+
+ISN'T WORKING
+https://api.openweathermap.org/data/2.5/forecast/daily?lat=28.45&lon=77.02&cnt=10&appid=c79b6cb39826aca9755ade5999cd13bd&units=metric
+
+

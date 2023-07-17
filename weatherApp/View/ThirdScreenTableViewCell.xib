@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="ThirdScreenTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ThirdScreenTableViewCell" rowHeight="69" id="KGk-i7-Jjw" customClass="ThirdScreenTableViewCell" customModule="weatherApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="733" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="733" height="80"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXF-pO-Ik0">
+                        <rect key="frame" x="20" y="13" width="50" height="50"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" misplaced="YES" text="TMP" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L8D-rb-ie8">
+                        <rect key="frame" x="667.66666666666663" y="15" width="50" height="50"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="HMD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRg-lj-AJF">
+                        <rect key="frame" x="326" y="14" width="50" height="50"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clouds.png" adjustsImageSizeForAccessibilityContentSizeCategory="YES" id="3XF-xS-zk1">
+                        <rect key="frame" x="100" y="15" width="60" height="50"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="L8D-rb-ie8" firstAttribute="leading" secondItem="rRg-lj-AJF" secondAttribute="trailing" constant="30" id="2x8-Vt-X0t"/>
+                    <constraint firstItem="3XF-xS-zk1" firstAttribute="leading" secondItem="xXF-pO-Ik0" secondAttribute="trailing" constant="20" placeholder="YES" id="A9I-mD-ao3"/>
+                    <constraint firstAttribute="trailing" secondItem="L8D-rb-ie8" secondAttribute="trailing" priority="999" constant="30" id="Frf-YH-7iS"/>
+                    <constraint firstAttribute="bottom" secondItem="L8D-rb-ie8" secondAttribute="bottom" constant="15" id="K59-wO-zta"/>
+                    <constraint firstAttribute="bottom" secondItem="xXF-pO-Ik0" secondAttribute="bottom" constant="15" id="LQz-SJ-8C5"/>
+                    <constraint firstItem="rRg-lj-AJF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3XF-xS-zk1" secondAttribute="trailing" constant="20" placeholder="YES" id="SBE-XU-P17"/>
+                    <constraint firstItem="L8D-rb-ie8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="cFb-iv-Ttj"/>
+                    <constraint firstItem="rRg-lj-AJF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="l21-Wx-yQX"/>
+                    <constraint firstAttribute="bottom" secondItem="rRg-lj-AJF" secondAttribute="bottom" constant="15" id="nba-T7-Zef"/>
+                    <constraint firstItem="xXF-pO-Ik0" firstAttribute="leading" relation="lessThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" priority="999" constant="30" id="rUp-jH-sd4"/>
+                    <constraint firstItem="xXF-pO-Ik0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="vY6-oA-I1c"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+            <connections>
+                <outlet property="dayNameLabel" destination="xXF-pO-Ik0" id="7w6-It-syp"/>
+                <outlet property="humidityLabel" destination="rRg-lj-AJF" id="rQb-qP-YJJ"/>
+                <outlet property="tempLabel" destination="L8D-rb-ie8" id="D3k-O5-fJN"/>
+                <outlet property="weatherIcon" destination="3XF-xS-zk1" id="nAm-s0-0ci"/>
+            </connections>
+            <point key="canvasLocation" x="866.41221374045801" y="26.760563380281692"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="clouds.png" width="409.60000610351562" height="409.60000610351562"/>
+    </resources>
+</document>

@@ -1,0 +1,90 @@
+//
+//  SceneDelegate.swift
+//  weatherApp
+//
+//  Created by Pranav Pratap on 10/07/23.
+//
+
+import UIKit
+
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
+    var window: UIWindow?
+    let urlMaker = UrlMaker()
+
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        guard let tabBarController = window?.rootViewController as? UITabBarController, let viewControllers = tabBarController.viewControllers else {
+            print("UNABLE TO GET VIEWCONTROLLERS IN SCENE_DELEGATE")
+            return 
+        }
+        for (_, viewController) in viewControllers.enumerated(){
+           print("VIEWCONTROLLERS IN SCENE_DELEGATE")
+            if let screen1ViewController = viewController as? FirstScreenTableViewController{
+                print("screen1ViewController")
+                screen1ViewController.urlMaker = urlMaker
+            }
+            if let screen2ViewController = viewController as? SecondScreenCollectionViewController{
+                print("screen2ViewController")
+                screen2ViewController.urlMaker = urlMaker
+            }
+            if let screen3ViewController = viewController as? ThirdScreenTableViewController{
+                print("screen3ViewController")
+                screen3ViewController.urlMaker = urlMaker
+            }
+            
+//            if let navigationController = viewController as? UINavigationController{
+//                print("Navigation_CONTROLLERS IN SCENE_DELEGATE")
+//                print(navigationController)
+//                if let screen1ViewController = navigationController.viewControllers.first as? FirstScreenTableViewController{
+//                    print("screen1ViewController")
+//                    screen1ViewController.urlMaker = urlMaker
+//                }
+//                if let screen2ViewController = navigationController.viewControllers.first as? SecondScreenCollectionViewController{
+//                    print("screen2ViewController")
+//                    screen2ViewController.urlMaker = urlMaker
+//                }
+//                if let screen3ViewController = navigationController.viewControllers.first as? ThirdScreenTableViewController{
+//                    print("screen3ViewController")
+//                    screen3ViewController.urlMaker = urlMaker
+//                }
+//            }
+        }
+        
+    }
+
+    func sceneDidDisconnect(_ scene: UIScene) {
+        // Called as the scene is being released by the system.
+        // This occurs shortly after the scene enters the background, or when its session is discarded.
+        // Release any resources associated with this scene that can be re-created the next time the scene connects.
+        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+    }
+
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        // Called when the scene has moved from an inactive state to an active state.
+        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+    }
+
+    func sceneWillResignActive(_ scene: UIScene) {
+        // Called when the scene will move from an active state to an inactive state.
+        // This may occur due to temporary interruptions (ex. an incoming phone call).
+    }
+
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        // Called as the scene transitions from the background to the foreground.
+        // Use this method to undo the changes made on entering the background.
+    }
+
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        // Called as the scene transitions from the foreground to the background.
+        // Use this method to save data, release shared resources, and store enough scene-specific state information
+        // to restore the scene back to its current state.
+    }
+
+
+}
+
