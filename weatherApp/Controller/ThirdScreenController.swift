@@ -73,14 +73,6 @@ extension ThirdScreenTableViewController : UITableViewDelegate, UITableViewDataS
 }
 
 extension ThirdScreenTableViewController : WeatherApiDelegate{
-    func updateUIforFirstScreen(_ weatherData: WeatherRequestTypeProtocol) {
-        print("Dummy updateUIforFirstScreen call from Third VC")
-    }
-    
-    func updateUIforSecondScreen(_ weatherData: WeatherRequestTypeProtocol) {
-        print("Dummy updateUIforSecondScreen call from Third VC")
-    }
-    
     func updateUIforThirdScreen(_ weatherData: WeatherRequestTypeProtocol) {
         
         print("CurrentWeather data in ThirdScreen")

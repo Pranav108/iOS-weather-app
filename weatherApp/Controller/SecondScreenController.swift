@@ -32,8 +32,8 @@ class SecondScreenCollectionViewController : UIViewController{
         reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: collectIonView.frame.width, height: collectIonView.frame.height))
         
         view.addSubview(reusableHeader!)
-
-       
+        
+        
         NSLayoutConstraint.activate([
             reusableHeader!.bottomAnchor.constraint(equalTo: collectIonView.topAnchor,constant: -20),
         ])
@@ -78,10 +78,6 @@ extension SecondScreenCollectionViewController : UICollectionViewDelegate, UICol
 
 extension SecondScreenCollectionViewController : WeatherApiDelegate {
     
-    func updateUIforFirstScreen(_ weatherData: WeatherRequestTypeProtocol) {
-        print("Dummy updateUIforFirstScreen call from second VC")
-    }
-    
     func updateUIforSecondScreen(_ weatherData: WeatherRequestTypeProtocol) {
         
         print("CurrentWeather data in SecondScreen")
@@ -95,11 +91,6 @@ extension SecondScreenCollectionViewController : WeatherApiDelegate {
         
         reloadUIForSecondScreen()
     }
-    
-    func updateUIforThirdScreen(_ weatherData: WeatherRequestTypeProtocol) {
-        print("Dummy updateUIforThirdScreen call from second VC")
-    }
-    
     
     func getForecastHourlyData(_ weatherData: CurrentLocationModel) -> [HourlyForecastModel]{
         

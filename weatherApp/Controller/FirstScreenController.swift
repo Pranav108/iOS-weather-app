@@ -16,15 +16,11 @@ import CoreLocation
 class FirstScreenTableViewController: UIViewController {
     
     @IBOutlet weak var screen1TableView: UITableView!
-    
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var searchButton: UIButton!
     
     let locationManager = CLLocationManager()
-    
     var screen1DataForBinding = [Screen1DataModel]()
-    
     var urlMaker : UrlMaker?
     
     override func viewDidLoad() {
@@ -57,6 +53,7 @@ class FirstScreenTableViewController: UIViewController {
         searchBarSearchButtonClicked(searchBar)
     }
 }
+
 
 extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataSource{
     
@@ -103,6 +100,7 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
     }
 }
 
+
 extension FirstScreenTableViewController : UISearchBarDelegate{
     
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
@@ -119,7 +117,11 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
         let cityName = searchBar.text!
         
         urlMaker?.city = cityName.replacingOccurrences(of: " ", with: "+")
-        urlMaker?.urlStringMaker()
+        if cityName == "" {
+            showToast(message: "Please enter city name", seconds: 1.2)
+        }else{
+            urlMaker?.urlStringMaker()
+        }
         searchBar.text = ""
     }
 }
@@ -132,7 +134,6 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
         var newData : Screen1DataModel
         if weatherData is PlaceLoactionModel {
             let placeData = weatherData as? PlaceLoactionModel
-            
             newData = Screen1DataModel(locationName: placeData?.name ?? "CTY", info: placeData?.weather.first?.main ?? "NA", temp: placeData?.main.tempString ?? "TMP", min_max: placeData?.main.tempRangeString ?? "MN_MX", imageName: placeData?.weather.first!.imageName ?? "NA")
             
             print("Data is of type : PlaceLoactionModel")
@@ -150,12 +151,15 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
         reloadUIForFirstScreen()
     }
     
-    func updateUIforSecondScreen(_ weatherData: WeatherRequestTypeProtocol) {
-        print("Dummy updateUIforSecondScreen call from first VC")
-    }
-    
-    func updateUIforThirdScreen(_ weatherData: WeatherRequestTypeProtocol) {
-        print("Dummy updateUIforThirdScreen call from first VC")
+    func showToast(message: String, seconds: Double) {
+        let toast = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        toast.view.backgroundColor = .darkGray
+        toast.view.alpha = 0.5
+        toast.view.layer.cornerRadius = 20
+        self.present(toast, animated: true)
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + seconds){
+            toast.dismiss(animated: true)
+        }
     }
 }
 

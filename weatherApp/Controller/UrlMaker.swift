@@ -105,8 +105,16 @@ class UrlMaker{
             print(#function)
             return decodedWeatherData
         } catch{
+            if apiRequestType == .weatherOfRerquestedPlace {
+                print("calling showToast")
+                DispatchQueue.main.async {
+                    self.delegates[0]?.showToast(message: "City Not found", seconds: 1.2)
+                }
+                
+            }
             print(error)
             return nil
         }
     }
 }
+

@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             print("UNABLE TO GET VIEWCONTROLLERS IN SCENE_DELEGATE")
             return 
         }
-        for (_, viewController) in viewControllers.enumerated(){
+        for viewController in viewControllers{
            print("VIEWCONTROLLERS IN SCENE_DELEGATE")
             if let screen1ViewController = viewController as? FirstScreenTableViewController{
                 print("screen1ViewController")
@@ -36,23 +36,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("screen3ViewController")
                 screen3ViewController.urlMaker = urlMaker
             }
-            
-//            if let navigationController = viewController as? UINavigationController{
-//                print("Navigation_CONTROLLERS IN SCENE_DELEGATE")
-//                print(navigationController)
-//                if let screen1ViewController = navigationController.viewControllers.first as? FirstScreenTableViewController{
-//                    print("screen1ViewController")
-//                    screen1ViewController.urlMaker = urlMaker
-//                }
-//                if let screen2ViewController = navigationController.viewControllers.first as? SecondScreenCollectionViewController{
-//                    print("screen2ViewController")
-//                    screen2ViewController.urlMaker = urlMaker
-//                }
-//                if let screen3ViewController = navigationController.viewControllers.first as? ThirdScreenTableViewController{
-//                    print("screen3ViewController")
-//                    screen3ViewController.urlMaker = urlMaker
-//                }
-//            }
         }
         
     }
