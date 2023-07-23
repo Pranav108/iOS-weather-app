@@ -8,31 +8,20 @@
 import Foundation
 import UIKit
 
-enum ApiRequestType : String{
-    case weatherOfRerquestedPlace = "https://api.openweathermap.org/data/2.5/weather?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric"
-    case weatherOfCurrentLocation = "https://api.openweathermap.org/data/2.5/forecast?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric"
-}
-
-protocol WeatherRequestTypeProtocol{
-    
-}
+let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric"
 
 protocol WeatherApiDelegate{
-    func updateUIforFirstScreen(_ weatherData : WeatherRequestTypeProtocol)
-    func updateUIforSecondScreen(_ weatherData : WeatherRequestTypeProtocol)
-    func updateUIforThirdScreen(_ weatherData : WeatherRequestTypeProtocol)
+    func updateUIforFirstScreen()
+    func updateUIforSecondScreen()
     func showToast(message : String, seconds : Double)
 }
 
 extension WeatherApiDelegate{
-    func updateUIforFirstScreen(_ weatherData : WeatherRequestTypeProtocol){
+    func updateUIforFirstScreen(){
         print("Default Inplementation of updateUIforFirstScreen")
     }
-     func updateUIforSecondScreen(_ weatherData : WeatherRequestTypeProtocol){
+    func updateUIforSecondScreen(){
         print("Default Inplementation of updateUIforSecondScreen")
-    }
-     func updateUIforThirdScreen(_ weatherData : WeatherRequestTypeProtocol){
-        print("Default Inplementation of updateUIforThirdScreen")
     }
     func showToast(message : String, seconds : Double){
         print("Default Inplementation of showToast")

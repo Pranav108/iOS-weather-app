@@ -7,42 +7,44 @@
 
 import UIKit
 
+var screen2DataForBinding : [UseableDataModel]?
 
-class SecondScreenCollectionViewController : UIViewController{
-    
-    @IBOutlet weak var collectIonView: UICollectionView!
+class SecondScreenTableViewController : UIViewController{
+
+    @IBOutlet weak var tableView: UITableView!
     
     var urlMaker : UrlMaker?
     
-    var screen2DataForBinding : [HourlyForecastModel]?
-    
     var reusableHeader : ReusableHeader?
+    
+    var expandedIndexSet : IndexSet = []
     
     override func viewDidLoad() {
         
-        collectIonView.delegate = self
-        collectIonView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         urlMaker?.delegates[1] = self
         
-        collectIonView.register(UINib(nibName: "SecondScreenCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SecondScreenCollectionViewCell")
+//        tableView.register(UINib(nibName: "SecondScreenCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SecondScreenCollectionViewCell")
         
-        collectIonView.layer.cornerRadius = 10
-        print(#function)
-        
-        reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: collectIonView.frame.width, height: collectIonView.frame.height))
-        
-        view.addSubview(reusableHeader!)
-        
-        
-        NSLayoutConstraint.activate([
-            reusableHeader!.bottomAnchor.constraint(equalTo: collectIonView.topAnchor,constant: -20),
-        ])
-        
-        if urlMaker?.dataByCurrentLocation == nil {
-            urlMaker?.urlStringMaker()
-        }else{
-            self.updateUIforSecondScreen((urlMaker?.dataByCurrentLocation)!)
-        }
+//        tableView.layer.cornerRadius = 10
+//        print(#function)
+//
+//        reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: tableView.frame.width, height: tableView.frame.height))
+//
+//        view.addSubview(reusableHeader!)
+//
+//
+//        NSLayoutConstraint.activate([
+//            reusableHeader!.bottomAnchor.constraint(equalTo: tableView.topAnchor,constant: -20),
+//        ])
+//
+//        if urlMaker?.dataByCurrentLocation == nil {
+//            urlMaker?.urlStringMaker()
+//        }else{
+//            self.updateUIforSecondScreen((urlMaker?.dataByCurrentLocation)!)
+//        }
         
     }
     // viewWillAppear might be called before loading the data of requerst from viewDidLoad
@@ -53,74 +55,123 @@ class SecondScreenCollectionViewController : UIViewController{
     }
 }
 
-extension SecondScreenCollectionViewController : UICollectionViewDelegate, UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        8
+
+extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let row = tableView.dequeueReusableCell(withIdentifier: "SecondScreenTableViewCell", for: indexPath) as! SecondScreenTableViewCell
+        row.collectionView?.tag = indexPath.item
+        row.selectionStyle = .none
+        row.animate()
+        row.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        let maskLayer = CALayer()
+        maskLayer.cornerRadius = 5
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.frame = CGRect(x: row.bounds.origin.x, y: row.bounds.origin.y, width: row.bounds.width, height: row.bounds.height).insetBy(dx: 16, dy: 10)
+        row.layer.mask = maskLayer
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SecondScreenCollectionViewCell", for: indexPath) as! SecondScreenCollectionViewCell
-        print(#function)
-        
-        if let hourlyForecastDataForBinding = screen2DataForBinding {
-            let dataToFill = hourlyForecastDataForBinding[indexPath.item]
-            cell.weatherIcon.image = UIImage(named: dataToFill.icon)
-            cell.forecastingTime.text = (indexPath.item == 0) ? "Now" : dataToFill.hour
-            cell.temperatureLabel.text = dataToFill.temperature
-            print("Weather Icon : ", dataToFill.info)
-            
-        }
-        return cell
+        return row
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(expandedIndexSet.contains(indexPath.row)){
+            expandedIndexSet.remove(indexPath.row)
+        } else {
+            // if the cell is not expanded, add it to the indexset to expand it
+            expandedIndexSet.insert(indexPath.row)
+        }
+        
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if expandedIndexSet.contains(indexPath.row) {
+            return 300
+        }
+        return 120
+    }
+    
 }
 
 
-extension SecondScreenCollectionViewController : WeatherApiDelegate {
+
+extension SecondScreenTableViewController : WeatherApiDelegate {
     
-    func updateUIforSecondScreen(_ weatherData: WeatherRequestTypeProtocol) {
+    func updateUIforSecondScreen() {
         
         print("CurrentWeather data in SecondScreen")
-        print(#function)
-        let foreCastData = weatherData as! CurrentLocationModel
-        print("Recieved forecast data in updateUIforSecondScreen")
+        let weatherData = urlMaker?.weatherData
         
-        screen2DataForBinding = getForecastHourlyData(foreCastData)
+        //  FORCE_UNRAPPED
+        screen2DataForBinding = getForecastHourlyData(weatherData!)
         
         print(#function, "SecondScreen")
         
         reloadUIForSecondScreen()
     }
     
-    func getForecastHourlyData(_ weatherData: CurrentLocationModel) -> [HourlyForecastModel]{
+    func getForecastHourlyData(_ weatherData: WeatherDataModel) -> [UseableDataModel]{
         
-        let requiredData = Array(weatherData.list.prefix(8))
-        let locationname = weatherData.city.name
-        print(#function)
-        let result = requiredData.map{
-            el in
-            return HourlyForecastModel(city : locationname ,hour: el.timeString, info: String(el.weather[0].main), temperature: el.main.tempString, icon: el.weather[0].icon)
+        //        struct HourlyDataModel {
+        //            let time : String
+        //            let temperature : String
+        //        }
+        //
+        //        struct UseableDataModel {
+        //            let city : String
+        //            let day : String
+        //            let icon : String
+        //            let humidity : String
+        //            let feelsLike : String
+        //            let hourlyData : [HourlyDataModel]
+        //        }
+        var dataForBinding = [UseableDataModel]()
+        
+        let dataList = weatherData.list
+        let city = weatherData.city.name
+        
+        for lowerRange in 0...4 {
+            let el = dataList[0]
+            let day : String = el.dayName
+            let icon : String = el.weather.first?.icon ?? "ICON"
+            let humidity : String = el.main.humidityString
+            let feelsLike : String = el.main.feels_likeString
+            
+            var hourlyData = [HourlyDataModel]()
+            
+            for i in stride(from: lowerRange * 8, to: (lowerRange+1) * 8 , by: 1) {
+                let time : String = dataList[i].timeString
+                let temperature : String = dataList[i].main.tempString
+                hourlyData.append(HourlyDataModel(time: time, temperature: temperature))
+            }
+            let useableDataModel = UseableDataModel(city : city, day: day, icon: icon, humidity: humidity, feelsLike: feelsLike, hourlyData: hourlyData)
+            dataForBinding.append(useableDataModel)
         }
-        print(#function)
-        return result
+        
+        return dataForBinding
     }
     
     func reloadUIForSecondScreen(){
         
-        if urlMaker?.dataByCurrentLocation != nil{
-            if self.collectIonView != nil {
-                print("collectIonView EXIST")
+        if screen2DataForBinding != nil{
+            if self.tableView != nil {
+                print("tableView EXIST")
                 DispatchQueue.main.async {
-                    self.collectIonView.reloadData()
+                    self.tableView.reloadData()
                 }
             }else{
-                print("collectIonView doesn't EXIST")
+                print("tableView doesn't EXIST")
             }
         }else{
             print(#function, "cannot find screen2DataForBinding data")
         }
         
-        self.reusableHeader!.binddataToCard(location: self.screen2DataForBinding?[0].city ?? "CITY_NAME")
+//        self.reusableHeader!.binddataToCard(location: screen2DataForBinding?[0].city ?? "CITY_NAME")
     }
 }
 

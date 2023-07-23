@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct TimeStampData : Decodable{
+struct ForeCastDataElement : Decodable{
     let dt_txt : String
     let main : MainWeatherContent
     let weather : [WeatherElement]

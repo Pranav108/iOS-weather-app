@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -116,125 +117,161 @@
                     </tabBar>
                     <connections>
                         <segue destination="5dM-kH-ybj" kind="relationship" relationship="viewControllers" id="sGt-cP-A7V"/>
-                        <segue destination="ATl-Jz-kIL" kind="relationship" relationship="viewControllers" id="szb-cb-Q4B"/>
-                        <segue destination="SrZ-ea-SaS" kind="relationship" relationship="viewControllers" id="rdx-ca-vad"/>
+                        <segue destination="ATl-Jz-kIL" kind="relationship" relationship="viewControllers" id="aHm-Iu-e8M"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V8d-EG-x0y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="405" y="501"/>
+            <point key="canvasLocation" x="428" y="264"/>
         </scene>
-        <!--ScreenScreenView-->
+        <!--SecondScreenView-->
         <scene sceneID="ZAI-Vq-b1I">
             <objects>
-                <viewController storyboardIdentifier="SecondScreenCollectionViewController" title="ScreenScreenView" interactionActivityTrackingBaseName="ScreenScreenView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ATl-Jz-kIL" customClass="SecondScreenCollectionViewController" customModule="weatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SecondScreenTableViewController" title="SecondScreenView" interactionActivityTrackingBaseName="SecondScreenView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ATl-Jz-kIL" customClass="SecondScreenTableViewController" customModule="weatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4lK-C5-fP0">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFk-nU-KXM">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WZF-iR-YRU">
                                 <rect key="frame" x="0.0" y="59" width="393" height="710"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="always" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="X8K-pV-P22">
-                                        <rect key="frame" x="10" y="20" width="373" height="180"/>
-                                        <color key="backgroundColor" systemColor="systemGray4Color"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="180" id="MU4-RA-C6E"/>
-                                            <constraint firstAttribute="height" constant="180" id="N83-Lg-m3l"/>
-                                        </constraints>
-                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Zsr-T6-pTO">
-                                            <size key="itemSize" width="80" height="160"/>
-                                            <size key="estimatedItemSize" width="80" height="160"/>
-                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        </collectionViewFlowLayout>
-                                        <cells/>
-                                    </collectionView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="cVn-dI-ONR">
+                                        <rect key="frame" x="0.0" y="100" width="393" height="610"/>
+                                        <color key="backgroundColor" red="0.94690792967547655" green="0.20597065005708259" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SecondScreenTableViewCell" rowHeight="280" id="0gN-zT-flS" customClass="SecondScreenTableViewCell" customModule="weatherApp" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="50" width="393" height="280"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0gN-zT-flS" id="XLq-4E-WkW">
+                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="280"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKB-GA-iOb">
+                                                            <rect key="frame" x="20" y="20" width="353" height="80"/>
+                                                            <color key="backgroundColor" red="0.673515368" green="0.21089106099999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="80" id="QfJ-fS-cR9"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fMK-gL-fjd">
+                                                            <rect key="frame" x="40" y="120" width="313" height="129"/>
+                                                            <color key="backgroundColor" red="0.59468954119999995" green="0.94328010080000002" blue="0.5196929911" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="160" id="NQt-H5-w9m"/>
+                                                            </constraints>
+                                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BvQ-fF-YXs">
+                                                                <size key="itemSize" width="128" height="128"/>
+                                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                            </collectionViewFlowLayout>
+                                                            <cells>
+                                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SecondScreenCollectionViewCell" id="Cn5-Fl-Rnv" customClass="SecondScreenCollectionViewCell" customModule="weatherApp" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="-5.666666666666667" width="140" height="140"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="g8C-q6-AhI">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+                                                                        <autoresizingMask key="autoresizingMask"/>
+                                                                        <subviews>
+                                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="X3h-iY-nW7">
+                                                                                <rect key="frame" x="10" y="10" width="120" height="120"/>
+                                                                                <subviews>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tempLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-1D-Czd">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="120" height="60"/>
+                                                                                        <color key="backgroundColor" red="0.033656103540000003" green="0.52948834469999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstAttribute="height" constant="60" id="Iu9-2i-edc"/>
+                                                                                            <constraint firstAttribute="width" constant="120" id="Wj5-nD-WLD"/>
+                                                                                        </constraints>
+                                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                        <nil key="textColor"/>
+                                                                                        <nil key="highlightedColor"/>
+                                                                                    </label>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="timeLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lIr-dJ-z05">
+                                                                                        <rect key="frame" x="0.0" y="60" width="120" height="60"/>
+                                                                                        <color key="backgroundColor" red="1" green="0.99615207039999998" blue="0.47883872490000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstAttribute="height" constant="60" id="0u2-z1-JUk"/>
+                                                                                            <constraint firstAttribute="width" constant="120" id="TNQ-fv-zcV"/>
+                                                                                        </constraints>
+                                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                        <nil key="textColor"/>
+                                                                                        <nil key="highlightedColor"/>
+                                                                                    </label>
+                                                                                </subviews>
+                                                                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                                                            </stackView>
+                                                                        </subviews>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="trailing" secondItem="X3h-iY-nW7" secondAttribute="trailing" constant="10" id="Wwj-gV-KQM"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="X3h-iY-nW7" secondAttribute="bottom" constant="10" id="Yvt-lp-Ned"/>
+                                                                            <constraint firstItem="X3h-iY-nW7" firstAttribute="leading" secondItem="g8C-q6-AhI" secondAttribute="leading" constant="10" id="qbH-23-die"/>
+                                                                            <constraint firstItem="X3h-iY-nW7" firstAttribute="top" secondItem="g8C-q6-AhI" secondAttribute="top" constant="10" id="sOC-rx-Gbi"/>
+                                                                        </constraints>
+                                                                    </collectionViewCellContentView>
+                                                                    <size key="customSize" width="140" height="140"/>
+                                                                    <connections>
+                                                                        <outlet property="tempLabel" destination="PvZ-1D-Czd" id="9cJ-81-oeH"/>
+                                                                        <outlet property="timeLabel" destination="lIr-dJ-z05" id="ym9-lO-kcF"/>
+                                                                    </connections>
+                                                                </collectionViewCell>
+                                                            </cells>
+                                                        </collectionView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.541995012" green="1" blue="0.88388233429999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="GKB-GA-iOb" secondAttribute="trailing" constant="20" id="3a0-wT-QH2"/>
+                                                        <constraint firstItem="GKB-GA-iOb" firstAttribute="centerX" secondItem="XLq-4E-WkW" secondAttribute="centerX" id="5Uh-Yt-UhL"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="fMK-gL-fjd" secondAttribute="trailing" constant="20" id="DXJ-Gj-23g"/>
+                                                        <constraint firstItem="fMK-gL-fjd" firstAttribute="top" secondItem="XLq-4E-WkW" secondAttribute="top" constant="120" id="EjB-Zc-9zN"/>
+                                                        <constraint firstItem="GKB-GA-iOb" firstAttribute="leading" secondItem="XLq-4E-WkW" secondAttribute="leading" constant="20" id="OXr-Fp-24V"/>
+                                                        <constraint firstItem="fMK-gL-fjd" firstAttribute="leading" secondItem="XLq-4E-WkW" secondAttribute="leadingMargin" constant="20" id="TWx-vT-Jvd"/>
+                                                        <constraint firstItem="fMK-gL-fjd" firstAttribute="top" secondItem="GKB-GA-iOb" secondAttribute="bottom" constant="20" id="hp5-gt-UOv"/>
+                                                        <constraint firstItem="GKB-GA-iOb" firstAttribute="top" secondItem="XLq-4E-WkW" secondAttribute="top" constant="20" id="ifK-aH-5Jr"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="fMK-gL-fjd" secondAttribute="bottom" constant="20" id="yvN-qd-QXs"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" red="1" green="0.99615207039999998" blue="0.47883872490000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <connections>
+                                                    <outlet property="collectionView" destination="fMK-gL-fjd" id="yzR-zF-ChG"/>
+                                                    <outlet property="stackView" destination="GKB-GA-iOb" id="Der-Pj-2ug"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <constraints>
-                                    <constraint firstItem="X8K-pV-P22" firstAttribute="leading" secondItem="oFk-nU-KXM" secondAttribute="leading" constant="10" id="ALf-C4-15z"/>
-                                    <constraint firstAttribute="trailing" secondItem="X8K-pV-P22" secondAttribute="trailing" constant="10" id="W66-0F-5QM"/>
-                                    <constraint firstItem="X8K-pV-P22" firstAttribute="centerX" secondItem="oFk-nU-KXM" secondAttribute="centerX" id="rZk-Tl-EXN"/>
-                                    <constraint firstItem="X8K-pV-P22" firstAttribute="top" secondItem="oFk-nU-KXM" secondAttribute="top" priority="999" constant="20" id="uzj-uG-FzO"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="X8K-pV-P22" secondAttribute="bottom" constant="10" id="y85-KO-lrf"/>
+                                    <constraint firstAttribute="bottom" secondItem="cVn-dI-ONR" secondAttribute="bottom" id="41i-3z-4FA"/>
+                                    <constraint firstItem="cVn-dI-ONR" firstAttribute="leading" secondItem="WZF-iR-YRU" secondAttribute="leading" id="dut-IW-jEg"/>
+                                    <constraint firstAttribute="trailing" secondItem="cVn-dI-ONR" secondAttribute="trailing" id="sv1-fU-7fl"/>
+                                    <constraint firstItem="cVn-dI-ONR" firstAttribute="top" secondItem="WZF-iR-YRU" secondAttribute="top" constant="100" id="zJi-zK-35a"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rrd-t3-brR"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="oFk-nU-KXM" firstAttribute="top" secondItem="rrd-t3-brR" secondAttribute="top" id="GHg-AP-cNR"/>
-                            <constraint firstItem="oFk-nU-KXM" firstAttribute="trailing" secondItem="rrd-t3-brR" secondAttribute="trailing" id="Q6J-HE-HTm"/>
-                            <constraint firstItem="oFk-nU-KXM" firstAttribute="leading" secondItem="rrd-t3-brR" secondAttribute="leading" id="QUW-oJ-MZv"/>
-                            <constraint firstItem="oFk-nU-KXM" firstAttribute="bottom" secondItem="rrd-t3-brR" secondAttribute="bottom" id="kvl-uU-d6o"/>
+                            <constraint firstItem="rrd-t3-brR" firstAttribute="trailing" secondItem="WZF-iR-YRU" secondAttribute="trailing" id="Hi4-nP-Cxh"/>
+                            <constraint firstItem="WZF-iR-YRU" firstAttribute="leading" secondItem="rrd-t3-brR" secondAttribute="leading" id="QC9-1e-g80"/>
+                            <constraint firstItem="rrd-t3-brR" firstAttribute="bottom" secondItem="WZF-iR-YRU" secondAttribute="bottom" id="S0i-R5-EHb"/>
+                            <constraint firstItem="WZF-iR-YRU" firstAttribute="top" secondItem="rrd-t3-brR" secondAttribute="top" id="vBv-Wc-3eL"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="mostRecent" id="HJL-C4-QFx"/>
                     <connections>
-                        <outlet property="collectIonView" destination="X8K-pV-P22" id="m0A-nE-dRy"/>
+                        <outlet property="tableView" destination="cVn-dI-ONR" id="rkZ-G6-vF9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vm1-JS-Y1Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1440" y="651"/>
-        </scene>
-        <!--ThirdScreenView-->
-        <scene sceneID="Mmg-5P-4jD">
-            <objects>
-                <viewController storyboardIdentifier="ThirdScreenTableViewController" title="ThirdScreenView" interactionActivityTrackingBaseName="ThirdScreenView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SrZ-ea-SaS" customClass="ThirdScreenTableViewController" customModule="weatherApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="oW8-0k-Qo4">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tgw-JP-bdm">
-                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
-                                <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LFY-Fc-wgp">
-                                        <rect key="frame" x="20" y="60" width="353" height="610"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="610" id="2de-8u-AU8"/>
-                                        </constraints>
-                                    </tableView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="LFY-Fc-wgp" secondAttribute="bottom" constant="40" id="DQp-l5-eoD"/>
-                                    <constraint firstItem="LFY-Fc-wgp" firstAttribute="centerX" secondItem="tgw-JP-bdm" secondAttribute="centerX" id="Qkg-B4-dvs"/>
-                                    <constraint firstAttribute="trailing" secondItem="LFY-Fc-wgp" secondAttribute="trailing" constant="20" id="Rdp-ap-Rh6"/>
-                                    <constraint firstItem="LFY-Fc-wgp" firstAttribute="leading" secondItem="tgw-JP-bdm" secondAttribute="leading" constant="20" id="kW3-UP-mLN"/>
-                                    <constraint firstItem="LFY-Fc-wgp" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tgw-JP-bdm" secondAttribute="top" constant="20" id="r6g-XZ-ew9"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="G4f-d4-vYh"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="G4f-d4-vYh" firstAttribute="bottom" secondItem="tgw-JP-bdm" secondAttribute="bottom" id="01x-Ym-mMB"/>
-                            <constraint firstItem="tgw-JP-bdm" firstAttribute="leading" secondItem="G4f-d4-vYh" secondAttribute="leading" id="7YE-PG-g87"/>
-                            <constraint firstItem="G4f-d4-vYh" firstAttribute="trailing" secondItem="tgw-JP-bdm" secondAttribute="trailing" id="vht-yt-gwO"/>
-                            <constraint firstItem="tgw-JP-bdm" firstAttribute="top" secondItem="G4f-d4-vYh" secondAttribute="top" id="z4S-EX-lC7"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" systemItem="more" id="N3M-l8-RUW"/>
-                    <connections>
-                        <outlet property="screen3TableView" destination="LFY-Fc-wgp" id="H2r-iM-jb8"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rwc-ik-Am6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1438.9312977099237" y="1544.3661971830986"/>
+            <point key="canvasLocation" x="1438.9312977099237" y="650.70422535211276"/>
         </scene>
     </scenes>
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -247,6 +284,9 @@
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -9,27 +9,21 @@ import Foundation
 
 class UrlMaker{
     
-    private var apiRequestType : ApiRequestType = .weatherOfCurrentLocation
- 
     var city : String?
     var lat : String = "25.5788"
     var lon : String = "91.8831"
-//    var lat : String = "23.424076"
-//    var lon : String = "53.847816"
+    //    var lat : String = "23.424076"
+    //    var lon : String = "53.847816"
     
     // PROVIDING CUSTOM LOCATION SO THAT APP DOESN'T CRASH
     
-    var dataByCurrentLocation : WeatherRequestTypeProtocol?
+    var weatherData : WeatherDataModel?
     
-    var delegates : [WeatherApiDelegate?] = [nil,nil,nil]
-    
+    var delegates : [WeatherApiDelegate?] = [nil,nil]
     
     func urlStringMaker(){
         print(#function)
-        if city != nil {
-            apiRequestType = .weatherOfRerquestedPlace
-        }
-        var urlString = apiRequestType.rawValue
+        var urlString = API_URL
         if let city = city {
             urlString += "&q=\(city)"
         }else{
@@ -64,57 +58,38 @@ class UrlMaker{
     
     func handler(data : Data?, urlResponse : URLResponse?, error : Error?){
         if let apiData = data {
-            //            let dataString = String(data: apiData, encoding: .utf8)
-            //            print(dataString!)
             print(#function)
             if let actualData = parseJson(weatherData: apiData){
-                // BIND THE DATA TO THE UI
+                // BIND THE DATA TO THE UI, WHEN DATA RECIEVED
                 print(#function)
-                print(self.apiRequestType)
                 print(actualData)
-                delegates[0]?.updateUIforFirstScreen(actualData)
-                print(apiRequestType)
-                
-                if apiRequestType == .weatherOfCurrentLocation {
-                    print("delegates[1]?.updateUIforSecondScreen(actualData)")
-                    self.dataByCurrentLocation = actualData
-                    print(delegates)
-                    delegates[1]?.updateUIforSecondScreen(actualData)
-                    delegates[2]?.updateUIforThirdScreen(actualData)
-                    print("delegates[1]?.updateUIforSecondScreen(actualData) - COMPLETED")
-                }
+                weatherData = actualData
+                delegates[0]?.updateUIforFirstScreen()
+                delegates[1]?.updateUIforSecondScreen()
+            }else{
+                print("CANNOT GET PARSED_DATA")
             }
         }else {
-            print(error!)
+            print("ERROR FROM HANDLER : ",error!)
         }
+        
     }
-    
-    func parseJson(weatherData : Data) -> WeatherRequestTypeProtocol?{
+    func parseJson(weatherData : Data) -> WeatherDataModel?{
         let decoder = JSONDecoder()
         print(#function)
         do {
-            print(apiRequestType," in parseJson")
-            var decodedWeatherData : WeatherRequestTypeProtocol
-            if apiRequestType == .weatherOfRerquestedPlace {
-                decodedWeatherData = try decoder.decode(PlaceLoactionModel.self, from: weatherData)
-            }else{
-                decodedWeatherData = try decoder.decode(CurrentLocationModel.self, from: weatherData)
-            }
-            // WHY TO USE SELF
-            
+            let decodedWeatherData = try decoder.decode(WeatherDataModel.self, from: weatherData)
             print(#function)
             return decodedWeatherData
         } catch{
-            if apiRequestType == .weatherOfRerquestedPlace {
-                print("calling showToast")
-                DispatchQueue.main.async {
-                    self.delegates[0]?.showToast(message: "City Not found", seconds: 1.2)
-                }
-                
+            
+            print("calling showToast")
+            DispatchQueue.main.async {
+                self.delegates[0]?.showToast(message: "City Not found", seconds: 1.2)
             }
             print(error)
             return nil
         }
     }
+    
 }
-

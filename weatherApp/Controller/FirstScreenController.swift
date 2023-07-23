@@ -32,10 +32,11 @@ class FirstScreenTableViewController: UIViewController {
         locationManager.delegate = self
         urlMaker?.delegates[0] = self
         
-        locationManager.requestWhenInUseAuthorization()
-//        locationManager.requestAlwaysAuthorization()
-        locationManager.requestLocation()
-        
+//        locationManager.requestWhenInUseAuthorization()
+////        locationManager.requestAlwaysAuthorization()
+//        locationManager.requestLocation()
+//
+        urlMaker?.urlStringMaker()
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
         
@@ -82,11 +83,12 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         row.layer.mask = maskLayer
         
         let currentWeatherData = screen1DataForBinding[indexPath.item]
-        row.placeLabel?.text = currentWeatherData.locationName
-        row.tmpLabel?.text = currentWeatherData.temp
-        row.infoLabel?.text = currentWeatherData.info
-        row.tempRangeLabel?.text = currentWeatherData.min_max
+        row.placeLabel?.text = currentWeatherData.city
+        row.tmpLabel?.text = currentWeatherData.temperature
+        row.infoLabel?.text = currentWeatherData.description
+        row.tempRangeLabel?.text = currentWeatherData.max_min
         row.backgroundView = UIImageView(image: UIImage(named: currentWeatherData.imageName))
+        
         return row
     }
     
@@ -128,23 +130,25 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
 
 extension FirstScreenTableViewController : WeatherApiDelegate{
     
-    func updateUIforFirstScreen(_ weatherData: WeatherRequestTypeProtocol) {
+    func updateUIforFirstScreen() {
         print("CurrentWeather data in FirstScreen")
         
-        var newData : Screen1DataModel
-        if weatherData is PlaceLoactionModel {
-            let placeData = weatherData as? PlaceLoactionModel
-            newData = Screen1DataModel(locationName: placeData?.name ?? "CTY", info: placeData?.weather.first?.main ?? "NA", temp: placeData?.main.tempString ?? "TMP", min_max: placeData?.main.tempRangeString ?? "MN_MX", imageName: placeData?.weather.first!.imageName ?? "NA")
-            
-            print("Data is of type : PlaceLoactionModel")
-        }else{
-            // CONVERT THE DATA OF TYPE CurrentLocationModel TO PlaceLoactionModel
-            let currentData = weatherData as? CurrentLocationModel
-            print("Data is of type : CurrentLocationModel")
-            
-            newData = Screen1DataModel(locationName: currentData?.city.name ?? "CTY", info:currentData?.list.first?.weather.first?.main ?? "NA", temp: currentData?.list.first?.main.tempString ?? "TMP", min_max: currentData?.list.first?.main.tempRangeString ?? "MN_MX", imageName: currentData?.list.first?.weather.first?.imageName ?? "NA")
-            
-        }
+//        struct Screen1DataModel {
+//            let city : String
+//            let imageName : String
+//            let description : String
+//            let max_min : String
+//            let temperature : String
+//        }
+        let weatherData = urlMaker?.weatherData
+        
+        let city : String = weatherData?.city.name ?? "CITY"
+        let imageName : String = weatherData?.list.first?.weather.first?.imageName ?? "IMAGE_NAME"
+        let description : String = weatherData?.list.first?.weather.first?.description ?? "DESCRIPTION"
+        let max_min : String = weatherData?.list.first?.main.tempRangeString ?? "MAX_MIN"
+        let temperature : String = weatherData?.list.first?.main.tempString ?? "TEMP"
+        
+        let newData = Screen1DataModel(city: city, imageName: imageName, description: description, max_min: max_min, temperature: temperature)
         
         screen1DataForBinding.insert(newData, at: 0)
         
