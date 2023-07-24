@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UrlMaker{
+class WeatherApiHandler{
     
     var city : String?
     var lat : String = "25.5788"
@@ -21,7 +21,7 @@ class UrlMaker{
     
     var delegates : [WeatherApiDelegate?] = [nil,nil]
     
-    func urlStringMaker(){
+    func getApiData(){
         print(#function)
         var urlString = API_URL
         if let city = city {

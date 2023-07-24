@@ -21,7 +21,7 @@ class FirstScreenTableViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     var screen1DataForBinding = [Screen1DataModel]()
-    var urlMaker : UrlMaker?
+    var urlMaker : WeatherApiHandler?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +33,10 @@ class FirstScreenTableViewController: UIViewController {
         urlMaker?.delegates[0] = self
         
 //        locationManager.requestWhenInUseAuthorization()
-////        locationManager.requestAlwaysAuthorization()
+//        locationManager.requestAlwaysAuthorization()
 //        locationManager.requestLocation()
-//
-        urlMaker?.urlStringMaker()
+
+        urlMaker?.getApiData()
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
         
@@ -92,6 +92,16 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         return row
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let secondViewController = SecondScreenTableViewController()
+
+        // Create a navigation controller with the SecondViewController as the root view controller
+        let navigationController = UINavigationController(rootViewController: secondViewController)
+
+        // Present the navigation controller modally
+        present(navigationController, animated: true, completion: nil)
+        
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
@@ -122,7 +132,7 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
         if cityName == "" {
             showToast(message: "Please enter city name", seconds: 1.2)
         }else{
-            urlMaker?.urlStringMaker()
+            urlMaker?.getApiData()
         }
         searchBar.text = ""
     }
@@ -133,13 +143,6 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
     func updateUIforFirstScreen() {
         print("CurrentWeather data in FirstScreen")
         
-//        struct Screen1DataModel {
-//            let city : String
-//            let imageName : String
-//            let description : String
-//            let max_min : String
-//            let temperature : String
-//        }
         let weatherData = urlMaker?.weatherData
         
         let city : String = weatherData?.city.name ?? "CITY"
@@ -179,7 +182,7 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
             urlMaker?.lon = String(locValue.longitude)
             
             print("Cordinates : ",urlMaker?.lat ?? "_LAT_", urlMaker?.lon ?? "_LON_")
-            urlMaker?.urlStringMaker()
+            urlMaker?.getApiData()
             
         }else{
             print("Cannot find the coordinates")
@@ -228,7 +231,7 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         }))
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
-            self.urlMaker?.urlStringMaker()
+            self.urlMaker?.getApiData()
         }))
         
         present(alertController, animated: true)

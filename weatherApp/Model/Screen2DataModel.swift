@@ -12,7 +12,7 @@ struct HourlyDataModel {
     let temperature : String
 }
 
-struct UseableDataModel {
+struct Screen2DataModel {
     let city : String
     let day : String
     let icon : String

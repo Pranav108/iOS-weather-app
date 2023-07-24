@@ -35,10 +35,8 @@
 		2FD006222A64706F0029640E /* Hourly_Forecast.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FD006212A64706F0029640E /* Hourly_Forecast.png */; };
 		2FD006242A6470750029640E /* Find_Weather.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FD006232A6470750029640E /* Find_Weather.png */; };
 		2FD006262A6470800029640E /* Daily_Forecast.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FD006252A6470800029640E /* Daily_Forecast.png */; };
-		2FDDF2622A5E70CB00CFADAB /* ThirdScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDDF2602A5E70CB00CFADAB /* ThirdScreenTableViewCell.swift */; };
-		2FDDF2632A5E70CB00CFADAB /* ThirdScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FDDF2612A5E70CB00CFADAB /* ThirdScreenTableViewCell.xib */; };
 		2FDDF2692A5EB8C600CFADAB /* APIs_List.TXT in Sources */ = {isa = PBXBuildFile; fileRef = 2FDDF2682A5EB8C600CFADAB /* APIs_List.TXT */; };
-		2FE4C3152A5F315800A19784 /* UrlMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE4C3142A5F315800A19784 /* UrlMaker.swift */; };
+		2FE4C3152A5F315800A19784 /* WeatherApiHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE4C3142A5F315800A19784 /* WeatherApiHandler.swift */; };
 		2FE9D5B42A5FDB69000D67DF /* WeatherElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE9D5B32A5FDB69000D67DF /* WeatherElement.swift */; };
 		2FE9D5B62A5FDBF3000D67DF /* MainWeatherContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE9D5B52A5FDBF3000D67DF /* MainWeatherContent.swift */; };
 		2FE9D5B82A5FFCF3000D67DF /* URL_SESSION_RESOURCE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2FE9D5B72A5FFCF3000D67DF /* URL_SESSION_RESOURCE.txt */; };
@@ -83,10 +81,8 @@
 		2FD006212A64706F0029640E /* Hourly_Forecast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Hourly_Forecast.png; sourceTree = "<group>"; };
 		2FD006232A6470750029640E /* Find_Weather.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Find_Weather.png; sourceTree = "<group>"; };
 		2FD006252A6470800029640E /* Daily_Forecast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Daily_Forecast.png; sourceTree = "<group>"; };
-		2FDDF2602A5E70CB00CFADAB /* ThirdScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdScreenTableViewCell.swift; sourceTree = "<group>"; };
-		2FDDF2612A5E70CB00CFADAB /* ThirdScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThirdScreenTableViewCell.xib; sourceTree = "<group>"; };
 		2FDDF2682A5EB8C600CFADAB /* APIs_List.TXT */ = {isa = PBXFileReference; lastKnownFileType = text; path = APIs_List.TXT; sourceTree = "<group>"; };
-		2FE4C3142A5F315800A19784 /* UrlMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlMaker.swift; sourceTree = "<group>"; };
+		2FE4C3142A5F315800A19784 /* WeatherApiHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApiHandler.swift; sourceTree = "<group>"; };
 		2FE9D5B32A5FDB69000D67DF /* WeatherElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherElement.swift; sourceTree = "<group>"; };
 		2FE9D5B52A5FDBF3000D67DF /* MainWeatherContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWeatherContent.swift; sourceTree = "<group>"; };
 		2FE9D5B72A5FFCF3000D67DF /* URL_SESSION_RESOURCE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = URL_SESSION_RESOURCE.txt; sourceTree = "<group>"; };
@@ -152,8 +148,6 @@
 				2F612CDB2A5C398000562080 /* Screen1TableViewCell.xib */,
 				2FE9E1772A6D71E3009CB409 /* SecondScreenTableViewCell.swift */,
 				2FE9E1792A6D71FE009CB409 /* SecondScreenCollectionViewCell.swift */,
-				2FDDF2602A5E70CB00CFADAB /* ThirdScreenTableViewCell.swift */,
-				2FDDF2612A5E70CB00CFADAB /* ThirdScreenTableViewCell.xib */,
 				2F612CB12A5BEA6E00562080 /* Main.storyboard */,
 				2F612CB62A5BEA6F00562080 /* LaunchScreen.storyboard */,
 				2FCEB84B2A63001700A32D82 /* ReusableHeader.swift */,
@@ -196,7 +190,7 @@
 		2FE2FD002A6109A500943CF5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2FE4C3142A5F315800A19784 /* UrlMaker.swift */,
+				2FE4C3142A5F315800A19784 /* WeatherApiHandler.swift */,
 				2F612CD02A5C322500562080 /* FirstScreenController.swift */,
 				2F0163912A5D65C000D853F6 /* SecondScreenController.swift */,
 			);
@@ -297,7 +291,6 @@
 				2FD006222A64706F0029640E /* Hourly_Forecast.png in Resources */,
 				2F612CB52A5BEA6F00562080 /* Assets.xcassets in Resources */,
 				2FD006122A645E7C0029640E /* Drizzle_Img.jpg in Resources */,
-				2FDDF2632A5E70CB00CFADAB /* ThirdScreenTableViewCell.xib in Resources */,
 				2FD006132A645E7C0029640E /* Clouds_Img.jpg in Resources */,
 				2FE9D5B82A5FFCF3000D67DF /* URL_SESSION_RESOURCE.txt in Resources */,
 				2FD006002A6437860029640E /* Rain.png in Resources */,
@@ -323,12 +316,11 @@
 				2FE9E1782A6D71E3009CB409 /* SecondScreenTableViewCell.swift in Sources */,
 				2FE9E1742A6D47BA009CB409 /* WeatherDataModel.swift in Sources */,
 				2FE9E17C2A6D7B02009CB409 /* Screen1DataModel.swift in Sources */,
-				2FE4C3152A5F315800A19784 /* UrlMaker.swift in Sources */,
+				2FE4C3152A5F315800A19784 /* WeatherApiHandler.swift in Sources */,
 				2FE9D5C12A60807A000D67DF /* City.swift in Sources */,
 				2FE9D5BF2A60805E000D67DF /* ForeCastDataElement.swift in Sources */,
 				2F0163922A5D65C000D853F6 /* SecondScreenController.swift in Sources */,
 				2F612CAC2A5BEA6E00562080 /* AppDelegate.swift in Sources */,
-				2FDDF2622A5E70CB00CFADAB /* ThirdScreenTableViewCell.swift in Sources */,
 				2F6E28CA2A67B56200E508C8 /* ToastLabel.swift in Sources */,
 				2F612CD12A5C322500562080 /* FirstScreenController.swift in Sources */,
 				2FCEB84C2A63001700A32D82 /* ReusableHeader.swift in Sources */,

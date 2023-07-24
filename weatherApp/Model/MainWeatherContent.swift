@@ -15,13 +15,13 @@ struct MainWeatherContent : Decodable {
     let feels_like : Float
     
     var humidityString : String{
-        return String(Int(humidity))
+        return String(Int(humidity)) + "% H"
     }
     var tempString : String{
-        return String(Int(temp))
+        return String(Int(temp)) + "˚C"
     }
     var feels_likeString : String{
-        return String(Int(feels_like))
+        return String(Int(feels_like)) + "˚C"
     }
     
     var tempRangeString : String{
