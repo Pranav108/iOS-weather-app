@@ -15,7 +15,7 @@ class ReusableHeader: UIView  {
         label.backgroundColor = .opaqueSeparator
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20)
-
+        label.text = "Loading..."
         return label
     }()
    

@@ -11,9 +11,9 @@ var screen2DataForBinding : [Screen2DataModel]?
 
 class SecondScreenTableViewController : UIViewController{
     
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
     @IBOutlet weak var tableView: UITableView!
+    
+    var spinner = UIActivityIndicatorView(style: .large)
     
     var urlMaker : WeatherApiHandler?
     
@@ -36,10 +36,11 @@ class SecondScreenTableViewController : UIViewController{
         
         view.addSubview(reusableHeader!)
         
-        
         NSLayoutConstraint.activate([
             reusableHeader!.bottomAnchor.constraint(equalTo: tableView.topAnchor,constant: -20),
         ])
+        spinnerSetup(spinner: spinner, parentView: view)
+        
         updateUIforSecondScreen()
         
     }
@@ -51,10 +52,16 @@ class SecondScreenTableViewController : UIViewController{
     }
 }
 
-
 extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        var rowCount = 0
+        if screen2DataForBinding != nil{
+            rowCount = (screen2DataForBinding?.count ?? 10)
+            print("screen2DataForBinding is NOT nill")
+        }
+        print("number_Of_Rows_In_Section : ",rowCount)
+        return rowCount
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -104,18 +111,25 @@ extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataS
     
 }
 
-
-
 extension SecondScreenTableViewController : WeatherApiDelegate {
     
     func updateUIforSecondScreen() {
         
         print("CurrentWeather data in SecondScreen")
-        guard let weatherData = urlMaker?.weatherData else {return}
+        DispatchQueue.main.async{
+            self.spinner.startAnimating()
+        }
         
-        screen2DataForBinding = getForecastHourlyData(weatherData)
+        guard let weatherData = urlMaker?.weatherData else {
+            print("weatherData not found!!")
+            return
+            
+        }
         
-        
+        if screen2DataForBinding == nil {
+            screen2DataForBinding = getForecastHourlyData(weatherData)
+        }
+
         print(#function, "SecondScreen")
         
         reloadUIForSecondScreen()
@@ -155,6 +169,8 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
                 print("tableView EXIST")
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    print("TABLE VIEW RELOADED")
+                    self.spinner.stopAnimating()
                 }
             }else{
                 print("tableView doesn't EXIST")

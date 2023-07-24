@@ -132,14 +132,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Dsl-ZG-cxQ">
-                                <rect key="frame" x="146.66666666666666" y="376" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="D4F-QC-9KJ"/>
-                                    <constraint firstAttribute="width" constant="100" id="nTM-QY-Fuj"/>
-                                </constraints>
-                                <color key="color" systemColor="systemGreenColor"/>
-                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WZF-iR-YRU">
                                 <rect key="frame" x="0.0" y="59" width="393" height="710"/>
                                 <subviews>
@@ -292,14 +284,11 @@
                             <constraint firstItem="rrd-t3-brR" firstAttribute="trailing" secondItem="WZF-iR-YRU" secondAttribute="trailing" id="Hi4-nP-Cxh"/>
                             <constraint firstItem="WZF-iR-YRU" firstAttribute="leading" secondItem="rrd-t3-brR" secondAttribute="leading" id="QC9-1e-g80"/>
                             <constraint firstItem="rrd-t3-brR" firstAttribute="bottom" secondItem="WZF-iR-YRU" secondAttribute="bottom" id="S0i-R5-EHb"/>
-                            <constraint firstItem="Dsl-ZG-cxQ" firstAttribute="centerX" secondItem="4lK-C5-fP0" secondAttribute="centerX" id="gHr-cd-Mpi"/>
-                            <constraint firstItem="Dsl-ZG-cxQ" firstAttribute="centerY" secondItem="4lK-C5-fP0" secondAttribute="centerY" id="jOV-ET-xI4"/>
                             <constraint firstItem="WZF-iR-YRU" firstAttribute="top" secondItem="rrd-t3-brR" secondAttribute="top" id="vBv-Wc-3eL"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="mostRecent" id="HJL-C4-QFx"/>
                     <connections>
-                        <outlet property="spinner" destination="Dsl-ZG-cxQ" id="bMZ-Xn-DRH"/>
                         <outlet property="tableView" destination="cVn-dI-ONR" id="rkZ-G6-vF9"/>
                     </connections>
                 </viewController>

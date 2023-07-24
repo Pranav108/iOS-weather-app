@@ -19,6 +19,8 @@ class FirstScreenTableViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchButton: UIButton!
     
+    var spinner = UIActivityIndicatorView(style: .large)
+    
     let locationManager = CLLocationManager()
     var screen1DataForBinding = [Screen1DataModel]()
     var urlMaker : WeatherApiHandler?
@@ -32,11 +34,11 @@ class FirstScreenTableViewController: UIViewController {
         locationManager.delegate = self
         urlMaker?.delegates[0] = self
         
-//        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization()
 //        locationManager.requestAlwaysAuthorization()
-//        locationManager.requestLocation()
+        locationManager.requestLocation()
 
-        urlMaker?.getApiData()
+//        urlMaker?.getApiData()
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
         
@@ -48,6 +50,9 @@ class FirstScreenTableViewController: UIViewController {
         imageV.tintColor = UIColor.purple
         
         searchButton.layer.cornerRadius = 10
+        
+        spinnerSetup(spinner: spinner, parentView: view)
+        spinner.startAnimating()
     }
     
     @IBAction func searchPressed(_ sender: UIButton) {
@@ -125,6 +130,8 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        spinner.startAnimating()
+        
         searchBar.endEditing(true)
         let cityName = searchBar.text!
         
@@ -159,6 +166,7 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
     }
     
     func showToast(message: String, seconds: Double) {
+        self.spinner.stopAnimating()
         let toast = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         toast.view.backgroundColor = .darkGray
         toast.view.alpha = 0.5
@@ -194,7 +202,6 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         print("Failed to fetch location")
         print(error)
         showAlert()
-        
     }
     
     func reloadUIForFirstScreen(){
@@ -209,6 +216,7 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
                     let indexPath = IndexPath(row: 0, section: 0)
                     self.screen1TableView.insertRows(at: [indexPath], with: .automatic)
                 }
+                self.spinner.stopAnimating()
             }
         }else{
             print("screen1TableView doesn't EXIST")
