@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherElement : Decodable {
+struct WeatherElement : Codable {
     let id : Int
     let main : String
     let description : String

@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct ForeCastDataElement : Decodable{
+struct ForeCastDataElement : Codable{
     let dt_txt : String
     let main : MainWeatherContent
     let weather : [WeatherElement]

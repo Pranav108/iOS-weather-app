@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherDataModel : Decodable {
+struct WeatherDataModel : Codable {
     let list : [ForeCastDataElement]
     let city : City
     

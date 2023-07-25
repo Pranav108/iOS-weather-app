@@ -17,8 +17,6 @@ class WeatherApiHandler{
     
     // PROVIDING CUSTOM LOCATION SO THAT APP DOESN'T CRASH
     
-    var fetchedDataList = [WeatherDataModel]()
-    
     var delegates : [WeatherApiDelegate?] = [nil,nil]
     
     func getApiData(){

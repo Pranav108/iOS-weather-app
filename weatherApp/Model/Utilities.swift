@@ -10,8 +10,9 @@ import UIKit
 
 let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric"
 
-let userDefault = UserDefaults.standard
 var globalIndexOfSelectedRow = 0
+
+var fetchedDataList = [WeatherDataModel]()
 
 protocol WeatherApiDelegate{
     func updateUIforFirstScreen()

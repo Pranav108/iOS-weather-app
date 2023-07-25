@@ -5,6 +5,6 @@
 //  Created by Pranav Pratap on 14/07/23.
 //
 
-struct City : Decodable {
+struct City : Codable {
     var name : String
 }

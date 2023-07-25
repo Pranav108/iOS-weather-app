@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MainWeatherContent : Decodable {
+struct MainWeatherContent : Codable {
     let temp : Float
     let temp_min : Float
     let temp_max : Float

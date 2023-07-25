@@ -124,11 +124,13 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
         
         print("indexOfSelectedRow : ", globalIndexOfSelectedRow)
         
-        guard let dataList = urlMaker?.fetchedDataList,dataList.count > globalIndexOfSelectedRow else {
+        let weatherData : WeatherDataModel
+        if (fetchedDataList.count > globalIndexOfSelectedRow) {
+            weatherData = fetchedDataList[globalIndexOfSelectedRow]
+        }else{
             print("Cannot find fetchedDataList")
             return
         }
-        let weatherData = dataList[globalIndexOfSelectedRow]
         
         screen2DataForBinding = getForecastHourlyData(weatherData)
         
