@@ -17,7 +17,7 @@ class WeatherApiHandler{
     
     // PROVIDING CUSTOM LOCATION SO THAT APP DOESN'T CRASH
     
-    var weatherData : WeatherDataModel?
+    var fetchedDataList = [WeatherDataModel]()
     
     var delegates : [WeatherApiDelegate?] = [nil,nil]
     
@@ -62,8 +62,8 @@ class WeatherApiHandler{
             if let actualData = parseJson(weatherData: apiData){
                 // BIND THE DATA TO THE UI, WHEN DATA RECIEVED
                 print(#function)
-                print(actualData)
-                weatherData = actualData
+//                print(actualData)
+                fetchedDataList.insert(actualData, at: 0)
                 delegates[0]?.updateUIforFirstScreen()
                 delegates[1]?.updateUIforSecondScreen()
             }else{

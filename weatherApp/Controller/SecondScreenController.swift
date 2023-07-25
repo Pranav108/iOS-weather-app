@@ -119,17 +119,16 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
         DispatchQueue.main.async{
             self.spinner.startAnimating()
         }
-        
-        guard let weatherData = urlMaker?.weatherData else {
-            print("weatherData not found!!")
+        let indexOfSelectedRow = userDefault.integer(forKey: "indexOfSelectedRow")
+        print("indexOfSelectedRow : ", indexOfSelectedRow)
+        guard (urlMaker?.fetchedDataList.count)! < indexOfSelectedRow,  let weatherData = urlMaker?.fetchedDataList[indexOfSelectedRow] else {
+            print("fetchedDataList is EMPTY")
             return
-            
         }
         
-        if screen2DataForBinding == nil {
-            screen2DataForBinding = getForecastHourlyData(weatherData)
-        }
-
+        screen2DataForBinding = getForecastHourlyData(weatherData)
+        
+        
         print(#function, "SecondScreen")
         
         reloadUIForSecondScreen()

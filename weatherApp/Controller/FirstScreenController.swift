@@ -24,6 +24,9 @@ class FirstScreenTableViewController: UIViewController {
     let locationManager = CLLocationManager()
     var screen1DataForBinding = [Screen1DataModel]()
     var urlMaker : WeatherApiHandler?
+    var selectedIndexSet : IndexSet = []
+    
+    var selectedRow = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +37,11 @@ class FirstScreenTableViewController: UIViewController {
         locationManager.delegate = self
         urlMaker?.delegates[0] = self
         
-        locationManager.requestWhenInUseAuthorization()
-//        locationManager.requestAlwaysAuthorization()
-        locationManager.requestLocation()
-
-//        urlMaker?.getApiData()
+        //        locationManager.requestWhenInUseAuthorization()
+        ////        locationManager.requestAlwaysAuthorization()
+        //        locationManager.requestLocation()
+        
+        urlMaker?.getApiData()
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
         
@@ -75,18 +78,23 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         }
         return screen1DataForBinding.count
     }
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let row = tableView.dequeueReusableCell(withIdentifier: "Screen1TableViewCell", for: indexPath) as! Screen1TableViewCell
         
+        row.selectionStyle = .none
+        
         let maskLayer = CALayer()
         
-        maskLayer.cornerRadius = 20
+        maskLayer.cornerRadius = 5
         maskLayer.backgroundColor = UIColor.black.cgColor
-        maskLayer.frame = CGRect(x: row.bounds.origin.x, y: row.bounds.origin.y, width: row.bounds.width, height: row.bounds.height).insetBy(dx: 16, dy: 10)
+        maskLayer.frame = CGRect(x: row.bounds.origin.x, y: row.bounds.origin.y, width: row.bounds.width, height: row.bounds.height).insetBy(dx: 10, dy: 10)
         row.layer.mask = maskLayer
         
+//        row.layer.borderColor = CGColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.9)
+
         let currentWeatherData = screen1DataForBinding[indexPath.item]
         row.placeLabel?.text = currentWeatherData.city
         row.tmpLabel?.text = currentWeatherData.temperature
@@ -94,18 +102,42 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         row.tempRangeLabel?.text = currentWeatherData.max_min
         row.backgroundView = UIImageView(image: UIImage(named: currentWeatherData.imageName))
         
+        
+        if selectedIndexSet.contains(indexPath.row) {
+            row.layer.borderColor = CGColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.9)
+            row.layer.borderWidth = 15
+            print("Border is selected : ", indexPath.row)
+        }else{
+            print("Border is NOT selected : ", indexPath.row)
+            row.layer.borderWidth = 0
+        }
+        
         return row
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let secondViewController = SecondScreenTableViewController()
-
-        // Create a navigation controller with the SecondViewController as the root view controller
-        let navigationController = UINavigationController(rootViewController: secondViewController)
-
-        // Present the navigation controller modally
-        present(navigationController, animated: true, completion: nil)
         
+        if(selectedIndexSet.contains(indexPath.row)){
+            selectedIndexSet.removeAll()
+        } else {
+            selectedIndexSet.removeAll()
+            selectedIndexSet.insert(indexPath.row)
+        }
+        
+        selectedRow = indexPath.row
+            
+        userDefault.set(indexPath.row, forKey: "indexOfSelectedRow")
+        tableView.reloadData()
+        
+        
+        //        let secondViewController = SecondScreenTableViewController()
+        //
+        //        // Create a navigation controller with the SecondViewController as the root view controller
+        //        let navigationController = UINavigationController(rootViewController: secondViewController)
+        //
+        //        // Present the navigation controller modally
+        //        present(navigationController, animated: true, completion: nil)
+        //
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -115,6 +147,7 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
+    
 }
 
 
@@ -127,10 +160,14 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
             searchBar.placeholder = "Type place name..."
             return false
         }
+        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         spinner.startAnimating()
+        
+        selectedIndexSet.removeAll()
+        screen1TableView.reloadRows(at: [IndexPath(item: selectedRow, section: 0)], with: .automatic)
         
         searchBar.endEditing(true)
         let cityName = searchBar.text!
@@ -150,7 +187,7 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
     func updateUIforFirstScreen() {
         print("CurrentWeather data in FirstScreen")
         
-        let weatherData = urlMaker?.weatherData
+        let weatherData = urlMaker?.fetchedDataList[0]
         
         let city : String = weatherData?.city.name ?? "CITY"
         let imageName : String = weatherData?.list.first?.weather.first?.imageName ?? "IMAGE_NAME"
