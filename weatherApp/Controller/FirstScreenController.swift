@@ -125,19 +125,21 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         }
         
         selectedRow = indexPath.row
-            
         userDefault.set(indexPath.row, forKey: "indexOfSelectedRow")
         tableView.reloadData()
         
         
-        //        let secondViewController = SecondScreenTableViewController()
-        //
-        //        // Create a navigation controller with the SecondViewController as the root view controller
-        //        let navigationController = UINavigationController(rootViewController: secondViewController)
-        //
-        //        // Present the navigation controller modally
-        //        present(navigationController, animated: true, completion: nil)
-        //
+        let indexData : [String: Int] = ["Index": 1]
+        NotificationCenter.default.post(name: Notification.Name("changeIndex"), object: nil,userInfo: indexData)
+
+//        let secondViewController = SecondScreenTableViewController()
+//
+//        // Create a navigation controller with the SecondViewController as the root view controller
+//        let navigationController = UINavigationController(rootViewController: secondViewController)
+//
+//        // Present the navigation controller modally
+//        present(navigationController, animated: true, completion: nil)
+
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

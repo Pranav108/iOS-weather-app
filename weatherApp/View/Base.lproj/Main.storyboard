@@ -100,7 +100,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="ZHa-Jy-BPb">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="WNV-x8-P0g" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="WNV-x8-P0g" customClass="TabBarController" customModule="weatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="voG-zd-Zat">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

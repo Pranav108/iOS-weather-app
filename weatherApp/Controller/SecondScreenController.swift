@@ -120,8 +120,10 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
             self.spinner.startAnimating()
         }
         let indexOfSelectedRow = userDefault.integer(forKey: "indexOfSelectedRow")
+        
         print("indexOfSelectedRow : ", indexOfSelectedRow)
-        guard (urlMaker?.fetchedDataList.count)! < indexOfSelectedRow,  let weatherData = urlMaker?.fetchedDataList[indexOfSelectedRow] else {
+        
+        guard let weatherData = urlMaker?.fetchedDataList[indexOfSelectedRow] else {
             print("fetchedDataList is EMPTY")
             return
         }
