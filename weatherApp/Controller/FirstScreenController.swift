@@ -25,6 +25,8 @@ class FirstScreenTableViewController: UIViewController {
     var screen1DataForBinding = [Screen1DataModel]()
     var urlMaker : WeatherApiHandler?
     var selectedIndexSet : IndexSet = []
+    var reusableHeader : ReusableHeader?
+    
     
     var selectedRow = 0
     
@@ -42,6 +44,16 @@ class FirstScreenTableViewController: UIViewController {
         //        locationManager.requestLocation()
         
         urlMaker?.getApiData()
+        
+        reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: screen1TableView.frame.width, height: screen1TableView.frame.height))
+        
+        view.addSubview(reusableHeader!)
+//        reusableHeader?.setHeaderColor(color: .systemFill)
+        reusableHeader?.binddataToCard(withText: "Weather App")
+        
+        NSLayoutConstraint.activate([
+            reusableHeader!.bottomAnchor.constraint(equalTo: searchBar.topAnchor,constant: -20),
+        ])
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
         
@@ -125,7 +137,8 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         }
         
         selectedRow = indexPath.row
-        userDefault.set(indexPath.row, forKey: "indexOfSelectedRow")
+//        userDefault.set(indexPath.row, forKey: "indexOfSelectedRow")
+        globalIndexOfSelectedRow = indexPath.row
         tableView.reloadData()
         
         

@@ -38,6 +38,11 @@ class ReusableHeader: UIView  {
         
     }
     
+    func setHeaderColor(color : UIColor){
+        placeLabel.backgroundColor = color
+        backgroundColor = color
+    }
+    
     override func didMoveToSuperview() {
         print(#function)
         guard let superview = superview else{
@@ -46,11 +51,11 @@ class ReusableHeader: UIView  {
         }
         
         NSLayoutConstraint.activate([
-            topAnchor.constraint(equalTo: superview.layoutMarginsGuide.topAnchor,constant: 50),
+            topAnchor.constraint(equalTo: superview.layoutMarginsGuide.topAnchor,constant: 20),
             
             centerXAnchor.constraint(equalTo: superview.centerXAnchor),
             
-            heightAnchor.constraint(equalToConstant: 50),
+            heightAnchor.constraint(equalToConstant: 40),
             widthAnchor.constraint(equalTo: superview.widthAnchor , multiplier: 0.85),
             
             placeLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.7),
@@ -61,10 +66,10 @@ class ReusableHeader: UIView  {
         ])
     }
     
-    func binddataToCard(location : String){
+    func binddataToCard(withText textToShow: String){
         print(#function)
         DispatchQueue.main.async {
-            self.placeLabel.text = location
+            self.placeLabel.text = textToShow
         }
     }
     

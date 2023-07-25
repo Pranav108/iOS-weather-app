@@ -20,7 +20,6 @@
 		2FCEB84C2A63001700A32D82 /* ReusableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEB84B2A63001700A32D82 /* ReusableHeader.swift */; };
 		2FD005FE2A6437860029640E /* Clouds.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FD005F72A6437860029640E /* Clouds.png */; };
 		2FD005FF2A6437860029640E /* Else.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FD005F82A6437860029640E /* Else.png */; };
-		2FD006002A6437860029640E /* Rain.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FD005F92A6437860029640E /* Rain.png */; };
 		2FD006012A6437860029640E /* Snow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FD005FA2A6437860029640E /* Snow.png */; };
 		2FD006022A6437860029640E /* Thunderstorm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FD005FB2A6437860029640E /* Thunderstorm.png */; };
 		2FD006032A6437860029640E /* Drizzle.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FD005FC2A6437860029640E /* Drizzle.png */; };
@@ -48,6 +47,7 @@
 		2FE9E17C2A6D7B02009CB409 /* Screen1DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE9E17B2A6D7B02009CB409 /* Screen1DataModel.swift */; };
 		2FF0CCCC2A6E50D300F06705 /* ReusableSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF0CCCB2A6E50D300F06705 /* ReusableSpinner.swift */; };
 		2FF0CCF42A6FA6F500F06705 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF0CCF32A6FA6F500F06705 /* TabBarController.swift */; };
+		2FF0CCF62A6FABCC00F06705 /* Rain.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF0CCF52A6FABCC00F06705 /* Rain.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,7 +66,6 @@
 		2FCEB84B2A63001700A32D82 /* ReusableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableHeader.swift; sourceTree = "<group>"; };
 		2FD005F72A6437860029640E /* Clouds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Clouds.png; sourceTree = "<group>"; };
 		2FD005F82A6437860029640E /* Else.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Else.png; sourceTree = "<group>"; };
-		2FD005F92A6437860029640E /* Rain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rain.png; sourceTree = "<group>"; };
 		2FD005FA2A6437860029640E /* Snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Snow.png; sourceTree = "<group>"; };
 		2FD005FB2A6437860029640E /* Thunderstorm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Thunderstorm.png; sourceTree = "<group>"; };
 		2FD005FC2A6437860029640E /* Drizzle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Drizzle.png; sourceTree = "<group>"; };
@@ -94,6 +93,7 @@
 		2FE9E17B2A6D7B02009CB409 /* Screen1DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen1DataModel.swift; sourceTree = "<group>"; };
 		2FF0CCCB2A6E50D300F06705 /* ReusableSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableSpinner.swift; sourceTree = "<group>"; };
 		2FF0CCF32A6FA6F500F06705 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		2FF0CCF52A6FABCC00F06705 /* Rain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rain.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,11 +161,11 @@
 				2FD005FD2A6437860029640E /* Clear.png */,
 				2FD005F72A6437860029640E /* Clouds.png */,
 				2FD005FC2A6437860029640E /* Drizzle.png */,
+				2FF0CCF52A6FABCC00F06705 /* Rain.png */,
 				2FD006252A6470800029640E /* Daily_Forecast.png */,
 				2FD006232A6470750029640E /* Find_Weather.png */,
 				2FD005F82A6437860029640E /* Else.png */,
 				2FD006212A64706F0029640E /* Hourly_Forecast.png */,
-				2FD005F92A6437860029640E /* Rain.png */,
 				2FD005FA2A6437860029640E /* Snow.png */,
 				2FD005FB2A6437860029640E /* Thunderstorm.png */,
 			);
@@ -292,10 +292,10 @@
 				2F612CB52A5BEA6F00562080 /* Assets.xcassets in Resources */,
 				2FD006122A645E7C0029640E /* Drizzle_Img.jpg in Resources */,
 				2FD006132A645E7C0029640E /* Clouds_Img.jpg in Resources */,
-				2FD006002A6437860029640E /* Rain.png in Resources */,
 				2FD006012A6437860029640E /* Snow.png in Resources */,
 				2FD006242A6470750029640E /* Find_Weather.png in Resources */,
 				2F612CB32A5BEA6E00562080 /* Main.storyboard in Resources */,
+				2FF0CCF62A6FABCC00F06705 /* Rain.png in Resources */,
 				2FD005FE2A6437860029640E /* Clouds.png in Resources */,
 				2FD0060F2A645E7C0029640E /* Clear_Img.jpg in Resources */,
 				2FD006262A6470800029640E /* Daily_Forecast.png in Resources */,

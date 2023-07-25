@@ -33,6 +33,7 @@ class SecondScreenTableViewController : UIViewController{
         print(#function)
         
         reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: tableView.frame.width, height: tableView.frame.height))
+//        reusableHeader?.backgroundColor = .green
         
         view.addSubview(reusableHeader!)
         
@@ -114,22 +115,22 @@ extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataS
 extension SecondScreenTableViewController : WeatherApiDelegate {
     
     func updateUIforSecondScreen() {
-        
+        expandedIndexSet.removeAll()
         print("CurrentWeather data in SecondScreen")
         DispatchQueue.main.async{
             self.spinner.startAnimating()
         }
-        let indexOfSelectedRow = userDefault.integer(forKey: "indexOfSelectedRow")
+//        let indexOfSelectedRow = userDefault.integer(forKey: "indexOfSelectedRow")
         
-        print("indexOfSelectedRow : ", indexOfSelectedRow)
+        print("indexOfSelectedRow : ", globalIndexOfSelectedRow)
         
-        guard let weatherData = urlMaker?.fetchedDataList[indexOfSelectedRow] else {
-            print("fetchedDataList is EMPTY")
+        guard let dataList = urlMaker?.fetchedDataList,dataList.count > globalIndexOfSelectedRow else {
+            print("Cannot find fetchedDataList")
             return
         }
+        let weatherData = dataList[globalIndexOfSelectedRow]
         
         screen2DataForBinding = getForecastHourlyData(weatherData)
-        
         
         print(#function, "SecondScreen")
         
@@ -180,7 +181,7 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
             print(#function, "cannot find screen2DataForBinding data")
         }
         
-        self.reusableHeader!.binddataToCard(location: screen2DataForBinding?[0].city ?? "CITY_NAME")
+        self.reusableHeader!.binddataToCard(withText: screen2DataForBinding?[0].city ?? "CITY_NAME")
     }
 }
 
