@@ -33,7 +33,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Added my me
     func applicationWillTerminate(_ application: UIApplication) {
         
-        let favouritePlaces = Array(fetchedDataList.prefix(3))
+//        let favouritePlaces = Array(fetchedDataList.prefix(3))
+        let favList = favouriteWeatherList.getFavouriteList()
+        var favouritePlaces = [WeatherDataModel]()
+        
+        for el in favList {
+            favouritePlaces.append(fetchedDataList[el])
+        }
         
         if let encoded = try? JSONEncoder().encode(favouritePlaces) {
             

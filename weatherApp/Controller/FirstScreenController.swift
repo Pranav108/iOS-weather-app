@@ -188,8 +188,8 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
         
         searchBar.endEditing(true)
         let cityName = searchBar.text!
-        
-        urlMaker?.city = cityName.replacingOccurrences(of: " ", with: "+")
+        let cityWithoutSpaces = cityName.trimmingCharacters(in: .whitespacesAndNewlines)
+        urlMaker?.city = cityWithoutSpaces.replacingOccurrences(of: " ", with: "+")
         if cityName == "" {
             showToast(message: "Please enter city name", seconds: 1.2)
         }else{
@@ -210,6 +210,9 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
                 let decodedData = try decoder.decode([WeatherDataModel].self, from: savedData)
                 
                 fetchedDataList = decodedData
+                for i in 0..<fetchedDataList.count{
+                    favouriteWeatherList.selectFavourite(havingIndex: i)
+                }
                 
                 print("RETRIVED DATA FROM USER_DEFAULTS",decodedData.count)
             } catch {
@@ -227,6 +230,7 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
     }
     
     func updateUIforFirstScreen() {
+        favouriteWeatherList.slideFavList()
         print("CurrentWeather data in FirstScreen")
         if self.screen1TableView != nil {
             print("screen1TableView EXIST")

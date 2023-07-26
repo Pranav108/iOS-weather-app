@@ -13,6 +13,7 @@ let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=c79b6cb398
 var globalIndexOfSelectedRow = 0
 
 var fetchedDataList = [WeatherDataModel]()
+var favouriteWeatherList = FavouriteQueue(size: 3)
 
 protocol WeatherApiDelegate{
     func updateUIforFirstScreen()

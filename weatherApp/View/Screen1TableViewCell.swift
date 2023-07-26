@@ -17,6 +17,8 @@ class Screen1TableViewCell: UITableViewCell {
     
     @IBOutlet weak var tempRangeLabel: UILabel!
     
+    @IBOutlet weak var favButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,5 +30,39 @@ class Screen1TableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    @IBAction func favClicked(_ sender: UIButton) {
+        print("BEFORE : ",sender.imageView?.image!)
+        
+        if let tableView = self.superview as? UITableView {
+            
+            let indexPath = tableView.indexPath(for: self)
+            
+            if let cardIndex = indexPath?.row {
+                print("Cell's indexPath: \(String(describing: cardIndex))")
+                if sender.currentImage == UIImage(systemName: "heart") {
+                    print("IMAGE NAME IS heart")
+                    
+                    if let indexToDeselect = favouriteWeatherList.selectFavourite(havingIndex: cardIndex) {
+                        print("indexToDeselect : ",indexToDeselect)
+                        let cellToBeUnselected = tableView.cellForRow(at: indexPath!) as! Screen1TableViewCell
+                        cellToBeUnselected.favButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                    }
+                    sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                }
+                else {
+                    // make fav
+                    print("IMAGE NAME IS NOT heart")
+                    favouriteWeatherList.deselectFavourite(havingIndex: cardIndex)
+                    sender.setImage(UIImage(systemName: "heart"), for: .normal)
+                }
+               
+                print("AFTER : ",sender.imageView?.image!)
+            }else{
+                print("CANNOT get cardIndex")
+            }
+            
+        }
     }
 }
