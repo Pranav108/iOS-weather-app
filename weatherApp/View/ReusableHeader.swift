@@ -34,7 +34,7 @@ class ReusableHeader: UIView  {
         layer.cornerRadius = 8.0
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .opaqueSeparator
-        print(#function)
+//        print(#function)
         
     }
     
@@ -44,7 +44,7 @@ class ReusableHeader: UIView  {
     }
     
     override func didMoveToSuperview() {
-        print(#function)
+//        print(#function)
         guard let superview = superview else{
             print("SuperView doesn't exist")
             return

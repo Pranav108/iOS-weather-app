@@ -70,7 +70,7 @@ extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataS
         
         row.collectionView?.tag = indexPath.item
         
-        print("ROW is created : ", indexPath.item)
+//        print("ROW is created : ", indexPath.item)
         let data = screen2DataForBinding?[indexPath.item]
         row.weatherLogo.image = UIImage(named: data?.icon ?? "Clear")
         row.dayLabel.text = data?.day ?? "TODAY"
@@ -122,7 +122,7 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
         }
 //        let indexOfSelectedRow = userDefault.integer(forKey: "indexOfSelectedRow")
         
-        print("indexOfSelectedRow : ", globalIndexOfSelectedRow)
+//        print("indexOfSelectedRow : ", globalIndexOfSelectedRow)
         
         let weatherData : WeatherDataModel
         if (fetchedDataList.count > globalIndexOfSelectedRow) {

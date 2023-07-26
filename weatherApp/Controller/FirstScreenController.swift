@@ -20,11 +20,10 @@ class FirstScreenTableViewController: UIViewController {
     @IBOutlet weak var searchButton: UIButton!
     
     var spinner = UIActivityIndicatorView(style: .large)
-    let locationManager = CLLocationManager()
     var urlMaker : WeatherApiHandler?
     var selectedIndexSet : IndexSet = []
     var reusableHeader : ReusableHeader?
-    
+    var locationManager = CLLocationManager()
     var selectedRow = 0
     
     override func viewDidLoad() {
@@ -37,11 +36,9 @@ class FirstScreenTableViewController: UIViewController {
         urlMaker?.delegates[0] = self
         
         setupInitialTableView()
-        
+       
         locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
-        
-//        urlMaker?.getApiData()
+//        locationManager.requestLocation()
         
         reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: screen1TableView.frame.width, height: screen1TableView.frame.height))
         
@@ -65,12 +62,38 @@ class FirstScreenTableViewController: UIViewController {
         
         spinnerSetup(spinner: spinner, parentView: view)
     }
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let authorizationStatus = manager.authorizationStatus
+        
+        print(authorizationStatus.rawValue)
+        
+        switch authorizationStatus {
+        case .restricted, .denied:
+            print("PERMISSION NOT GIVEN")
+            showAlert()
+        case .authorizedAlways, .authorizedWhenInUse:
+            givePermission(manager)
+        default:
+            print("STATUS : UNKNOWN__DEFAULT")
+        }
+    }
+    func givePermission(_ manager: CLLocationManager){
+        print("PERMISSION GIVEN")
+        let location = manager.location
+        guard let lat = location?.coordinate.latitude, let lon = location?.coordinate.longitude else {
+            showToast(message: "Cannot decode LAT and LON \(manager.authorizationStatus.rawValue)", seconds: 1.5)
+            return
+        }
+        urlMaker?.lat = String(lat)
+        urlMaker?.lon = String(lon)
+        print("Cordinates : ",lat, lon)
+        urlMaker?.getApiData()
+    }
     
     @IBAction func searchPressed(_ sender: UIButton) {
         searchBarSearchButtonClicked(searchBar)
     }
 }
-
 
 extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataSource{
     
@@ -79,7 +102,6 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         print("INITIAL_ROW_COUNT : ", fetchedDataList.count)
         return fetchedDataList.count
     }
@@ -97,7 +119,7 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         maskLayer.frame = CGRect(x: row.bounds.origin.x, y: row.bounds.origin.y, width: row.bounds.width, height: row.bounds.height).insetBy(dx: 10, dy: 10)
         row.layer.mask = maskLayer
         
-        print("MAKING ROWS : ", indexPath.item)
+//        print("MAKING ROWS : ", indexPath.item)
         let currentWeatherData = getBindedModel(weatherData: fetchedDataList[indexPath.item])
         row.placeLabel?.text = currentWeatherData.city
         row.tmpLabel?.text = currentWeatherData.temperature
@@ -109,9 +131,9 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         if selectedIndexSet.contains(indexPath.row) {
             row.layer.borderColor = CGColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.9)
             row.layer.borderWidth = 15
-            print("Border is selected : ", indexPath.row)
+//            print("Border is selected : ", indexPath.row)
         }else{
-            print("Border is NOT selected : ", indexPath.row)
+//            print("Border is NOT selected : ", indexPath.row)
             row.layer.borderWidth = 0
         }
         
@@ -156,7 +178,6 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
             searchBar.placeholder = "Type place name..."
             return false
         }
-        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -236,26 +257,14 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
 
 extension FirstScreenTableViewController : CLLocationManagerDelegate {
     
+   
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print(#function)
-        print(locations)
-        
-        if let locValue = locations.first?.coordinate {
-            urlMaker?.lat = String(locValue.latitude)
-            urlMaker?.lon = String(locValue.longitude)
-            
-            print("Cordinates : ",urlMaker?.lat ?? "_LAT_", urlMaker?.lon ?? "_LON_")
-            urlMaker?.getApiData()
-            
-        }else{
-            print("Cannot find the coordinates")
-        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to fetch location")
-        print(error)
-        showAlert()
+        print(#function)
     }
     
     func showAlert(){
@@ -274,7 +283,7 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         }))
         print("SHOWING ALERT")
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
-            self.urlMaker?.getApiData()
+            exit(0)
         }))
         
         present(alertController, animated: true)

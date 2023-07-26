@@ -10,8 +10,8 @@ import Foundation
 class WeatherApiHandler{
     
     var city : String?
-    var lat : String = "25.5788"
-    var lon : String = "91.8831"
+    var lat : String?
+    var lon : String?
     //    var lat : String = "23.424076"
     //    var lon : String = "53.847816"
     
@@ -20,16 +20,18 @@ class WeatherApiHandler{
     var delegates : [WeatherApiDelegate?] = [nil,nil]
     
     func getApiData(){
-        print(#function)
+        print(#function, "__START")
         var urlString = API_URL
         if let city = city {
             urlString += "&q=\(city)"
+        }else if lat == nil || lon == nil{
+            print("CANNOT get LAT and LON")
         }else{
-            urlString += "&lat=" + lat + "&lon=" + lon
+            urlString += "&lat=" + (lat ?? "LAT") + "&lon=" + (lon ?? "LON")
         }
         print(urlString)
         performRequest(urlString: urlString)
-        print(#function)
+        print(#function, "__END")
     }
     
     func performRequest(urlString : String){
@@ -41,13 +43,13 @@ class WeatherApiHandler{
             // 2. Create a url session
             
             let session = URLSession.shared
-            print(#function)
+            print(#function,"__START")
             // 3. Give the session a task
             
             let task = session.dataTask(with: url, completionHandler:  handler(data:urlResponse:error:))
             // I THINK THIS IS JUST ESCAPING, BUT I'M EXPECTING TO COMPLETE
             
-            print(#function)
+            print(#function,"__END")
             // 4. Start the task
             
             task.resume()
