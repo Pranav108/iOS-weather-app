@@ -122,6 +122,7 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
 extension FirstScreenTableViewController : UISearchBarDelegate{
     
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.resignFirstResponder()
         if searchBar.text != "" {
             return true
         }else{
@@ -171,10 +172,12 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
 extension FirstScreenTableViewController : CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        givePermission(manager)
         print(#function)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        givePermission(manager)
         print(#function)
     }
     
@@ -187,7 +190,8 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         case .restricted, .denied:
             print("PERMISSION NOT GIVEN")
             showAlert()
-        case .authorizedAlways, .authorizedWhenInUse:
+        case .authorizedAlways , .authorizedWhenInUse:
+            spinner.startAnimating()
             givePermission(manager)
         default:
             print("STATUS : UNKNOWN__DEFAULT")
@@ -198,7 +202,8 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         print("PERMISSION GIVEN")
         let location = manager.location
         guard let lat = location?.coordinate.latitude, let lon = location?.coordinate.longitude else {
-            showToast(message: "Cannot decode LAT and LON \(manager.authorizationStatus.rawValue)", seconds: 1.5)
+            locationManager.requestWhenInUseAuthorization()
+//            showToast(message: "Cannot decode LAT and LON \(manager.authorizationStatus.rawValue)", seconds: 1.5)
             return
         }
         urlMaker?.lat = String(lat)
@@ -264,12 +269,14 @@ extension FirstScreenTableViewController {
             if UIApplication.shared.canOpenURL(settingsUrl) {
                 UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
                     print("Settings opened: \(success)")
+                    self.spinner.stopAnimating()
                 })
             }
         }))
         print("SHOWING ALERT")
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
             exit(0)
+//            self.spinner.stopAnimating()
         }))
         
         present(alertController, animated: true)
