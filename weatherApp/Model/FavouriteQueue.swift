@@ -16,14 +16,12 @@ class FavouriteQueue {
         array = []
     }
 
-    func selectFavourite(havingIndex element: Int) -> Int?{
+    func selectFavourite(havingIndex element: Int) {
         print(#function, element)
-        var indexToDeselect : Int?
         if array.count == maxSize {
-            indexToDeselect = array.removeFirst()
+             array.removeLast()
         }
-        array.append(element)
-        return indexToDeselect
+        array.insert(element, at: 0)
     }
 
     func deselectFavourite(havingIndex element : Int){

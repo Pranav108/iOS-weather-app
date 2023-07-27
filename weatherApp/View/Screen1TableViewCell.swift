@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol TableReloaderDelegate{
+    func reloadTableView()
+}
+
+
 class Screen1TableViewCell: UITableViewCell {
     
     @IBOutlet weak var placeLabel: UILabel!
@@ -18,6 +23,12 @@ class Screen1TableViewCell: UITableViewCell {
     @IBOutlet weak var tempRangeLabel: UILabel!
     
     @IBOutlet weak var favButton: UIButton!
+    
+    var indexPath: Int?
+    
+    var favClickedCallback: (() -> Void)?
+    
+    var delegate : TableReloaderDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,36 +44,31 @@ class Screen1TableViewCell: UITableViewCell {
     }
     
     @IBAction func favClicked(_ sender: UIButton) {
-        print("BEFORE : ",sender.imageView?.image!)
+        print("BEFORE : ",sender.imageView?.image ?? "BEFORE IMAGE")
         
-        if let tableView = self.superview as? UITableView {
+        if let cardIndex = indexPath {
             
-            let indexPath = tableView.indexPath(for: self)
+            print("Cell's indexPath: \(String(describing: cardIndex))")
             
-            if let cardIndex = indexPath?.row {
-                print("Cell's indexPath: \(String(describing: cardIndex))")
-                if sender.currentImage == UIImage(systemName: "heart") {
-                    print("IMAGE NAME IS heart")
-                    
-                    if let indexToDeselect = favouriteWeatherList.selectFavourite(havingIndex: cardIndex) {
-                        print("indexToDeselect : ",indexToDeselect)
-                        let cellToBeUnselected = tableView.cellForRow(at: indexPath!) as! Screen1TableViewCell
-                        cellToBeUnselected.favButton.setImage(UIImage(systemName: "heart"), for: .normal)
-                    }
-                    sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                }
-                else {
-                    // make fav
-                    print("IMAGE NAME IS NOT heart")
-                    favouriteWeatherList.deselectFavourite(havingIndex: cardIndex)
-                    sender.setImage(UIImage(systemName: "heart"), for: .normal)
-                }
-               
-                print("AFTER : ",sender.imageView?.image!)
-            }else{
-                print("CANNOT get cardIndex")
+            if sender.currentImage == UIImage(systemName: "heart") {
+                
+                print("image name is HEART")
+                
+                favouriteWeatherList.selectFavourite(havingIndex: cardIndex)
+                sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                
             }
-            
+            else {
+                print("image name is HEART.FILL")
+                
+                favouriteWeatherList.deselectFavourite(havingIndex: cardIndex)
+                
+                sender.setImage(UIImage(systemName: "heart"), for: .normal)
+            }
         }
+        
+        print("AFTER : ",sender.imageView?.image! ?? "AFTER IMAGE")
+        print(favouriteWeatherList.getFavouriteList())
+        delegate?.reloadTableView()
     }
 }
