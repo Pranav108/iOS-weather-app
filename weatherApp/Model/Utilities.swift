@@ -36,6 +36,18 @@ extension WeatherApiDelegate{
     }
 }
 
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
 func spinnerSetup(spinner : UIActivityIndicatorView, parentView : UIView){
     spinner.translatesAutoresizingMaskIntoConstraints = false
     parentView.addSubview(spinner)

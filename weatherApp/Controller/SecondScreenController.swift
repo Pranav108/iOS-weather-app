@@ -28,6 +28,7 @@ class SecondScreenTableViewController : UIViewController{
         
         urlMaker?.delegates[1] = self
         
+        self.hideKeyboardWhenTappedAround()
         
         tableView.layer.cornerRadius = 10
         print(#function)

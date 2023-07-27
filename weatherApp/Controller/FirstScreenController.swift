@@ -15,6 +15,7 @@ import CoreLocation
 
 class FirstScreenTableViewController: UIViewController {
     
+    
     @IBOutlet weak var screen1TableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchButton: UIButton!
@@ -28,8 +29,18 @@ class FirstScreenTableViewController: UIViewController {
     var locationManager = CLLocationManager()
     var selectedRow = 0
     
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//            self.view.endEditing(true)
+//        }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touches..")
+        self.view.endEditing(true)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.hideKeyboardWhenTappedAround()
         
         setInitialDelegates()
         
