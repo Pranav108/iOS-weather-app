@@ -39,9 +39,7 @@ class FirstScreenTableViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.hideKeyboardWhenTappedAround()
-        
+            
         setInitialDelegates()
         
         setupInitialTableView()
@@ -132,14 +130,9 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
 
 extension FirstScreenTableViewController : UISearchBarDelegate{
     
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        if searchBar.text != "" {
-            return true
-        }else{
-            searchBar.placeholder = "Type place name..."
-            return false
-        }
+        print(#function)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -170,7 +163,12 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
             print("screen1TableView EXIST")
             DispatchQueue.main.async {
                 let indexPath = IndexPath(row: 0, section: 0)
+                self.screen1TableView.scrollToRow(at: indexPath,
+                                                  at: .top,
+                                                   animated: true)
+                self.screen1TableView.layoutIfNeeded()
                 self.screen1TableView.insertRows(at: [indexPath], with: .automatic)
+               
                 globalIndexOfSelectedRow = 0
                 self.spinner.stopAnimating()
             }
@@ -359,6 +357,5 @@ extension FirstScreenTableViewController {
         }else{
             row.layer.borderWidth = 0
         }
-        
     }
 }
