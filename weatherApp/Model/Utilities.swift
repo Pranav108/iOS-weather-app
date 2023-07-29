@@ -11,6 +11,7 @@ import UIKit
 let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric"
 
 var globalIndexOfSelectedRow = 0
+var deleteRowFrom : Int?
 
 var fetchedDataList = [WeatherDataModel]()
 var favouriteWeatherList = FavouriteQueue(size: 3)

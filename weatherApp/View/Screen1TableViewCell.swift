@@ -24,7 +24,7 @@ class Screen1TableViewCell: UITableViewCell {
     
     @IBOutlet weak var favButton: UIButton!
     
-    var indexPath: Int?
+    weak var tableView: UITableView?
     
     var favClickedCallback: (() -> Void)?
     
@@ -46,7 +46,8 @@ class Screen1TableViewCell: UITableViewCell {
     @IBAction func favClicked(_ sender: UIButton) {
         print("BEFORE : ",sender.imageView?.image ?? "BEFORE IMAGE")
         
-        if let cardIndex = indexPath {
+        if let indexPath = tableView?.indexPath(for: self) {
+            let cardIndex = indexPath.row
             
             print("Cell's indexPath: \(String(describing: cardIndex))")
             

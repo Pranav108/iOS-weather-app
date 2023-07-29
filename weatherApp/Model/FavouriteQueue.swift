@@ -38,4 +38,15 @@ class FavouriteQueue {
             array[i] += 1
         }
     }
+    func swapFavouriteWeather(forIndex index : Int){
+        
+        for i in 0..<array.count {
+            if array[i] < index{
+                array[i] += 1
+            }else if array[i] == index{
+                array[i] = 0
+            }
+        }
+        
+    }
 }

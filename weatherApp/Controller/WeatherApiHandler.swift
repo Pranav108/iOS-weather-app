@@ -12,10 +12,6 @@ class WeatherApiHandler{
     var city : String?
     var lat : String?
     var lon : String?
-    //    var lat : String = "23.424076"
-    //    var lon : String = "53.847816"
-    
-    // PROVIDING CUSTOM LOCATION SO THAT APP DOESN'T CRASH
     
     var delegates : [WeatherApiDelegate?] = [nil,nil]
     
@@ -62,8 +58,7 @@ class WeatherApiHandler{
             if let actualData = parseJson(weatherData: apiData){
                 // BIND THE DATA TO THE UI, WHEN DATA RECIEVED
                 print(#function)
-//                print(actualData)
-                fetchedDataList.insert(actualData, at: 0)
+                addWeatherUniquely(forData: actualData)
                 delegates[0]?.updateUIforFirstScreen()
                 delegates[1]?.updateUIforSecondScreen()
             }else{
@@ -84,12 +79,41 @@ class WeatherApiHandler{
         } catch{
             
             print("calling showToast")
-            DispatchQueue.main.async {
-                self.delegates[0]?.showToast(message: "City Not found", seconds: 1.2)
-            }
+            showToastMessage(forMessage: "City NOT found", forSeconds: 1.2)
             print(error)
             return nil
         }
+    }
+    
+    private func showToastMessage(forMessage msg : String,forSeconds sec : Double){
+        DispatchQueue.main.async {
+            self.delegates[0]?.showToast(message: msg, seconds: sec)
+        }
+    }
+    
+    func addWeatherUniquely(forData currentData : WeatherDataModel){
+        
+        let currentCityID = currentData.city.id
+        print(currentData.city.name)
+        for (index, data) in fetchedDataList.enumerated(){
+            
+            if currentCityID == data.city.id {
+                
+                fetchedDataList.remove(at: index)
+                fetchedDataList.insert(currentData, at: 0)
+                
+                deleteRowFrom = index
+                favouriteWeatherList.swapFavouriteWeather(forIndex : index)
+                if index == 0 {
+                    showToastMessage(forMessage: "Weather updated for \(currentData.city.name)", forSeconds: 1)
+                }
+                return
+            }else{
+                print("city name is \(data.city.name)")
+            }
+        }
+        favouriteWeatherList.slideFavList()
+        fetchedDataList.insert(currentData, at: 0)
     }
     
 }

@@ -29,21 +29,23 @@ class FirstScreenTableViewController: UIViewController {
     var locationManager = CLLocationManager()
     var selectedRow = 0
     
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//            self.view.endEditing(true)
-//        }
+    //    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    //            self.view.endEditing(true)
+    //        }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touches..")
         self.view.endEditing(true)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        
         setInitialDelegates()
         
         setupInitialTableView()
-       
+        
+        
+        
         locationManager.requestWhenInUseAuthorization()
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
@@ -81,8 +83,9 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let row = tableView.dequeueReusableCell(withIdentifier: "Screen1TableViewCell", for: indexPath) as! Screen1TableViewCell
-//        firstScreenTableViewCell?.reloaderDelegate = self
-        row.indexPath = indexPath.row
+        //        firstScreenTableViewCell?.reloaderDelegate = self
+        print("CELL IS CREATED WITH INDEXPATH : \(indexPath.row)")
+        row.tableView = screen1TableView
         row.delegate = self
         setRowLayouts(for: row,withIndex: indexPath)
         
@@ -157,20 +160,38 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
 extension FirstScreenTableViewController : WeatherApiDelegate{
     
     func updateUIforFirstScreen() {
-        favouriteWeatherList.slideFavList()
         print("CurrentWeather data in FirstScreen")
         if self.screen1TableView != nil {
             print("screen1TableView EXIST")
             DispatchQueue.main.async {
-                let indexPath = IndexPath(row: 0, section: 0)
-                self.screen1TableView.scrollToRow(at: indexPath,
-                                                  at: .top,
-                                                   animated: true)
-                self.screen1TableView.layoutIfNeeded()
-                self.screen1TableView.insertRows(at: [indexPath], with: .automatic)
-               
+                
+                self.screen1TableView.beginUpdates()
+                
+                if let moveFrom = deleteRowFrom {
+                    guard moveFrom < fetchedDataList.count, moveFrom > 0 else {
+                        //                        self.screen1TableView.reloadData()
+                        self.spinner.stopAnimating()
+                        self.screen1TableView.endUpdates()
+                        deleteRowFrom = nil
+                        return
+                    }
+                    self.screen1TableView.moveRow(at: IndexPath(item: moveFrom, section: 0), to: IndexPath(row: 0, section: 0))
+                    
+                    deleteRowFrom = nil
+                    
+                }else{
+                    let indexPathToBeAdded = IndexPath(row: 0, section: 0)
+                    self.screen1TableView.insertRows(at: [indexPathToBeAdded], with: .automatic)
+                    self.screen1TableView.endUpdates()
+                    
+                    self.screen1TableView.scrollToRow(at: indexPathToBeAdded,
+                                                      at: .top,
+                                                      animated: true)
+                }
+                self.screen1TableView.endUpdates()
                 globalIndexOfSelectedRow = 0
                 self.spinner.stopAnimating()
+                print("FavList : \(favouriteWeatherList.getFavouriteList())")
             }
         }else{
             print("screen1TableView doesn't EXIST")
@@ -212,7 +233,7 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         let location = manager.location
         guard let lat = location?.coordinate.latitude, let lon = location?.coordinate.longitude else {
             locationManager.requestWhenInUseAuthorization()
-//            showToast(message: "Cannot decode LAT and LON \(manager.authorizationStatus.rawValue)", seconds: 1.5)
+            //            showToast(message: "Cannot decode LAT and LON \(manager.authorizationStatus.rawValue)", seconds: 1.5)
             return
         }
         urlMaker?.lat = String(lat)
@@ -238,7 +259,7 @@ func getBindedModel(weatherData : WeatherDataModel) -> Screen1DataModel{
 
 extension FirstScreenTableViewController {
     
-    func setupInitialTableView(){
+    private func setupInitialTableView(){
         let defaults = UserDefaults.standard
         if let savedData = defaults.data(forKey: "favouritePlaces") {
             do {
@@ -247,7 +268,7 @@ extension FirstScreenTableViewController {
                 let decodedData = try decoder.decode([WeatherDataModel].self, from: savedData)
                 
                 fetchedDataList = decodedData
-               
+                
                 for index in stride(from: fetchedDataList.count - 1, through: 0, by: -1) {
                     favouriteWeatherList.selectFavourite(havingIndex: index)
                 }
@@ -285,7 +306,7 @@ extension FirstScreenTableViewController {
         print("SHOWING ALERT")
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
             exit(0)
-//            self.spinner.stopAnimating()
+            //            self.spinner.stopAnimating()
         }))
         
         present(alertController, animated: true)
@@ -303,7 +324,7 @@ extension FirstScreenTableViewController {
         }
     }
     
-    func bindCellData(withData currentWeatherData : Screen1DataModel, for row : Screen1TableViewCell){
+    private func bindCellData(withData currentWeatherData : Screen1DataModel, for row : Screen1TableViewCell){
         row.placeLabel?.text = currentWeatherData.city
         row.tmpLabel?.text = currentWeatherData.temperature
         row.infoLabel?.text = currentWeatherData.description
@@ -311,16 +332,16 @@ extension FirstScreenTableViewController {
         row.backgroundView = UIImageView(image: UIImage(named: currentWeatherData.imageName))
     }
     
-    func setInitialDelegates(){
+    private func setInitialDelegates(){
         screen1TableView.delegate = self
         screen1TableView.dataSource = self
         searchBar.delegate = self
         locationManager.delegate = self
         urlMaker?.delegates[0] = self
-//        firstScreenTableViewCell?.delegate = self
+        //        firstScreenTableViewCell?.delegate = self
     }
     
-    func setupHeaderView(){
+    private func setupHeaderView(){
         reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: screen1TableView.frame.width, height: screen1TableView.frame.height))
         
         view.addSubview(reusableHeader!)
@@ -331,7 +352,7 @@ extension FirstScreenTableViewController {
         ])
         
     }
-    func setupSearchBarView(){
+    private func setupSearchBarView(){
         self.searchBar.placeholder = "Search here"
         
         let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UISearchTextField
@@ -343,7 +364,7 @@ extension FirstScreenTableViewController {
         
     }
     
-    func setRowLayouts(for row : Screen1TableViewCell, withIndex indexPath: IndexPath){
+    private func setRowLayouts(for row : Screen1TableViewCell, withIndex indexPath: IndexPath){
         row.selectionStyle = .none
         let maskLayer = CALayer()
         maskLayer.cornerRadius = 5

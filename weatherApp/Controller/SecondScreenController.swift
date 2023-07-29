@@ -28,18 +28,8 @@ class SecondScreenTableViewController : UIViewController{
         
         urlMaker?.delegates[1] = self
         
-        tableView.layer.cornerRadius = 10
         print(#function)
-        
-        reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: tableView.frame.width, height: tableView.frame.height))
-//        reusableHeader?.backgroundColor = .green
-        
-        view.addSubview(reusableHeader!)
-        
-        NSLayoutConstraint.activate([
-            reusableHeader!.bottomAnchor.constraint(equalTo: tableView.topAnchor,constant: -20),
-        ])
-        spinnerSetup(spinner: spinner, parentView: view)
+        setupHeaderView()
         
         updateUIforSecondScreen()
         
@@ -69,36 +59,32 @@ extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataS
         
         row.collectionView?.tag = indexPath.item
         
-//        print("ROW is created : ", indexPath.item)
-        let data = screen2DataForBinding?[indexPath.item]
-        row.weatherLogo.image = UIImage(named: data?.icon ?? "Clear")
-        row.dayLabel.text = data?.day ?? "TODAY"
-        row.humidityLabel.text = data?.humidity ?? "00"
-        row.feelsLikeLabel.text = data?.feelsLike ?? "00"
-        // THIS DATA IS NOT CONSISTENT
+        if let data = screen2DataForBinding?[indexPath.item] {
+            bindCellData(forRow : row, withData : data)
+        }
         
-        row.selectionStyle = .none
-        row.animate()
-        row.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        let maskLayer = CALayer()
-        maskLayer.cornerRadius = 5
-        maskLayer.backgroundColor = UIColor.black.cgColor
-        maskLayer.frame = CGRect(x: row.bounds.origin.x, y: row.bounds.origin.y, width: row.bounds.width, height: row.bounds.height).insetBy(dx: 16, dy: 10)
-        row.layer.mask = maskLayer
-        
+        giveBorders(toRow: row)
         return row
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var indexPathList = [IndexPath]()
+        
+        for el in expandedIndexSet{
+            indexPathList.append(IndexPath(row: el, section: 0))
+        }
+        
         if(expandedIndexSet.contains(indexPath.row)){
-            expandedIndexSet.remove(indexPath.row)
+            expandedIndexSet.removeAll()
         } else {
             // if the cell is not expanded, add it to the indexset to expand it
+            expandedIndexSet.removeAll()
             expandedIndexSet.insert(indexPath.row)
+            indexPathList.append(indexPath)
         }
         
         tableView.beginUpdates()
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.reloadRows(at: indexPathList, with: .automatic)
         tableView.endUpdates()
     }
     
@@ -119,9 +105,9 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
         DispatchQueue.main.async{
             self.spinner.startAnimating()
         }
-//        let indexOfSelectedRow = userDefault.integer(forKey: "indexOfSelectedRow")
+        //        let indexOfSelectedRow = userDefault.integer(forKey: "indexOfSelectedRow")
         
-//        print("indexOfSelectedRow : ", globalIndexOfSelectedRow)
+        //        print("indexOfSelectedRow : ", globalIndexOfSelectedRow)
         
         let weatherData : WeatherDataModel
         if (fetchedDataList.count > globalIndexOfSelectedRow) {
@@ -186,3 +172,31 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
     }
 }
 
+extension SecondScreenTableViewController {
+    private func bindCellData(forRow row : SecondScreenTableViewCell, withData data : Screen2DataModel){
+        row.weatherLogo.image = UIImage(named: data.icon )
+        row.dayLabel.text = data.day
+        row.humidityLabel.text = data.humidity
+        row.feelsLikeLabel.text = data.feelsLike
+    }
+    private func giveBorders(toRow row : SecondScreenTableViewCell){
+        row.selectionStyle = .none
+        row.animate()
+        row.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        let maskLayer = CALayer()
+        maskLayer.cornerRadius = 5
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.frame = CGRect(x: row.bounds.origin.x, y: row.bounds.origin.y, width: row.bounds.width, height: row.bounds.height).insetBy(dx: 16, dy: 10)
+        row.layer.mask = maskLayer
+    }
+    private func setupHeaderView(){
+        reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: tableView.frame.width, height: tableView.frame.height))
+        
+        view.addSubview(reusableHeader!)
+        
+        NSLayoutConstraint.activate([
+            reusableHeader!.bottomAnchor.constraint(equalTo: tableView.topAnchor,constant: -20),
+        ])
+        spinnerSetup(spinner: spinner, parentView: view)
+    }
+}
