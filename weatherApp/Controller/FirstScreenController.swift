@@ -44,8 +44,6 @@ class FirstScreenTableViewController: UIViewController {
         
         setupInitialTableView()
         
-        
-        
         locationManager.requestWhenInUseAuthorization()
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
@@ -69,7 +67,6 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
             self.screen1TableView.reloadData()
         }
     }
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -120,6 +117,31 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         
         let indexData : [String: Int] = ["Index": 1]
         NotificationCenter.default.post(name: Notification.Name("changeIndex"), object: nil,userInfo: indexData)
+    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+            completionHandler(true)
+        }
+        
+        deleteAction.image = UIImage(systemName: "trash")?.withTintColor(.red, renderingMode: .alwaysOriginal)
+        deleteAction.backgroundColor = .systemGray4
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            fetchedDataList.remove(at: indexPath.row)
+            favouriteWeatherList.deselectFavourite(havingIndex: indexPath.row)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

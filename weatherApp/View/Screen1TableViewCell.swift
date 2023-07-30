@@ -14,6 +14,9 @@ protocol TableReloaderDelegate{
 
 class Screen1TableViewCell: UITableViewCell {
     
+    
+    @IBOutlet weak var outerView: UIView!
+    
     @IBOutlet weak var placeLabel: UILabel!
     
     @IBOutlet weak var tmpLabel: UILabel!
