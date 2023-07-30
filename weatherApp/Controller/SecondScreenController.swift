@@ -7,13 +7,13 @@
 
 import UIKit
 
-var screen2DataForBinding : [Screen2DataModel]?
+var screen2DataForBinding = [Screen2DataModel]()
 
 class SecondScreenTableViewController : UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
     
-    var spinner = UIActivityIndicatorView(style: .large)
+    var backgroundView: BackgroundView!
     
     var urlMaker : WeatherApiHandler?
     
@@ -27,6 +27,10 @@ class SecondScreenTableViewController : UIViewController{
         tableView.dataSource = self
         
         urlMaker?.delegates[1] = self
+        
+        backgroundView = BackgroundView()
+        backgroundView.imageWithName(as: "empty-box")
+        tableView.backgroundView = backgroundView
         
         print(#function)
         setupHeaderView()
@@ -44,14 +48,12 @@ class SecondScreenTableViewController : UIViewController{
 
 extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var rowCount = 0
-        if screen2DataForBinding != nil{
-            rowCount = (screen2DataForBinding?.count ?? 10)
-            print("screen2DataForBinding is NOT nill")
-        }
-        print("number_Of_Rows_In_Section : ",rowCount)
-        return rowCount
         
+        let rowCount = screen2DataForBinding.count
+       
+        tableView.backgroundView?.isHidden = rowCount > 0
+        
+        return rowCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,9 +61,9 @@ extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataS
         
         row.collectionView?.tag = indexPath.item
         
-        if let data = screen2DataForBinding?[indexPath.item] {
+        let data = screen2DataForBinding[indexPath.item]
             bindCellData(forRow : row, withData : data)
-        }
+        
         
         giveBorders(toRow: row)
         return row
@@ -102,24 +104,14 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
     func updateUIforSecondScreen() {
         expandedIndexSet.removeAll()
         print("CurrentWeather data in SecondScreen")
-        DispatchQueue.main.async{
-            self.spinner.startAnimating()
-        }
-        //        let indexOfSelectedRow = userDefault.integer(forKey: "indexOfSelectedRow")
-        
-        //        print("indexOfSelectedRow : ", globalIndexOfSelectedRow)
-        
+
         let weatherData : WeatherDataModel
         if (fetchedDataList.count > globalIndexOfSelectedRow) {
             weatherData = fetchedDataList[globalIndexOfSelectedRow]
+            screen2DataForBinding = getForecastHourlyData(weatherData)
         }else{
-            print("Cannot find fetchedDataList")
-            return
+            screen2DataForBinding.removeAll()
         }
-        
-        screen2DataForBinding = getForecastHourlyData(weatherData)
-        
-        print(#function, "SecondScreen")
         
         reloadUIForSecondScreen()
     }
@@ -153,22 +145,20 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
     }
     
     func reloadUIForSecondScreen(){
-        if screen2DataForBinding != nil{
-            if self.tableView != nil {
-                print("tableView EXIST")
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    print("TABLE VIEW RELOADED")
-                    self.spinner.stopAnimating()
-                }
-            }else{
-                print("tableView doesn't EXIST")
+        if self.tableView != nil {
+            print("tableView EXIST")
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                print("TABLE VIEW RELOADED")
             }
         }else{
-            print(#function, "cannot find screen2DataForBinding data")
+            print("tableView doesn't EXIST")
         }
-        
-        self.reusableHeader!.binddataToCard(withText: screen2DataForBinding?[0].city ?? "CITY_NAME")
+        var textToBind = "Nothing to show"
+        if screen2DataForBinding.count > 0 {
+            textToBind = screen2DataForBinding[0].city
+        }
+        self.reusableHeader!.binddataToCard(withText: textToBind)
     }
 }
 
@@ -197,6 +187,5 @@ extension SecondScreenTableViewController {
         NSLayoutConstraint.activate([
             reusableHeader!.bottomAnchor.constraint(equalTo: tableView.topAnchor,constant: -20),
         ])
-        spinnerSetup(spinner: spinner, parentView: view)
     }
 }

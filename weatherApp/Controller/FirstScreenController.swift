@@ -26,6 +26,7 @@ class FirstScreenTableViewController: UIViewController {
     var urlMaker : WeatherApiHandler?
     var selectedIndexSet : IndexSet = []
     var reusableHeader : ReusableHeader?
+    var backgroundView: BackgroundView!
     var locationManager = CLLocationManager()
     var selectedRow = 0
     
@@ -39,11 +40,15 @@ class FirstScreenTableViewController: UIViewController {
         
         setInitialDelegates()
         
+        backgroundView = BackgroundView()
+        screen1TableView.backgroundView = backgroundView
+        
         setupInitialTableView()
         
         locationManager.requestWhenInUseAuthorization()
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
+        
         setupHeaderView()
         
         setupSearchBarView()
@@ -71,7 +76,11 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("INITIAL_ROW_COUNT : ", fetchedDataList.count)
-        return fetchedDataList.count
+        let rowCount = fetchedDataList.count
+        
+        tableView.backgroundView?.isHidden = rowCount > 0
+        
+        return rowCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -113,7 +122,6 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         tableView.reloadData()
         tableView.endUpdates()
         
-        
         let indexData : [String: Int] = ["Index": 1]
         NotificationCenter.default.post(name: Notification.Name("changeIndex"), object: nil,userInfo: indexData)
     }
@@ -138,10 +146,6 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         print(#function)
         return true
-    }
-    
-    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        return proposedDestinationIndexPath
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -221,12 +225,12 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
 extension FirstScreenTableViewController : CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        givePermission(manager)
+        getLocationData(locations.last)
         print(#function)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        givePermission(manager)
+        getLocationData(manager.location)
         print(#function)
     }
     
@@ -239,19 +243,20 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         case .restricted, .denied:
             print("PERMISSION NOT GIVEN")
             showAlert()
-        case .authorizedAlways , .authorizedWhenInUse:
-            givePermission(manager)
+        case .authorizedAlways :
+            getLocationData(manager.location)
+        case .authorizedWhenInUse :
+            locationManager.requestLocation()
         default:
             print("STATUS : UNKNOWN__DEFAULT")
         }
     }
     
-    func givePermission(_ manager: CLLocationManager){
+    func getLocationData(_ location: CLLocation?){
         print("PERMISSION GIVEN")
-        let location = manager.location
         guard let lat = location?.coordinate.latitude, let lon = location?.coordinate.longitude else {
-            locationManager.requestWhenInUseAuthorization()
-            showToast(message: "Cannot decode LAT and LON \(manager.authorizationStatus.rawValue)", seconds: 1.5)
+            showToast(message: "Unable to get location", seconds: 1.5)
+            spinner.stopAnimating()
             return
         }
         urlMaker?.lat = String(lat)
@@ -259,8 +264,6 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         print("Cordinates : ",lat, lon)
         urlMaker?.getApiData()
     }
-    
-    
 }
 
 func getBindedModel(weatherData : WeatherDataModel) -> Screen1DataModel{
@@ -323,7 +326,7 @@ extension FirstScreenTableViewController {
         }))
         print("SHOWING ALERT")
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
-            exit(0)
+            self.spinner.stopAnimating()
         }))
         
         present(alertController, animated: true)

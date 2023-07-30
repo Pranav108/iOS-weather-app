@@ -53,7 +53,7 @@ extension SecondScreenTableViewCell : UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SecondScreenCollectionViewCell", for: indexPath) as! SecondScreenCollectionViewCell
         
-        let hourlyData = screen2DataForBinding?[collectionView.tag].hourlyData
+        let hourlyData = screen2DataForBinding[collectionView.tag].hourlyData
         
         print("CELL is created : ", collectionView.tag, indexPath.item)
         
@@ -65,8 +65,8 @@ extension SecondScreenTableViewCell : UICollectionViewDelegate, UICollectionView
         cell.layer.mask = maskLayer
         
         
-        cell.tempLabel.text = hourlyData?[indexPath.item].temperature ?? "TEMP"
-        cell.timeLabel.text = hourlyData?[indexPath.item].time ?? "TIME"
+        cell.tempLabel.text = hourlyData[indexPath.item].temperature
+        cell.timeLabel.text = hourlyData[indexPath.item].time
 
         return cell
     }
