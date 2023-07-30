@@ -39,7 +39,6 @@ class FavouriteQueue {
         }
     }
     func swapFavouriteWeather(forIndex index : Int){
-        
         for i in 0..<array.count {
             if array[i] < index{
                 array[i] += 1
@@ -47,6 +46,15 @@ class FavouriteQueue {
                 array[i] = 0
             }
         }
-        
+    }
+    func deleteRow(withIndex index : Int){
+        print(#function," BEFOFRE ", array, index)
+        for i in 0..<array.count {
+            if array[i] > index{
+                array[i] -= 1
+            }
+        }
+        deselectFavourite(havingIndex: index)
+        print(#function," AFTER ", array)
     }
 }

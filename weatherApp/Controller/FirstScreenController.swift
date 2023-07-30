@@ -29,9 +29,6 @@ class FirstScreenTableViewController: UIViewController {
     var locationManager = CLLocationManager()
     var selectedRow = 0
     
-    //    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-    //            self.view.endEditing(true)
-    //        }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("touches..")
         self.view.endEditing(true)
@@ -112,7 +109,9 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         
         selectedRow = indexPath.row
         globalIndexOfSelectedRow = indexPath.row
+        tableView.beginUpdates()
         tableView.reloadData()
+        tableView.endUpdates()
         
         
         let indexData : [String: Int] = ["Index": 1]
@@ -120,37 +119,35 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+            fetchedDataList.remove(at: indexPath.row)
+            favouriteWeatherList.deleteRow(withIndex: indexPath.row)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
             completionHandler(true)
         }
         
         deleteAction.image = UIImage(systemName: "trash")?.withTintColor(.red, renderingMode: .alwaysOriginal)
         deleteAction.backgroundColor = .systemGray4
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        print(#function)
         return configuration
     }
     
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        print(#function)
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-            // handle delete (by removing the data from your array and updating the tableview)
-            fetchedDataList.remove(at: indexPath.row)
-            favouriteWeatherList.deselectFavourite(havingIndex: indexPath.row)
-            tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            tableView.endUpdates()
-        }
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        return proposedDestinationIndexPath
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
-    }
 }
 
 extension FirstScreenTableViewController : UISearchBarDelegate{
@@ -243,7 +240,6 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
             print("PERMISSION NOT GIVEN")
             showAlert()
         case .authorizedAlways , .authorizedWhenInUse:
-            spinner.startAnimating()
             givePermission(manager)
         default:
             print("STATUS : UNKNOWN__DEFAULT")
@@ -255,7 +251,7 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         let location = manager.location
         guard let lat = location?.coordinate.latitude, let lon = location?.coordinate.longitude else {
             locationManager.requestWhenInUseAuthorization()
-            //            showToast(message: "Cannot decode LAT and LON \(manager.authorizationStatus.rawValue)", seconds: 1.5)
+            showToast(message: "Cannot decode LAT and LON \(manager.authorizationStatus.rawValue)", seconds: 1.5)
             return
         }
         urlMaker?.lat = String(lat)
@@ -328,7 +324,6 @@ extension FirstScreenTableViewController {
         print("SHOWING ALERT")
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
             exit(0)
-            //            self.spinner.stopAnimating()
         }))
         
         present(alertController, animated: true)
