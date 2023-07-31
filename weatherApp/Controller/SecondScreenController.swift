@@ -21,6 +21,8 @@ class SecondScreenTableViewController : UIViewController{
     
     var expandedIndexSet : IndexSet = []
     
+    var indexOfSelectedRow = 0
+    
     override func viewDidLoad() {
         
         tableView.delegate = self
@@ -43,6 +45,9 @@ class SecondScreenTableViewController : UIViewController{
         
         print(#function, "SecondScreen")
         updateUIforSecondScreen()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        indexOfSelectedRow = 0
     }
 }
 
@@ -106,8 +111,8 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
         print("CurrentWeather data in SecondScreen")
 
         let weatherData : WeatherDataModel
-        if (fetchedDataList.count > globalIndexOfSelectedRow) {
-            weatherData = fetchedDataList[globalIndexOfSelectedRow]
+        if (fetchedDataList.count > indexOfSelectedRow) {
+            weatherData = fetchedDataList[indexOfSelectedRow]
             screen2DataForBinding = getForecastHourlyData(weatherData)
         }else{
             screen2DataForBinding.removeAll()

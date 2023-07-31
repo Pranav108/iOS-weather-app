@@ -30,11 +30,6 @@ class FirstScreenTableViewController: UIViewController {
     var locationManager = CLLocationManager()
     var selectedRow = 0
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touches..")
-        self.view.endEditing(true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +49,10 @@ class FirstScreenTableViewController: UIViewController {
         setupSearchBarView()
         
         spinnerSetup(spinner: spinner, parentView: view)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        searchBar.resignFirstResponder()
     }
     
     @IBAction func searchPressed(_ sender: UIButton) {
@@ -117,13 +116,17 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         }
         
         selectedRow = indexPath.row
-        globalIndexOfSelectedRow = indexPath.row
         tableView.beginUpdates()
         tableView.reloadData()
         tableView.endUpdates()
         
-        let indexData : [String: Int] = ["Index": 1]
-        NotificationCenter.default.post(name: Notification.Name("changeIndex"), object: nil,userInfo: indexData)
+        if let tabBarController = self.tabBarController,
+        let viewControllers = tabBarController.viewControllers,
+           let secondViewController = viewControllers[1] as? SecondScreenTableViewController {
+            secondViewController.indexOfSelectedRow = indexPath.row
+            tabBarController.selectedIndex = 1
+        }
+        
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
@@ -212,7 +215,6 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
                                                       animated: true)
                 }
                 self.screen1TableView.endUpdates()
-                globalIndexOfSelectedRow = 0
                 self.spinner.stopAnimating()
                 print("FavList : \(favouriteWeatherList.getFavouriteList())")
             }

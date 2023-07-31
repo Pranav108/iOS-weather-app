@@ -52,8 +52,6 @@
 		2FE9E1782A6D71E3009CB409 /* SecondScreenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE9E1772A6D71E3009CB409 /* SecondScreenTableViewCell.swift */; };
 		2FE9E17A2A6D71FE009CB409 /* SecondScreenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE9E1792A6D71FE009CB409 /* SecondScreenCollectionViewCell.swift */; };
 		2FE9E17C2A6D7B02009CB409 /* Screen1DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE9E17B2A6D7B02009CB409 /* Screen1DataModel.swift */; };
-		2FF0CCCC2A6E50D300F06705 /* ReusableSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF0CCCB2A6E50D300F06705 /* ReusableSpinner.swift */; };
-		2FF0CCF42A6FA6F500F06705 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF0CCF32A6FA6F500F06705 /* TabBarController.swift */; };
 		2FF0CCF62A6FABCC00F06705 /* Rain.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF0CCF52A6FABCC00F06705 /* Rain.png */; };
 /* End PBXBuildFile section */
 
@@ -105,8 +103,6 @@
 		2FE9E1772A6D71E3009CB409 /* SecondScreenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondScreenTableViewCell.swift; sourceTree = "<group>"; };
 		2FE9E1792A6D71FE009CB409 /* SecondScreenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondScreenCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FE9E17B2A6D7B02009CB409 /* Screen1DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen1DataModel.swift; sourceTree = "<group>"; };
-		2FF0CCCB2A6E50D300F06705 /* ReusableSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableSpinner.swift; sourceTree = "<group>"; };
-		2FF0CCF32A6FA6F500F06705 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		2FF0CCF52A6FABCC00F06705 /* Rain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rain.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -164,7 +160,6 @@
 				2F612CB62A5BEA6F00562080 /* LaunchScreen.storyboard */,
 				2FCEB84B2A63001700A32D82 /* ReusableHeader.swift */,
 				2F6E28C92A67B56200E508C8 /* ToastLabel.swift */,
-				2FF0CCCB2A6E50D300F06705 /* ReusableSpinner.swift */,
 				2FBBE93D2A76E4A30033A609 /* placeholderImage.swift */,
 			);
 			path = View;
@@ -224,7 +219,6 @@
 				2FE4C3142A5F315800A19784 /* WeatherApiHandler.swift */,
 				2F612CD02A5C322500562080 /* FirstScreenController.swift */,
 				2F0163912A5D65C000D853F6 /* SecondScreenController.swift */,
-				2FF0CCF32A6FA6F500F06705 /* TabBarController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -358,9 +352,7 @@
 				2F612CAC2A5BEA6E00562080 /* AppDelegate.swift in Sources */,
 				2F6E28CA2A67B56200E508C8 /* ToastLabel.swift in Sources */,
 				2F612CD12A5C322500562080 /* FirstScreenController.swift in Sources */,
-				2FF0CCF42A6FA6F500F06705 /* TabBarController.swift in Sources */,
 				2FCEB84C2A63001700A32D82 /* ReusableHeader.swift in Sources */,
-				2FF0CCCC2A6E50D300F06705 /* ReusableSpinner.swift in Sources */,
 				2FE9D5B42A5FDB69000D67DF /* WeatherElement.swift in Sources */,
 				2F612CAE2A5BEA6E00562080 /* SceneDelegate.swift in Sources */,
 				2FE9D5BA2A6079D4000D67DF /* Utilities.swift in Sources */,

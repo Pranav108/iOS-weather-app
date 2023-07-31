@@ -10,7 +10,6 @@ import UIKit
 
 let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric"
 
-var globalIndexOfSelectedRow = 0
 var deleteRowFrom : Int?
 
 var fetchedDataList = [WeatherDataModel]()
@@ -57,37 +56,3 @@ func spinnerSetup(spinner : UIActivityIndicatorView, parentView : UIView){
     ])
     spinner.color = .darkGray
 }
-
-//            PlaceLoactionModel
-
-//            name : String
-//            main : MainWeatherContent
-//            weather : [WeatherElement]
-//
-//            MainWeatherContent
-//            temp : Float
-//            temp_min : Float
-//            temp_max : Float
-//            humidity : Int
-//            tempRangeString : String
-//
-//            [WeatherElement]
-//            id : Int
-//            main : String
-//            description : String
-//            icon : String
-
-
-//            CurrentLocationModel
-
-//            list : [TimeStampData]
-//            city : City
-//
-//            City
-//            name : String
-//
-//            [TimeStampData]
-//            dt_txt : String
-//            main : MainWeatherContent
-//            weather : [WeatherElement]
-//
