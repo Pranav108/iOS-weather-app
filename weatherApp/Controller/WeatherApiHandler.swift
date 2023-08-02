@@ -13,6 +13,8 @@ class WeatherApiHandler{
     var lat : String?
     var lon : String?
     
+    private var deleteRowFrom : Int?
+    
     var delegates : [WeatherApiDelegate?] = [nil,nil]
     
     func getApiData(){
@@ -58,13 +60,15 @@ class WeatherApiHandler{
             if let actualData = parseJson(weatherData: apiData){
                 // BIND THE DATA TO THE UI, WHEN DATA RECIEVED
                 print(#function)
+                deleteRowFrom = nil
                 addWeatherUniquely(forData: actualData)
-                delegates[0]?.updateUIforFirstScreen()
+                delegates[0]?.updateUIforFirstScreen(deleteRowFrom : deleteRowFrom)
                 delegates[1]?.updateUIforSecondScreen()
             }else{
                 print("CANNOT GET PARSED_DATA")
             }
         }else {
+            showToastMessage(forMessage: "Internet  connection needed", forSeconds: 1.2)
             print("ERROR FROM HANDLER : ",error!)
         }
         
@@ -85,17 +89,17 @@ class WeatherApiHandler{
         }
     }
     
-    private func showToastMessage(forMessage msg : String,forSeconds sec : Double){
+    private func showToastMessage(forMessage msg : String,forSeconds sec : Double) {
         DispatchQueue.main.async {
             self.delegates[0]?.showToast(message: msg, seconds: sec)
         }
     }
     
-    func addWeatherUniquely(forData currentData : WeatherDataModel){
+    func addWeatherUniquely(forData currentData : WeatherDataModel) {
         
         let currentCityID = currentData.city.id
         print(currentData.city.name)
-        for (index, data) in fetchedDataList.enumerated(){
+        for (index, data) in fetchedDataList.enumerated() {
             
             if currentCityID == data.city.id {
                 
@@ -104,16 +108,16 @@ class WeatherApiHandler{
                 
                 deleteRowFrom = index
                 favouriteWeatherList.swapFavouriteWeather(forIndex : index)
-                if index == 0 {
-                    showToastMessage(forMessage: "Weather updated for \(currentData.city.name)", forSeconds: 1)
-                }
-                return
+                break
             }else{
                 print("city name is \(data.city.name)")
             }
         }
-        favouriteWeatherList.slideFavList()
-        fetchedDataList.insert(currentData, at: 0)
+        if deleteRowFrom == nil {
+            favouriteWeatherList.slideFavList()
+            fetchedDataList.insert(currentData, at: 0)
+        }
+        
     }
     
 }

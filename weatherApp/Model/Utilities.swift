@@ -8,21 +8,20 @@
 import Foundation
 import UIKit
 
-let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric"
-
-var deleteRowFrom : Int?
+let API_KEY = "c79b6cb39826aca9755ade5999cd13bd"
+let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=\(API_KEY)&units=metric"
 
 var fetchedDataList = [WeatherDataModel]()
 var favouriteWeatherList = FavouriteQueue(size: 3)
 
 protocol WeatherApiDelegate{
-    func updateUIforFirstScreen()
+    func updateUIforFirstScreen(deleteRowFrom : Int?)
     func updateUIforSecondScreen()
     func showToast(message : String, seconds : Double)
 }
 
 extension WeatherApiDelegate{
-    func updateUIforFirstScreen(){
+    func updateUIforFirstScreen(deleteRowFrom : Int? = nil){
         print("Default Inplementation of updateUIforFirstScreen")
     }
     func updateUIforSecondScreen(){

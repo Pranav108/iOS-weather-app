@@ -37,8 +37,6 @@ class SecondScreenTableViewController : UIViewController{
         print(#function)
         setupHeaderView()
         
-        updateUIforSecondScreen()
-        
     }
     // viewWillAppear might be called before loading the data of requerst from viewDidLoad
     override func viewWillAppear(_ animated: Bool) {
@@ -119,6 +117,10 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
         }
         
         reloadUIForSecondScreen()
+    }
+    
+    func updateUIforFirstScreen(deleteRowFrom: Int?) {
+        print("DUMMY CALLER")
     }
     
     func getForecastHourlyData(_ weatherData: WeatherDataModel) -> [Screen2DataModel]{

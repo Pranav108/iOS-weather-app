@@ -27,17 +27,39 @@ class Screen1TableViewCell: UITableViewCell {
     
     @IBOutlet weak var favButton: UIButton!
     
-    weak var tableView: UITableView?
+    private var selectedRow : Int? // why I'm able to recover this , even after reloading tableView
     
-    var favClickedCallback: (() -> Void)?
+    static var selectedIndexSet : IndexSet = []
+    
+    weak var tableView: UITableView?
     
     var delegate : TableReloaderDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        //        layoutMargins = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
+        selectionStyle = .none
+    }
+    
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: self.layer)
+        let maskLayer = CALayer()
+        maskLayer.cornerRadius = 10
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.frame = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: frame.width, height: frame.height).insetBy(dx: 5, dy: 5)
+        self.layer.mask = maskLayer
         
+        print(#function)
+        
+        if let selectedRow = selectedRow {
+            print("index path found ", selectedRow)
+            
+            if Screen1TableViewCell.selectedIndexSet.contains(selectedRow) {
+                layer.borderColor = CGColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.9)
+                layer.borderWidth = 10
+            }else{
+                layer.borderWidth = 0
+            }
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -46,8 +68,14 @@ class Screen1TableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func togggleSelection(for rowIndex : Int){
+        
+        selectedRow = rowIndex
+        Screen1TableViewCell.selectedIndexSet.removeAll()
+        Screen1TableViewCell.selectedIndexSet.insert(rowIndex)
+    }
+    
     @IBAction func favClicked(_ sender: UIButton) {
-        print("BEFORE : ",sender.imageView?.image ?? "BEFORE IMAGE")
         
         if let indexPath = tableView?.indexPath(for: self) {
             let cardIndex = indexPath.row
@@ -55,23 +83,16 @@ class Screen1TableViewCell: UITableViewCell {
             print("Cell's indexPath: \(String(describing: cardIndex))")
             
             if sender.currentImage == UIImage(systemName: "heart") {
-                
-                print("image name is HEART")
-                
                 favouriteWeatherList.selectFavourite(havingIndex: cardIndex)
                 sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
                 
             }
             else {
-                print("image name is HEART.FILL")
-                
                 favouriteWeatherList.deselectFavourite(havingIndex: cardIndex)
                 
                 sender.setImage(UIImage(systemName: "heart"), for: .normal)
             }
         }
-        
-        print("AFTER : ",sender.imageView?.image! ?? "AFTER IMAGE")
         print(favouriteWeatherList.getFavouriteList())
         delegate?.reloadTableView()
     }

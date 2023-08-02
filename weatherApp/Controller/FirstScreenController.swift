@@ -24,7 +24,7 @@ class FirstScreenTableViewController: UIViewController {
     
     var spinner = UIActivityIndicatorView(style: .large)
     var urlMaker : WeatherApiHandler?
-    var selectedIndexSet : IndexSet = []
+    
     var reusableHeader : ReusableHeader?
     var backgroundView: BackgroundView!
     var locationManager = CLLocationManager()
@@ -89,7 +89,7 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         print("CELL IS CREATED WITH INDEXPATH : \(indexPath.row)")
         row.tableView = screen1TableView
         row.delegate = self
-        setRowLayouts(for: row,withIndex: indexPath)
+        //        setRowLayouts(for: row,withIndex: indexPath)
         
         let currentWeatherData = getBindedModel(weatherData: fetchedDataList[indexPath.item])
         
@@ -108,20 +108,13 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if(selectedIndexSet.contains(indexPath.row)){
-            selectedIndexSet.removeAll()
-        } else {
-            selectedIndexSet.removeAll()
-            selectedIndexSet.insert(indexPath.row)
-        }
+        let row  = tableView.cellForRow(at: indexPath) as! Screen1TableViewCell
+        row.togggleSelection(for : indexPath.row)
         
         selectedRow = indexPath.row
-        tableView.beginUpdates()
-        tableView.reloadData()
-        tableView.endUpdates()
         
         if let tabBarController = self.tabBarController,
-        let viewControllers = tabBarController.viewControllers,
+           let viewControllers = tabBarController.viewControllers,
            let secondViewController = viewControllers[1] as? SecondScreenTableViewController {
             secondViewController.indexOfSelectedRow = indexPath.row
             tabBarController.selectedIndex = 1
@@ -167,7 +160,7 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         spinner.startAnimating()
         print("SEARCHED BUTTON IS CLICKED")
-        selectedIndexSet.removeAll()
+        Screen1TableViewCell.selectedIndexSet.removeAll()
         screen1TableView.reloadRows(at: [IndexPath(item: selectedRow, section: 0)], with: .automatic)
         
         searchBar.endEditing(true)
@@ -185,88 +178,38 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
 
 extension FirstScreenTableViewController : WeatherApiDelegate{
     
-    func updateUIforFirstScreen() {
+    func updateUIforFirstScreen(deleteRowFrom : Int? ){
         print("CurrentWeather data in FirstScreen")
-        if self.screen1TableView != nil {
-            print("screen1TableView EXIST")
-            DispatchQueue.main.async {
-                
-                self.screen1TableView.beginUpdates()
-                
-                if let moveFrom = deleteRowFrom {
-                    guard moveFrom < fetchedDataList.count, moveFrom > 0 else {
-                        //                        self.screen1TableView.reloadData()
-                        self.spinner.stopAnimating()
-                        self.screen1TableView.endUpdates()
-                        deleteRowFrom = nil
-                        return
-                    }
-                    self.screen1TableView.moveRow(at: IndexPath(item: moveFrom, section: 0), to: IndexPath(row: 0, section: 0))
+        DispatchQueue.main.async {
+            
+            self.screen1TableView.beginUpdates()
+            
+            if let moveFrom = deleteRowFrom {
+                guard moveFrom < fetchedDataList.count, moveFrom > 0 else {
                     
-                    deleteRowFrom = nil
-                    
-                }else{
-                    let indexPathToBeAdded = IndexPath(row: 0, section: 0)
-                    self.screen1TableView.insertRows(at: [indexPathToBeAdded], with: .automatic)
+                    self.showToast(message: "Weather updated for \(fetchedDataList.first?.city.name ?? "CITY")", seconds: 1)
                     self.screen1TableView.endUpdates()
-                    
-                    self.screen1TableView.scrollToRow(at: indexPathToBeAdded,
-                                                      at: .top,
-                                                      animated: true)
+                    return
                 }
+                self.screen1TableView.moveRow(at: IndexPath(item: moveFrom, section: 0), to: IndexPath(row: 0, section: 0))
+                
+            }else{
+                let indexPathToBeAdded = IndexPath(row: 0, section: 0)
+                self.screen1TableView.insertRows(at: [indexPathToBeAdded], with: .automatic)
                 self.screen1TableView.endUpdates()
-                self.spinner.stopAnimating()
-                print("FavList : \(favouriteWeatherList.getFavouriteList())")
+                
+                self.screen1TableView.scrollToRow(at: indexPathToBeAdded,
+                                                  at: .top,
+                                                  animated: true)
             }
-        }else{
-            print("screen1TableView doesn't EXIST")
+            self.screen1TableView.endUpdates()
+            self.spinner.stopAnimating()
+            print("FavList : \(favouriteWeatherList.getFavouriteList())")
+            
         }
     }
 }
 
-extension FirstScreenTableViewController : CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        getLocationData(locations.last)
-        print(#function)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        getLocationData(manager.location)
-        print(#function)
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        let authorizationStatus = manager.authorizationStatus
-        
-        print(authorizationStatus.rawValue)
-        
-        switch authorizationStatus {
-        case .restricted, .denied:
-            print("PERMISSION NOT GIVEN")
-            showAlert()
-        case .authorizedAlways :
-            getLocationData(manager.location)
-        case .authorizedWhenInUse :
-            locationManager.requestLocation()
-        default:
-            print("STATUS : UNKNOWN__DEFAULT")
-        }
-    }
-    
-    func getLocationData(_ location: CLLocation?){
-        print("PERMISSION GIVEN")
-        guard let lat = location?.coordinate.latitude, let lon = location?.coordinate.longitude else {
-            showToast(message: "Unable to get location", seconds: 1.5)
-            spinner.stopAnimating()
-            return
-        }
-        urlMaker?.lat = String(lat)
-        urlMaker?.lon = String(lon)
-        print("Cordinates : ",lat, lon)
-        urlMaker?.getApiData()
-    }
-}
 
 func getBindedModel(weatherData : WeatherDataModel) -> Screen1DataModel{
     
@@ -282,7 +225,7 @@ func getBindedModel(weatherData : WeatherDataModel) -> Screen1DataModel{
 
 extension FirstScreenTableViewController {
     
-    private func setupInitialTableView(){
+    private func setupInitialTableView() {
         let defaults = UserDefaults.standard
         if let savedData = defaults.data(forKey: "favouritePlaces") {
             do {
@@ -311,29 +254,6 @@ extension FirstScreenTableViewController {
     }
     
     
-    func showAlert(){
-        let alertController = UIAlertController(title: "Need location access", message: "Allow location acces to continue this app", preferredStyle: .alert)
-        
-        alertController.addAction(UIAlertAction(title: "Give permission", style: .destructive,handler: { _ in
-            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                return
-            }
-            
-            if UIApplication.shared.canOpenURL(settingsUrl) {
-                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                    print("Settings opened: \(success)")
-                    self.spinner.stopAnimating()
-                })
-            }
-        }))
-        print("SHOWING ALERT")
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
-            self.spinner.stopAnimating()
-        }))
-        
-        present(alertController, animated: true)
-    }
-    
     func showToast(message: String, seconds: Double) {
         self.spinner.stopAnimating()
         let toast = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -360,7 +280,6 @@ extension FirstScreenTableViewController {
         searchBar.delegate = self
         locationManager.delegate = self
         urlMaker?.delegates[0] = self
-        //        firstScreenTableViewCell?.delegate = self
     }
     
     private func setupHeaderView(){
@@ -386,19 +305,4 @@ extension FirstScreenTableViewController {
         
     }
     
-    private func setRowLayouts(for row : Screen1TableViewCell, withIndex indexPath: IndexPath){
-        row.selectionStyle = .none
-        let maskLayer = CALayer()
-        maskLayer.cornerRadius = 5
-        maskLayer.backgroundColor = UIColor.black.cgColor
-        maskLayer.frame = CGRect(x: row.bounds.origin.x, y: row.bounds.origin.y, width: row.bounds.width, height: row.bounds.height).insetBy(dx: 10, dy: 10)
-        row.layer.mask = maskLayer
-        
-        if selectedIndexSet.contains(indexPath.row) {
-            row.layer.borderColor = CGColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.9)
-            row.layer.borderWidth = 15
-        }else{
-            row.layer.borderWidth = 0
-        }
-    }
 }

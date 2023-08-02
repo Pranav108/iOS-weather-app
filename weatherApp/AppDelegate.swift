@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Added my me
     func applicationWillTerminate(_ application: UIApplication) {
         
-//        let favouritePlaces = Array(fetchedDataList.prefix(3))
         let favList = favouriteWeatherList.getFavouriteList()
         var favouritePlaces = [WeatherDataModel]()
         
