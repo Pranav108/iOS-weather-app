@@ -16,7 +16,7 @@ class WeatherApiHandler{
     var delegates : [WeatherApiDelegate?] = [nil,nil]
     
     func getApiData(){
-        print(#function, "__START")
+        
         var urlString = API_URL
         if let city = city {
             urlString += "&q=\(city)"
@@ -25,9 +25,7 @@ class WeatherApiHandler{
         }else{
             urlString += "&lat=" + (lat ?? "LAT") + "&lon=" + (lon ?? "LON")
         }
-        print(urlString)
         performRequest(urlString: urlString)
-        print(#function, "__END")
     }
     
     func performRequest(urlString : String){
@@ -39,13 +37,11 @@ class WeatherApiHandler{
             // 2. Create a url session
             
             let session = URLSession.shared
-            print(#function,"__START")
             // 3. Give the session a task
             
             let task = session.dataTask(with: url, completionHandler:  handler(data:urlResponse:error:))
             // I THINK THIS IS JUST ESCAPING, BUT I'M EXPECTING TO COMPLETE
             
-            print(#function,"__END")
             // 4. Start the task
             
             task.resume()
@@ -54,10 +50,8 @@ class WeatherApiHandler{
     
     func handler(data : Data?, urlResponse : URLResponse?, error : Error?){
         if let apiData = data {
-            print(#function)
             if let actualData = parseJson(weatherData: apiData){
                 // BIND THE DATA TO THE UI, WHEN DATA RECIEVED
-                print(#function)
                 addWeatherUniquely(forData: actualData)
                 delegates[0]?.updateUIforFirstScreen()
                 delegates[1]?.updateUIforSecondScreen()
@@ -77,10 +71,7 @@ class WeatherApiHandler{
             print(#function)
             return decodedWeatherData
         } catch{
-            
-            print("calling showToast")
             showToastMessage(forMessage: "City NOT found", forSeconds: 1.2)
-            print(error)
             return nil
         }
     }
@@ -94,7 +85,6 @@ class WeatherApiHandler{
     func addWeatherUniquely(forData currentData : WeatherDataModel){
         
         let currentCityID = currentData.city.id
-        print(currentData.city.name)
         for (index, data) in fetchedDataList.enumerated(){
             
             if currentCityID == data.city.id {

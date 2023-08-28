@@ -11,9 +11,16 @@ import UIKit
 let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=c79b6cb39826aca9755ade5999cd13bd&units=metric"
 
 var deleteRowFrom : Int?
-
+var isDegreeCelsius : Bool = true
 var fetchedDataList = [WeatherDataModel]()
 var favouriteWeatherList = FavouriteQueue(size: 3)
+
+func getTemperatureStringBasedOnScale(forTemp temp : Float) -> String {
+    if (!isDegreeCelsius) {
+        return String(Int((temp * 9/5) + 32)) + "˚F"
+    }
+    return String(Int(temp)) + "˚C"
+}
 
 protocol WeatherApiDelegate{
     func updateUIforFirstScreen()
@@ -33,15 +40,6 @@ extension WeatherApiDelegate{
     }
     func showSpinner(){
         print("Default Inplementation of showSpinner")
-    }
-}
-
-extension UIViewController {
-    func hideKeyboardWhenTappedAround() {
-        print(#function)
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
     }
 }
 

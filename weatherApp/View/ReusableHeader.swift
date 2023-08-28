@@ -15,10 +15,10 @@ class ReusableHeader: UIView  {
         label.backgroundColor = .opaqueSeparator
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "Loading..."
+        label.text = "Weather App"
         return label
     }()
-   
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         basicInit()
@@ -34,7 +34,7 @@ class ReusableHeader: UIView  {
         layer.cornerRadius = 8.0
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .opaqueSeparator
-//        print(#function)
+        //        print(#function)
         
     }
     
@@ -44,16 +44,16 @@ class ReusableHeader: UIView  {
     }
     
     override func didMoveToSuperview() {
-//        print(#function)
+        //        print(#function)
         guard let superview = superview else{
             print("SuperView doesn't exist")
             return
         }
         
         NSLayoutConstraint.activate([
-            topAnchor.constraint(equalTo: superview.layoutMarginsGuide.topAnchor,constant: 20),
             
             centerXAnchor.constraint(equalTo: superview.centerXAnchor),
+            centerYAnchor.constraint(equalTo: superview.centerYAnchor),
             
             heightAnchor.constraint(equalToConstant: 40),
             widthAnchor.constraint(equalTo: superview.widthAnchor , multiplier: 0.85),

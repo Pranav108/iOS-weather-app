@@ -16,16 +16,24 @@ import CoreLocation
 class FirstScreenTableViewController: UIViewController {
     
     
-    @IBOutlet weak var screen1TableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var outerBlurView: UIView!
     
-    var firstScreenTableViewCell : Screen1TableViewCell?
+    @IBOutlet weak var screen1TableView: UITableView!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var switchButton: UISwitch!
+    
+    @IBOutlet weak var headerView: UIView!
+    
+    
+    var firstScreenTableViewCell : Screen1TableViewCell!
+    var blurEffectView: UIVisualEffectView?
     
     var spinner = UIActivityIndicatorView(style: .large)
     var urlMaker : WeatherApiHandler?
     var selectedIndexSet : IndexSet = []
-    var reusableHeader : ReusableHeader?
+//    var reusableHeader : ReusableHeader?
     var backgroundView: BackgroundView!
     var locationManager = CLLocationManager()
     var selectedRow = 0
@@ -40,11 +48,13 @@ class FirstScreenTableViewController: UIViewController {
         
         setupInitialTableView()
         
+        blurViewSetup()
+        
         locationManager.requestWhenInUseAuthorization()
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
         
-        setupHeaderView()
+        setupHeaderAndSwitchView()
         
         setupSearchBarView()
         
@@ -55,8 +65,47 @@ class FirstScreenTableViewController: UIViewController {
         searchBar.resignFirstResponder()
     }
     
-    @IBAction func searchPressed(_ sender: UIButton) {
-        searchBarSearchButtonClicked(searchBar)
+    @objc func switchStateChanged(_ sender: UISwitch) {
+           if sender.isOn {
+               isDegreeCelsius = true
+               print("Switch is ON")
+           } else {
+               isDegreeCelsius = false
+               print("Switch is OFF")
+           }
+        screen1TableView.reloadData()
+       }
+    
+    func applyBlurEffect() {
+        print(#function)
+        screen1TableView.isUserInteractionEnabled = false
+        
+        UIView.animate(withDuration: 0.4) {
+            self.blurEffectView?.alpha = 0.7
+        }
+    }
+    
+    func blurViewSetup(){
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.lightGray .cgColor,UIColor.clear.cgColor]
+        gradientLayer.locations = [0.0, 0.05, 1.0]
+        
+        let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView!.contentView.layer.addSublayer(gradientLayer)
+        blurEffectView!.frame = outerBlurView.bounds
+        outerBlurView.addSubview(blurEffectView!)
+        blurEffectView?.alpha = 0
+    }
+    
+    func removeBlurEffect() {
+        print(#function)
+        UIView.animate(withDuration: 0.4) {
+            self.blurEffectView?.alpha = 0
+        } completion: { _ in
+            self.screen1TableView.isUserInteractionEnabled = true
+        }
     }
 }
 
@@ -121,7 +170,7 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         tableView.endUpdates()
         
         if let tabBarController = self.tabBarController,
-        let viewControllers = tabBarController.viewControllers,
+           let viewControllers = tabBarController.viewControllers,
            let secondViewController = viewControllers[1] as? SecondScreenTableViewController {
             secondViewController.indexOfSelectedRow = indexPath.row
             tabBarController.selectedIndex = 1
@@ -159,9 +208,28 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
 
 extension FirstScreenTableViewController : UISearchBarDelegate{
     
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        print(#function)
+        return true
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print(#function)
+        searchBar.setShowsCancelButton(true, animated: true)
+        applyBlurEffect()
+    }
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        print(#function)
+        return true
+    }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         print(#function)
+        removeBlurEffect()
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print(#function)
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -360,19 +428,15 @@ extension FirstScreenTableViewController {
         searchBar.delegate = self
         locationManager.delegate = self
         urlMaker?.delegates[0] = self
-        //        firstScreenTableViewCell?.delegate = self
     }
     
-    private func setupHeaderView(){
-        reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: screen1TableView.frame.width, height: screen1TableView.frame.height))
+    private func setupHeaderAndSwitchView(){
+        switchButton.isOn = true
+        switchButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        switchButton.addTarget(self, action: #selector(switchStateChanged(_:)), for: .valueChanged)
         
-        view.addSubview(reusableHeader!)
-        reusableHeader?.binddataToCard(withText: "Weather App")
-        
-        NSLayoutConstraint.activate([
-            reusableHeader!.bottomAnchor.constraint(equalTo: searchBar.topAnchor,constant: -20),
-        ])
-        
+        let reusableHeader = ReusableHeader(frame:headerView.bounds)
+        headerView.addSubview(reusableHeader)
     }
     private func setupSearchBarView(){
         self.searchBar.placeholder = "Search here"
@@ -381,9 +445,6 @@ extension FirstScreenTableViewController {
         let imageV = textFieldInsideSearchBar?.leftView as! UIImageView
         imageV.image = imageV.image?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         imageV.tintColor = UIColor.purple
-        
-        searchButton.layer.cornerRadius = 10
-        
     }
     
     private func setRowLayouts(for row : Screen1TableViewCell, withIndex indexPath: IndexPath){
