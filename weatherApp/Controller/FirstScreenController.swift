@@ -27,7 +27,9 @@ class FirstScreenTableViewController: UIViewController {
     var firstScreenTableViewCell : Screen1TableViewCell!
     var blurEffectView : UIVisualEffectView?
     var reusableHeader : ReusableHeader?
-    
+
+    var redHeader = UIColor(red: 1, green: 179 / 255.0, blue: 179 / 255.0, alpha: 1)
+    var greenHeader = UIColor(red: 179 / 255.0, green: 1, blue: 179 / 255.0, alpha: 1)
     var spinner = UIActivityIndicatorView(style: .large)
     var urlMaker = WeatherApiHandler()
     var selectedIndexSet : IndexSet = []

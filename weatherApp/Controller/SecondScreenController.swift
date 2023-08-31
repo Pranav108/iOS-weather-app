@@ -157,7 +157,7 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
         if screen2DataForBinding.count > 0 {
             textToBind = screen2DataForBinding[0].city
         }
-        self.reusableHeader!.binddataToCard(withText: textToBind)
+        self.reusableHeader!.binddataToCard(withText: textToBind,withBackgroundColor: .opaqueSeparator)
     }
 }
 

@@ -34,8 +34,6 @@ class ReusableHeader: UIView  {
         layer.cornerRadius = 8.0
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .opaqueSeparator
-        //        print(#function)
-        
     }
     
     func setHeaderColor(color : UIColor){
@@ -44,7 +42,6 @@ class ReusableHeader: UIView  {
     }
     
     override func didMoveToSuperview() {
-        //        print(#function)
         guard let superview = superview else{
             print("SuperView doesn't exist")
             return
@@ -62,14 +59,13 @@ class ReusableHeader: UIView  {
             placeLabel.widthAnchor.constraint(equalToConstant: 50),
             placeLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             placeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            
         ])
     }
     
-    func binddataToCard(withText textToShow: String){
-        print(#function)
+    func binddataToCard(withText textToShow: String,withBackgroundColor bgColor : UIColor){
         DispatchQueue.main.async {
             self.placeLabel.text = textToShow
+            self.setHeaderColor(color: bgColor)
         }
     }
     
