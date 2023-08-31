@@ -18,7 +18,7 @@ class SecondScreenTableViewController : UIViewController{
     
     var backgroundView: BackgroundView!
     
-    var urlMaker : WeatherApiHandler?
+    var urlMaker = WeatherApiHandler()
     
     var reusableHeader : ReusableHeader?
     
@@ -31,7 +31,7 @@ class SecondScreenTableViewController : UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         
-        urlMaker?.delegates[1] = self
+        urlMaker.delegates[1] = self
         
         backgroundView = BackgroundView()
         backgroundView.imageWithName(as: "empty-box")

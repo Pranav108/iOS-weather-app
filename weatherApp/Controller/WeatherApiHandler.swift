@@ -6,26 +6,29 @@
 //
 
 import Foundation
+import UIKit
 
 class WeatherApiHandler{
     
     var city : String?
     var lat : String?
     var lon : String?
+    var isInitalLocationCallDone = false
     
     var delegates : [WeatherApiDelegate?] = [nil,nil]
     
     func getApiData(){
-        
         var urlString = API_URL
-        if let city = city {
-            urlString += "&q=\(city)"
+        if (city != nil) && isInitalLocationCallDone{
+            urlString += "&q=\(city ?? "")"
+            performRequest(urlString: urlString)
         }else if lat == nil || lon == nil{
             print("CANNOT get LAT and LON")
         }else{
             urlString += "&lat=" + (lat ?? "LAT") + "&lon=" + (lon ?? "LON")
+            performRequest(urlString: urlString)
+            isInitalLocationCallDone = true
         }
-        performRequest(urlString: urlString)
     }
     
     func performRequest(urlString : String){
@@ -76,9 +79,9 @@ class WeatherApiHandler{
         }
     }
     
-    private func showToastMessage(forMessage msg : String,forSeconds sec : Double){
+    private func showToastMessage(forMessage msg : String,forSeconds sec : Double,withBackroundColor bgColor: UIColor = .darkGray){
         DispatchQueue.main.async {
-            self.delegates[0]?.showToast(message: msg, seconds: sec)
+            self.delegates[0]?.showToast(message: msg, seconds: sec, withBackroundColor: bgColor)
         }
     }
     

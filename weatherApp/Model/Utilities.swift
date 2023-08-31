@@ -25,7 +25,7 @@ func getTemperatureStringBasedOnScale(forTemp temp : Float) -> String {
 protocol WeatherApiDelegate{
     func updateUIforFirstScreen()
     func updateUIforSecondScreen()
-    func showToast(message : String, seconds : Double)
+    func showToast(message : String, seconds : Double, withBackroundColor bgColor : UIColor)
 }
 
 extension WeatherApiDelegate{
@@ -35,7 +35,7 @@ extension WeatherApiDelegate{
     func updateUIforSecondScreen(){
         print("Default Inplementation of updateUIforSecondScreen")
     }
-    func showToast(message : String, seconds : Double){
+    func showToast(message : String, seconds : Double, withBackroundColor bgColor : UIColor = .darkGray){
         print("Default Inplementation of showToast")
     }
     func showSpinner(){

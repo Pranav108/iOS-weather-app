@@ -7,14 +7,12 @@
 
 //unable to dequeue a cell with identifier screen1TableViewCell - must register a nib or a class for the identifier or connect a prototype cell in a storyboard"
 
-
 import UIKit
 
 import CoreLocation
-
+import Reachability
 
 class FirstScreenTableViewController: UIViewController {
-    
     
     @IBOutlet weak var outerBlurView: UIView!
     
@@ -26,17 +24,18 @@ class FirstScreenTableViewController: UIViewController {
     
     @IBOutlet weak var headerView: UIView!
     
-    
     var firstScreenTableViewCell : Screen1TableViewCell!
     var blurEffectView: UIVisualEffectView?
     
     var spinner = UIActivityIndicatorView(style: .large)
-    var urlMaker : WeatherApiHandler?
+    var urlMaker = WeatherApiHandler()
     var selectedIndexSet : IndexSet = []
-//    var reusableHeader : ReusableHeader?
     var backgroundView: BackgroundView!
     var locationManager = CLLocationManager()
     var selectedRow = 0
+    let reachability = try! Reachability()
+    var isReachableToNetwork = false
+    var shouldNotifyOnInternetAvailable = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +49,8 @@ class FirstScreenTableViewController: UIViewController {
         
         blurViewSetup()
         
+        checkNetworkConnectionStatus()
+        
         locationManager.requestWhenInUseAuthorization()
         
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
@@ -61,6 +62,42 @@ class FirstScreenTableViewController: UIViewController {
         spinnerSetup(spinner: spinner, parentView: view)
     }
     
+    func checkNetworkConnectionStatus(){
+        DispatchQueue.main.async {
+            self.reachability.whenReachable = {
+                reachability in
+                if reachability.connection == .wifi {
+                    print("Reachable via WiFi")
+                } else {
+                    print("Reachable via Cellular")
+                }
+                self.isReachableToNetwork = true
+                
+                if self.shouldNotifyOnInternetAvailable {
+                    self.showToast(message: "Internet Connection Available", seconds: 1.2,withBackroundColor: .green)
+                }
+                
+                if (((self.urlMaker.lat) != nil) && ((self.urlMaker.lon) != nil) && (!self.urlMaker.isInitalLocationCallDone))  {
+                    self.spinner.startAnimating()
+                    self.urlMaker.getApiData()
+                }
+            }
+            self.reachability.whenUnreachable = { _ in
+                self.isReachableToNetwork = false
+                self.showToast(message: "Internet Connection Needed", seconds: 2,withBackroundColor: .red)
+                self.shouldNotifyOnInternetAvailable = true
+            }
+
+            do {
+                try self.reachability.startNotifier()
+            } catch {
+                print("Unable to start notifier")
+            }
+        }
+    }
+    deinit{
+        reachability.stopNotifier()
+    }
     override func viewWillAppear(_ animated: Bool) {
         searchBar.resignFirstResponder()
     }
@@ -68,16 +105,13 @@ class FirstScreenTableViewController: UIViewController {
     @objc func switchStateChanged(_ sender: UISwitch) {
            if sender.isOn {
                isDegreeCelsius = true
-               print("Switch is ON")
            } else {
                isDegreeCelsius = false
-               print("Switch is OFF")
            }
         screen1TableView.reloadData()
        }
     
     func applyBlurEffect() {
-        print(#function)
         screen1TableView.isUserInteractionEnabled = false
         
         UIView.animate(withDuration: 0.4) {
@@ -100,7 +134,6 @@ class FirstScreenTableViewController: UIViewController {
     }
     
     func removeBlurEffect() {
-        print(#function)
         UIView.animate(withDuration: 0.4) {
             self.blurEffectView?.alpha = 0
         } completion: { _ in
@@ -111,8 +144,6 @@ class FirstScreenTableViewController: UIViewController {
 
 extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataSource,TableReloaderDelegate{
     func reloadTableView() {
-        print("TABLE RELOADED FROM CELL CALL")
-        print(favouriteWeatherList.getFavouriteList())
         DispatchQueue.main.async {
             self.screen1TableView.reloadData()
         }
@@ -123,7 +154,6 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("INITIAL_ROW_COUNT : ", fetchedDataList.count)
         let rowCount = fetchedDataList.count
         
         tableView.backgroundView?.isHidden = rowCount > 0
@@ -135,7 +165,6 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         
         let row = tableView.dequeueReusableCell(withIdentifier: "Screen1TableViewCell", for: indexPath) as! Screen1TableViewCell
         //        firstScreenTableViewCell?.reloaderDelegate = self
-        print("CELL IS CREATED WITH INDEXPATH : \(indexPath.row)")
         row.tableView = screen1TableView
         row.delegate = self
         setRowLayouts(for: row,withIndex: indexPath)
@@ -148,7 +177,6 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         
         if favList.contains(indexPath.row){
             row.favButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            print("favList contains : \(indexPath.row)")
         }else{
             row.favButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
@@ -190,13 +218,11 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         deleteAction.image = UIImage(systemName: "trash")?.withTintColor(.red, renderingMode: .alwaysOriginal)
         deleteAction.backgroundColor = .systemGray4
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-        print(#function)
         return configuration
     }
     
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        print(#function)
         return true
     }
     
@@ -209,43 +235,39 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
 extension FirstScreenTableViewController : UISearchBarDelegate{
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        print(#function)
         return true
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print(#function)
         searchBar.setShowsCancelButton(true, animated: true)
         applyBlurEffect()
     }
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        print(#function)
         return true
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        print(#function)
         removeBlurEffect()
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        spinner.startAnimating()
-        print("SEARCHED BUTTON IS CLICKED")
         selectedIndexSet.removeAll()
         screen1TableView.reloadRows(at: [IndexPath(item: selectedRow, section: 0)], with: .automatic)
         
         searchBar.endEditing(true)
         let cityName = searchBar.text!
         let cityWithoutSpaces = cityName.trimmingCharacters(in: .whitespacesAndNewlines)
-        urlMaker?.city = cityWithoutSpaces.replacingOccurrences(of: " ", with: "+")
+        urlMaker.city = cityWithoutSpaces.replacingOccurrences(of: " ", with: "+")
         if cityName == "" {
-            showToast(message: "Please enter city name", seconds: 1.2)
-        }else{
-            urlMaker?.getApiData()
+            showToast(message: "Please enter city name", seconds: 1.2,withBackroundColor: .orange)
+        }else if isReachableToNetwork{
+            spinner.startAnimating()
+            urlMaker.getApiData()
+        }else {
+            self.showToast(message: "Internet Connection Needed", seconds: 1.5,withBackroundColor: .red)
         }
         searchBar.text = ""
     }
@@ -254,9 +276,7 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
 extension FirstScreenTableViewController : WeatherApiDelegate{
     
     func updateUIforFirstScreen() {
-        print("CurrentWeather data in FirstScreen")
         if self.screen1TableView != nil {
-            print("screen1TableView EXIST")
             DispatchQueue.main.async {
                 
                 self.screen1TableView.beginUpdates()
@@ -284,7 +304,6 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
                 }
                 self.screen1TableView.endUpdates()
                 self.spinner.stopAnimating()
-                print("FavList : \(favouriteWeatherList.getFavouriteList())")
             }
         }else{
             print("screen1TableView doesn't EXIST")
@@ -296,22 +315,16 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         getLocationData(locations.last)
-        print(#function)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         getLocationData(manager.location)
-        print(#function)
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let authorizationStatus = manager.authorizationStatus
-        
-        print(authorizationStatus.rawValue)
-        
         switch authorizationStatus {
         case .restricted, .denied:
-            print("PERMISSION NOT GIVEN")
             showAlert()
         case .authorizedAlways :
             getLocationData(manager.location)
@@ -323,16 +336,18 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
     }
     
     func getLocationData(_ location: CLLocation?){
-        print("PERMISSION GIVEN")
         guard let lat = location?.coordinate.latitude, let lon = location?.coordinate.longitude else {
             showToast(message: "Unable to get location", seconds: 1.5)
             spinner.stopAnimating()
             return
         }
-        urlMaker?.lat = String(lat)
-        urlMaker?.lon = String(lon)
+        urlMaker.lat = String(lat)
+        urlMaker.lon = String(lon)
         print("Cordinates : ",lat, lon)
-        urlMaker?.getApiData()
+        if isReachableToNetwork {
+            spinner.startAnimating()
+            urlMaker.getApiData()
+        }
     }
 }
 
@@ -363,8 +378,6 @@ extension FirstScreenTableViewController {
                 for index in stride(from: fetchedDataList.count - 1, through: 0, by: -1) {
                     favouriteWeatherList.selectFavourite(havingIndex: index)
                 }
-                
-                print("RETRIVED DATA FROM USER_DEFAULTS",decodedData.count)
             } catch {
                 print("Error decoding data: \(error)")
             }
@@ -389,12 +402,10 @@ extension FirstScreenTableViewController {
             
             if UIApplication.shared.canOpenURL(settingsUrl) {
                 UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                    print("Settings opened: \(success)")
                     self.spinner.stopAnimating()
                 })
             }
         }))
-        print("SHOWING ALERT")
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
             self.spinner.stopAnimating()
         }))
@@ -402,11 +413,10 @@ extension FirstScreenTableViewController {
         present(alertController, animated: true)
     }
     
-    func showToast(message: String, seconds: Double) {
+    func showToast(message: String, seconds: Double,withBackroundColor bgColor : UIColor = .darkGray) {
         self.spinner.stopAnimating()
         let toast = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        toast.view.backgroundColor = .darkGray
-        toast.view.alpha = 0.5
+        toast.view.backgroundColor = bgColor
         toast.view.layer.cornerRadius = 20
         self.present(toast, animated: true)
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + seconds){
@@ -427,7 +437,7 @@ extension FirstScreenTableViewController {
         screen1TableView.dataSource = self
         searchBar.delegate = self
         locationManager.delegate = self
-        urlMaker?.delegates[0] = self
+        urlMaker.delegates[0] = self
     }
     
     private func setupHeaderAndSwitchView(){
