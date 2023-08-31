@@ -13,9 +13,12 @@ class SecondScreenTableViewController : UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var headerView: UIView!
+    
+    
     var backgroundView: BackgroundView!
     
-    var urlMaker : WeatherApiHandler?
+    var urlMaker = WeatherApiHandler()
     
     var reusableHeader : ReusableHeader?
     
@@ -28,22 +31,16 @@ class SecondScreenTableViewController : UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         
-        urlMaker?.delegates[1] = self
+        urlMaker.delegates[1] = self
         
         backgroundView = BackgroundView()
         backgroundView.imageWithName(as: "empty-box")
         tableView.backgroundView = backgroundView
         
-        print(#function)
         setupHeaderView()
-        
-        updateUIforSecondScreen()
-        
     }
-    // viewWillAppear might be called before loading the data of requerst from viewDidLoad
+    
     override func viewWillAppear(_ animated: Bool) {
-        
-        print(#function, "SecondScreen")
         updateUIforSecondScreen()
     }
     override func viewDidDisappear(_ animated: Bool) {
@@ -108,8 +105,7 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
     
     func updateUIforSecondScreen() {
         expandedIndexSet.removeAll()
-        print("CurrentWeather data in SecondScreen")
-
+        
         let weatherData : WeatherDataModel
         if (fetchedDataList.count > indexOfSelectedRow) {
             weatherData = fetchedDataList[indexOfSelectedRow]
@@ -151,19 +147,17 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
     
     func reloadUIForSecondScreen(){
         if self.tableView != nil {
-            print("tableView EXIST")
             DispatchQueue.main.async {
                 self.tableView.reloadData()
-                print("TABLE VIEW RELOADED")
             }
         }else{
-            print("tableView doesn't EXIST")
+            print("SecondScreen tableView doesn't EXIST")
         }
         var textToBind = "Nothing to show"
         if screen2DataForBinding.count > 0 {
             textToBind = screen2DataForBinding[0].city
         }
-        self.reusableHeader!.binddataToCard(withText: textToBind)
+        self.reusableHeader!.binddataToCard(withText: textToBind,withBackgroundColor: .opaqueSeparator)
     }
 }
 
@@ -185,12 +179,7 @@ extension SecondScreenTableViewController {
         row.layer.mask = maskLayer
     }
     private func setupHeaderView(){
-        reusableHeader = ReusableHeader(frame: CGRect(x: 20, y: 20, width: tableView.frame.width, height: tableView.frame.height))
-        
-        view.addSubview(reusableHeader!)
-        
-        NSLayoutConstraint.activate([
-            reusableHeader!.bottomAnchor.constraint(equalTo: tableView.topAnchor,constant: -20),
-        ])
+        reusableHeader = ReusableHeader(frame: headerView.bounds)
+        headerView.addSubview(reusableHeader!)
     }
 }

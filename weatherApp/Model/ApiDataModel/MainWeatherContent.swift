@@ -18,21 +18,21 @@ struct MainWeatherContent : Codable {
         return String(Int(humidity)) + "% H"
     }
     var tempString : String{
-        return String(Int(temp)) + "˚C"
+        return getTemperatureStringBasedOnScale(forTemp: temp)
     }
     var feels_likeString : String{
-        return String(Int(feels_like)) + "˚C"
+        return getTemperatureStringBasedOnScale(forTemp: feels_like)
     }
     
     var tempRangeString : String{
-        return "H:\(temp_maxString)˚ L:\(temp_minString)˚"
+        return "H:\(temp_maxString) L:\(temp_minString)"
     }
     var temp_minString : String{
-        return String(Int(temp_min))
+        return String(getTemperatureStringBasedOnScale(forTemp: temp_min).dropLast(1))
     }
     
     var temp_maxString : String{
-        return String(Int(temp_max))
+        return String(getTemperatureStringBasedOnScale(forTemp: temp_max).dropLast(1))
     }
     
 }

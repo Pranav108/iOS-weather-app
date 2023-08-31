@@ -42,8 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if let encoded = try? JSONEncoder().encode(favouritePlaces) {
-            
-            print("SETTING value to Default : ", favouritePlaces.count)
             UserDefaults.standard.set(encoded, forKey: "favouritePlaces" )
         }else{
             print("cannot set userDefault values")
