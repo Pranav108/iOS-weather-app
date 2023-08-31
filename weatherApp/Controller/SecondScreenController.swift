@@ -38,13 +38,9 @@ class SecondScreenTableViewController : UIViewController{
         tableView.backgroundView = backgroundView
         
         setupHeaderView()
-        
-        updateUIforSecondScreen()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         updateUIforSecondScreen()
     }
     override func viewDidDisappear(_ animated: Bool) {
@@ -110,7 +106,6 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
     func updateUIforSecondScreen() {
         expandedIndexSet.removeAll()
         
-
         let weatherData : WeatherDataModel
         if (fetchedDataList.count > indexOfSelectedRow) {
             weatherData = fetchedDataList[indexOfSelectedRow]

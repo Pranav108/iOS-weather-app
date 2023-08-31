@@ -25,7 +25,8 @@ class FirstScreenTableViewController: UIViewController {
     @IBOutlet weak var headerView: UIView!
     
     var firstScreenTableViewCell : Screen1TableViewCell!
-    var blurEffectView: UIVisualEffectView?
+    var blurEffectView : UIVisualEffectView?
+    var reusableHeader : ReusableHeader?
     
     var spinner = UIActivityIndicatorView(style: .large)
     var urlMaker = WeatherApiHandler()

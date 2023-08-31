@@ -13,7 +13,7 @@ class BackgroundView: UIView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .center
-        imageView.image = UIImage(named: "weather-forecast")
+        imageView.image = UIImage(named: "no-weather-data")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView

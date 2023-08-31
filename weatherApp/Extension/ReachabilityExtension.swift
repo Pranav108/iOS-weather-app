@@ -18,6 +18,7 @@ extension FirstScreenTableViewController {
                     print("Reachable via Cellular")
                 }
                 self.isReachableToNetwork = true
+                self.reusableHeader?.binddataToCard(withText: "Weather App")
                 self.locationManager.requestWhenInUseAuthorization()
                 
                 if self.shouldNotifyOnInternetAvailable {
@@ -27,6 +28,7 @@ extension FirstScreenTableViewController {
             }
             self.reachability.whenUnreachable = { _ in
                 self.isReachableToNetwork = false
+                self.reusableHeader?.binddataToCard(withText: "No Internet")
                 self.showToast(message: "Internet Connection Needed", seconds: 2,withBackroundColor: .red)
                 self.shouldNotifyOnInternetAvailable = true
             }

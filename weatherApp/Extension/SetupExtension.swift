@@ -69,8 +69,8 @@ extension FirstScreenTableViewController {
         switchButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         switchButton.addTarget(self, action: #selector(switchStateChanged(_:)), for: .valueChanged)
         
-        let reusableHeader = ReusableHeader(frame:headerView.bounds)
-        headerView.addSubview(reusableHeader)
+        reusableHeader = ReusableHeader(frame:headerView.bounds)
+        headerView.addSubview(reusableHeader!)
     }
     func setupSearchBarView(){
         self.searchBar.placeholder = "Search here"
