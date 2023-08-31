@@ -79,7 +79,7 @@ class WeatherApiHandler{
         }
     }
     
-    private func showToastMessage(forMessage msg : String,forSeconds sec : Double,withBackroundColor bgColor: UIColor = .darkGray){
+    private func showToastMessage(forMessage msg : String, forSeconds sec : Double, withBackroundColor bgColor: UIColor = .darkGray){
         DispatchQueue.main.async {
             self.delegates[0]?.showToast(message: msg, seconds: sec, withBackroundColor: bgColor)
         }
@@ -98,7 +98,7 @@ class WeatherApiHandler{
                 deleteRowFrom = index
                 favouriteWeatherList.swapFavouriteWeather(forIndex : index)
                 if index == 0 {
-                    showToastMessage(forMessage: "Weather updated for \(currentData.city.name)", forSeconds: 1)
+                    showToastMessage(forMessage: "Weather updated for \(currentData.city.name)",forSeconds: 1,withBackroundColor: .green)
                 }
                 return
             }else{
