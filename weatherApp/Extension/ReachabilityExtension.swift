@@ -29,7 +29,7 @@ extension FirstScreenTableViewController {
             self.reachability.whenUnreachable = { _ in
                 self.isReachableToNetwork = false
                 self.reusableHeader?.binddataToCard(withText: "No Internet",withBackgroundColor: self.redHeader)
-                self.showToast(message: "Internet Connection Needed", seconds: 2,withBackroundColor: .red)
+                self.showAlert(forPromptTitle: "Need internet access", withMessage: "Need internet acces to continue this app")
                 self.shouldNotifyOnInternetAvailable = true
             }
 

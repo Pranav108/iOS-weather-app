@@ -24,7 +24,7 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         switch authorizationStatus {
         case .restricted, .denied:
             print(authorizationStatus.rawValue)
-            showAlert()
+            showAlert(forPromptTitle: "Need location access", withMessage: "Allow location acces to continue this app")
         case .authorizedAlways :
             print(authorizationStatus.rawValue)
             getLocationData(manager.location)
@@ -52,9 +52,10 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
             self.showToast(message: "Internet Connection Needed", seconds: 2,withBackroundColor: .red)
         }
     }
-    func showAlert(){
-        let alertController = UIAlertController(title: "Need location access", message: "Allow location acces to continue this app", preferredStyle: .alert)
-        
+    func showAlert(forPromptTitle title : String,withMessage message : String){
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//        let alertController = UIAlertController(title: "Need location access", message: "Allow location acces to continue this app", preferredStyle: .alert)
+//
         alertController.addAction(UIAlertAction(title: "Give permission", style: .destructive,handler: { _ in
             guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                 return
@@ -72,4 +73,5 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         
         present(alertController, animated: true)
     }
+    
 }
