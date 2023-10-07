@@ -82,13 +82,6 @@ extension FirstScreenTableViewController {
     }
     
     func setRowLayouts(for row : Screen1TableViewCell, withIndex indexPath: IndexPath){
-        row.selectionStyle = .none
-        let maskLayer = CALayer()
-        maskLayer.cornerRadius = 5
-        maskLayer.backgroundColor = UIColor.black.cgColor
-        maskLayer.frame = CGRect(x: row.bounds.origin.x, y: row.bounds.origin.y, width: row.bounds.width, height: row.bounds.height).insetBy(dx: 10, dy: 10)
-        row.layer.mask = maskLayer
-        
         if selectedIndexSet.contains(indexPath.row) {
             row.layer.borderColor = CGColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.9)
             row.layer.borderWidth = 15

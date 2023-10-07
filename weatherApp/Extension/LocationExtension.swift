@@ -23,13 +23,10 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         let authorizationStatus = manager.authorizationStatus
         switch authorizationStatus {
         case .restricted, .denied:
-            print(authorizationStatus.rawValue)
             showAlert(forPromptTitle: "Need location access", withMessage: "Allow location acces to continue this app")
         case .authorizedAlways :
-            print(authorizationStatus.rawValue)
             getLocationData(manager.location)
         case .authorizedWhenInUse :
-            print(authorizationStatus.rawValue)
             locationManager.requestLocation()
         default:
             print("STATUS : UNKNOWN__DEFAULT")

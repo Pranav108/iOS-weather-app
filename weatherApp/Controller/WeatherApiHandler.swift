@@ -68,10 +68,8 @@ class WeatherApiHandler{
     }
     func parseJson(weatherData : Data) -> WeatherDataModel?{
         let decoder = JSONDecoder()
-        print(#function)
         do {
             let decodedWeatherData = try decoder.decode(WeatherDataModel.self, from: weatherData)
-            print(#function)
             return decodedWeatherData
         } catch{
             showToastMessage(forMessage: "City NOT found", forSeconds: 1.2)

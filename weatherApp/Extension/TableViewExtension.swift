@@ -36,11 +36,9 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         setRowLayouts(for: row,withIndex: indexPath)
         
         let currentWeatherData = getBindedModel(weatherData: fetchedDataList[indexPath.item])
-        
         bindCellData(withData: currentWeatherData, for: row)
         
         let favList = favouriteWeatherList.getFavouriteList()
-        
         if favList.contains(indexPath.row){
             row.favButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }else{

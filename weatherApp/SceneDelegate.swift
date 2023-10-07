@@ -25,11 +25,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         for viewController in viewControllers{
            print("VIEWCONTROLLERS IN SCENE_DELEGATE")
             if let screen1ViewController = viewController as? FirstScreenTableViewController{
-                print("screen1ViewController")
                 screen1ViewController.urlMaker = urlMaker
             }
             if let screen2ViewController = viewController as? SecondScreenTableViewController{
-                print("screen2ViewController")
                 screen2ViewController.urlMaker = urlMaker
             }
         }

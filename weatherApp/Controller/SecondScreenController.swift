@@ -64,10 +64,7 @@ extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataS
         row.collectionView?.tag = indexPath.item
         
         let data = screen2DataForBinding[indexPath.item]
-            bindCellData(forRow : row, withData : data)
-        
-        
-        giveBorders(toRow: row)
+        bindCellData(forRow : row, withData : data)
         return row
     }
     
@@ -167,16 +164,6 @@ extension SecondScreenTableViewController {
         row.dayLabel.text = data.day
         row.humidityLabel.text = data.humidity
         row.feelsLikeLabel.text = data.feelsLike
-    }
-    private func giveBorders(toRow row : SecondScreenTableViewCell){
-        row.selectionStyle = .none
-        row.animate()
-        row.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        let maskLayer = CALayer()
-        maskLayer.cornerRadius = 5
-        maskLayer.backgroundColor = UIColor.black.cgColor
-        maskLayer.frame = CGRect(x: row.bounds.origin.x, y: row.bounds.origin.y, width: row.bounds.width, height: row.bounds.height).insetBy(dx: 16, dy: 10)
-        row.layer.mask = maskLayer
     }
     private func setupHeaderView(){
         reusableHeader = ReusableHeader(frame: headerView.bounds)
