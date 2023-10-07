@@ -19,6 +19,19 @@ class SecondScreenTableViewCell: UITableViewCell {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.selectionStyle = .none
+        self.animate()
+        self.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        let maskLayer = CALayer()
+        maskLayer.cornerRadius = 5
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.frame = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width, height: bounds.height).insetBy(dx: 16, dy: 10)
+        self.layer.mask = maskLayer
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -37,7 +50,7 @@ class SecondScreenTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func animate() {
+    private func animate() {
         UIView.animate(withDuration: 0.5, delay: 0.3, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
             self.contentView.layoutIfNeeded()
         })
@@ -56,14 +69,6 @@ extension SecondScreenTableViewCell : UICollectionViewDelegate, UICollectionView
         let hourlyData = screen2DataForBinding[collectionView.tag].hourlyData
         
         print("CELL is created : ", collectionView.tag, indexPath.item)
-        
-        let maskLayer = CALayer()
-        
-        maskLayer.cornerRadius = 10
-        maskLayer.backgroundColor = UIColor.black.cgColor
-        maskLayer.frame = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.width, height: cell.bounds.height).insetBy(dx: 16, dy: 10)
-        cell.layer.mask = maskLayer
-        
         
         cell.tempLabel.text = hourlyData[indexPath.item].temperature
         cell.timeLabel.text = hourlyData[indexPath.item].time

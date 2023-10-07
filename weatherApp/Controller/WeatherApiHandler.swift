@@ -19,6 +19,7 @@ class WeatherApiHandler{
     
     func getApiData(){
         var urlString = API_URL
+        print("urlString = \(urlString)")
         if (city != nil) && isInitalLocationCallDone{
             urlString += "&q=\(city ?? "")"
             performRequest(urlString: urlString)
@@ -68,10 +69,8 @@ class WeatherApiHandler{
     }
     func parseJson(weatherData : Data) -> WeatherDataModel?{
         let decoder = JSONDecoder()
-        print(#function)
         do {
             let decodedWeatherData = try decoder.decode(WeatherDataModel.self, from: weatherData)
-            print(#function)
             return decodedWeatherData
         } catch{
             showToastMessage(forMessage: "City NOT found", forSeconds: 1.2)

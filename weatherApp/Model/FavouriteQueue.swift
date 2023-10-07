@@ -17,7 +17,6 @@ class FavouriteQueue {
     }
 
     func selectFavourite(havingIndex element: Int) {
-        print(#function, element)
         if array.count == maxSize {
              array.removeLast()
         }
@@ -25,7 +24,6 @@ class FavouriteQueue {
     }
 
     func deselectFavourite(havingIndex element : Int){
-        print(#function, element)
         if let index = array.firstIndex(of: element) {
             array.remove(at: index)
         }
@@ -48,13 +46,11 @@ class FavouriteQueue {
         }
     }
     func deleteRow(withIndex index : Int){
-        print(#function," BEFOFRE ", array, index)
         for i in 0..<array.count {
             if array[i] > index{
                 array[i] -= 1
             }
         }
         deselectFavourite(havingIndex: index)
-        print(#function," AFTER ", array)
     }
 }

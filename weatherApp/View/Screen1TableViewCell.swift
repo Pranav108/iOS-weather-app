@@ -11,33 +11,27 @@ protocol TableReloaderDelegate{
     func reloadTableView()
 }
 
-
 class Screen1TableViewCell: UITableViewCell {
-    
-    
     @IBOutlet weak var outerView: UIView!
-    
     @IBOutlet weak var placeLabel: UILabel!
-    
     @IBOutlet weak var tmpLabel: UILabel!
-    
     @IBOutlet weak var infoLabel: UILabel!
-    
     @IBOutlet weak var tempRangeLabel: UILabel!
-    
     @IBOutlet weak var favButton: UIButton!
     
     weak var tableView: UITableView?
-    
     var favClickedCallback: (() -> Void)?
-    
     var delegate : TableReloaderDelegate?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        //        layoutMargins = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
-        
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        selectionStyle = .none
+        self.animate()
+        let maskLayer = CALayer()
+        maskLayer.cornerRadius = 5
+        maskLayer.backgroundColor = UIColor.black.cgColor
+        maskLayer.frame = CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width, height: bounds.height).insetBy(dx: 10, dy: 10)
+        layer.mask = maskLayer
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -47,32 +41,23 @@ class Screen1TableViewCell: UITableViewCell {
     }
     
     @IBAction func favClicked(_ sender: UIButton) {
-        print("BEFORE : ",sender.imageView?.image ?? "BEFORE IMAGE")
-        
         if let indexPath = tableView?.indexPath(for: self) {
             let cardIndex = indexPath.row
-            
-            print("Cell's indexPath: \(String(describing: cardIndex))")
-            
             if sender.currentImage == UIImage(systemName: "heart") {
-                
-                print("image name is HEART")
-                
                 favouriteWeatherList.selectFavourite(havingIndex: cardIndex)
                 sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                
             }
             else {
-                print("image name is HEART.FILL")
-                
                 favouriteWeatherList.deselectFavourite(havingIndex: cardIndex)
-                
                 sender.setImage(UIImage(systemName: "heart"), for: .normal)
             }
         }
-        
-        print("AFTER : ",sender.imageView?.image! ?? "AFTER IMAGE")
-        print(favouriteWeatherList.getFavouriteList())
         delegate?.reloadTableView()
+    }
+    
+    private func animate() {
+        UIView.animate(withDuration: 0.5, delay: 0.3, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+            self.contentView.layoutIfNeeded()
+        })
     }
 }
