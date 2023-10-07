@@ -19,6 +19,7 @@ class WeatherApiHandler{
     
     func getApiData(){
         var urlString = API_URL
+        print("urlString = \(urlString)")
         if (city != nil) && isInitalLocationCallDone{
             urlString += "&q=\(city ?? "")"
             performRequest(urlString: urlString)
