@@ -66,6 +66,7 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
             self.spinner.stopAnimating()
+            self.urlMaker.isInitalLocationCallDone = true
         }))
         
         present(alertController, animated: true)

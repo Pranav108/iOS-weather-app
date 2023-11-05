@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-let API_ID = ProcessInfo.processInfo.environment["WEATHER_API_ID"]
+let API_ID = ServerConfig.shared.WEATHER_API_ID
 
-let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=\(API_ID ?? "SOME_INVALID_ID")&units=metric"
+let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=\(API_ID)&units=metric"
 
 var deleteRowFrom : Int?
 var isDegreeCelsius : Bool = true

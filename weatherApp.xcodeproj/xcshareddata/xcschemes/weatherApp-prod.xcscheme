@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2F612CA72A5BEA6E00562080"
-               BuildableName = "weatherApp.app"
+               BuildableName = "Weather-Release.app"
                BlueprintName = "weatherApp"
                ReferencedContainer = "container:weatherApp.xcodeproj">
             </BuildableReference>
@@ -30,7 +30,7 @@
       shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -44,18 +44,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2F612CA72A5BEA6E00562080"
-            BuildableName = "weatherApp.app"
+            BuildableName = "Weather-Release.app"
             BlueprintName = "weatherApp"
             ReferencedContainer = "container:weatherApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "WEATHER_API_ID"
-            value = "SOME_WEATHER_API_ID"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -68,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2F612CA72A5BEA6E00562080"
-            BuildableName = "weatherApp.app"
+            BuildableName = "Weather-Release.app"
             BlueprintName = "weatherApp"
             ReferencedContainer = "container:weatherApp.xcodeproj">
          </BuildableReference>

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2F612CA72A5BEA6E00562080"
-               BuildableName = "weatherApp.app"
+               BuildableName = "Weather-Release.app"
                BlueprintName = "weatherApp"
                ReferencedContainer = "container:weatherApp.xcodeproj">
             </BuildableReference>
@@ -44,18 +44,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2F612CA72A5BEA6E00562080"
-            BuildableName = "weatherApp.app"
+            BuildableName = "Weather-Release.app"
             BlueprintName = "weatherApp"
             ReferencedContainer = "container:weatherApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "WEATHER_API_ID"
-            value = "c79b6cb39826aca9755ade5999cd13bd"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
       <LocationScenarioReference
          identifier = "Mumbai, India"
          referenceType = "1">
@@ -72,7 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2F612CA72A5BEA6E00562080"
-            BuildableName = "weatherApp.app"
+            BuildableName = "Weather-Release.app"
             BlueprintName = "weatherApp"
             ReferencedContainer = "container:weatherApp.xcodeproj">
          </BuildableReference>
