@@ -39,20 +39,17 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
             spinner.stopAnimating()
             return
         }
-        urlMaker.lat = String(lat)
-        urlMaker.lon = String(lon)
         print("Cordinates : ",lat, lon)
         if isReachableToNetwork {
             spinner.startAnimating()
-            urlMaker.getApiData()
+            urlMaker.makeApiCallForCordinate(lat: String(lat), lon: String(lon))
         }else {
             self.showToast(message: "Internet Connection Needed", seconds: 2,withBackroundColor: .red)
         }
     }
     func showAlert(forPromptTitle title : String,withMessage message : String){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//        let alertController = UIAlertController(title: "Need location access", message: "Allow location acces to continue this app", preferredStyle: .alert)
-//
+
         alertController.addAction(UIAlertAction(title: "Give permission", style: .destructive,handler: { _ in
             guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                 return
@@ -66,7 +63,6 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
             self.spinner.stopAnimating()
-            self.urlMaker.isInitalLocationCallDone = true
         }))
         
         present(alertController, animated: true)

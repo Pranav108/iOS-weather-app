@@ -34,14 +34,14 @@ extension FirstScreenTableViewController : UISearchBarDelegate{
         screen1TableView.reloadRows(at: [IndexPath(item: selectedRow, section: 0)], with: .automatic)
         
         searchBar.endEditing(true)
-        let cityName = searchBar.text!
-        let cityWithoutSpaces = cityName.trimmingCharacters(in: .whitespacesAndNewlines)
-        urlMaker.city = cityWithoutSpaces.replacingOccurrences(of: " ", with: "+")
+        let providedCityName = searchBar.text!
+        let cityWithoutSpaces = providedCityName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cityName = cityWithoutSpaces.replacingOccurrences(of: " ", with: "+")
         if cityName == "" {
             showToast(message: "Please enter city name", seconds: 1.2,withBackroundColor: .orange)
         }else if isReachableToNetwork{
             spinner.startAnimating()
-            urlMaker.getApiData()
+            urlMaker.makeApiCall(for: cityName)
         }else {
             self.showToast(message: "Internet Connection Needed", seconds: 1.5,withBackroundColor: .red)
         }

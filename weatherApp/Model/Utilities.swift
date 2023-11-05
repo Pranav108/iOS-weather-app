@@ -56,3 +56,13 @@ func spinnerSetup(spinner : UIActivityIndicatorView, parentView : UIView){
     ])
     spinner.color = .darkGray
 }
+
+
+func giveDateComponent(fromInt timeInterval : Int64) -> DateComponents{
+    
+    let dateFromInterval = Date(timeIntervalSince1970: TimeInterval(timeInterval))
+    
+    let dateComponentFromInterval = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: dateFromInterval)
+    return dateComponentFromInterval
+    
+}
