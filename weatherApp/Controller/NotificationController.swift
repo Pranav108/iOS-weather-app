@@ -39,7 +39,7 @@ class NotificationHandler {
     }
     private func requestPermission() -> Void {
         center.requestAuthorization(options: [.alert, .badge, .alert]) { granted, error in
-            if granted == true && error == nil {
+            if granted == true {
                 self.scheduleNotifications()
                 // We have permission!
             }else{
@@ -51,6 +51,9 @@ class NotificationHandler {
     
    private func scheduleNotifications() -> Void {
        center.removeAllPendingNotificationRequests()
+       defer {
+           notifications.removeAll()
+       }
         for notification in notifications {
             let content = UNMutableNotificationContent()
             content.title = notification.title
@@ -64,5 +67,4 @@ class NotificationHandler {
             }
         }
     }
-    
 }

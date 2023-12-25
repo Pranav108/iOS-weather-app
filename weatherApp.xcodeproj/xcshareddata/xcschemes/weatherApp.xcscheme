@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1430"
+   LastUpgradeVersion = "1500"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2F612CA72A5BEA6E00562080"
-               BuildableName = "Weather-Release.app"
+               BuildableName = "Weather-Debug.app"
                BlueprintName = "weatherApp"
                ReferencedContainer = "container:weatherApp.xcodeproj">
             </BuildableReference>
@@ -28,9 +28,33 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2FD17FB32B3160AD005B4EF9"
+               BuildableName = "WeatherDebugTests.xctest"
+               BlueprintName = "WeatherDebugTests"
+               ReferencedContainer = "container:weatherApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2FD8940D2B3981DB00052806"
+               BuildableName = "weatherAppTest.xctest"
+               BlueprintName = "weatherAppTest"
+               ReferencedContainer = "container:weatherApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -44,7 +68,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2F612CA72A5BEA6E00562080"
-            BuildableName = "Weather-Release.app"
+            BuildableName = "Weather-Debug.app"
             BlueprintName = "weatherApp"
             ReferencedContainer = "container:weatherApp.xcodeproj">
          </BuildableReference>
@@ -61,7 +85,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2F612CA72A5BEA6E00562080"
-            BuildableName = "Weather-Release.app"
+            BuildableName = "Weather-Debug.app"
             BlueprintName = "weatherApp"
             ReferencedContainer = "container:weatherApp.xcodeproj">
          </BuildableReference>
