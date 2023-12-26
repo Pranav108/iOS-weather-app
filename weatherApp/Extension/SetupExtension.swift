@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension FirstScreenTableViewController {
+extension HomeViewController {
     
     func setupInitialTableView(){
         let defaults = UserDefaults.standard
@@ -33,7 +33,6 @@ extension FirstScreenTableViewController {
         DispatchQueue.main.async {
             self.screen1TableView.reloadData()
         }
-        spinner.startAnimating()
     }
     
     @objc func switchStateChanged(_ sender: UISwitch) {

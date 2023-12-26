@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 import UIKit
 
-extension FirstScreenTableViewController : CLLocationManagerDelegate {
+extension HomeViewController : CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         getLocationData(locations.last)
@@ -30,6 +30,7 @@ extension FirstScreenTableViewController : CLLocationManagerDelegate {
             locationManager.requestLocation()
         default:
             print("STATUS : UNKNOWN__DEFAULT")
+            self.spinner.stopAnimating()
         }
     }
     

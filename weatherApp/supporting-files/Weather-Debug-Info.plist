@@ -6,8 +6,6 @@
 	<string>DEBUG</string>
 	<key>SERVER_URL</key>
 	<string>$(SERVER_URL)</string>
-	<key>WEATHER_API_ID</key>
-	<string>$(WEATHER_API_ID)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -21,11 +19,11 @@
 					<string>Default Configuration</string>
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-					<key>UISceneStoryboardFile</key>
-					<string>Main</string>
 				</dict>
 			</array>
 		</dict>
 	</dict>
+	<key>WEATHER_API_ID</key>
+	<string>$(WEATHER_API_ID)</string>
 </dict>
 </plist>

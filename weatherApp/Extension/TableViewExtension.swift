@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataSource,TableReloaderDelegate{
+extension HomeViewController : UITableViewDelegate, UITableViewDataSource,TableReloaderDelegate{
     func reloadTableView() {
         DispatchQueue.main.async {
             self.screen1TableView.reloadData()
@@ -63,7 +63,7 @@ extension FirstScreenTableViewController : UITableViewDelegate, UITableViewDataS
         
         if let tabBarController = self.tabBarController,
            let viewControllers = tabBarController.viewControllers,
-           let secondViewController = viewControllers[1] as? SecondScreenTableViewController {
+           let secondViewController = viewControllers[1] as? ForecastViewController {
             secondViewController.indexOfSelectedRow = indexPath.row
             tabBarController.selectedIndex = 1
         }

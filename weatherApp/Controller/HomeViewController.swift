@@ -1,18 +1,16 @@
 //
-//  firstScreenTableViewController.swift
+//  HomeViewController.swift
 //  weatherApp
 //
-//  Created by Pranav Pratap on 10/07/23.
+//  Created by Pranav Pratap on 25/12/23.
 //
-
-//unable to dequeue a cell with identifier screen1TableViewCell - must register a nib or a class for the identifier or connect a prototype cell in a storyboard"
 
 import UIKit
 
 import CoreLocation
 import Reachability
 
-class FirstScreenTableViewController: UIViewController {
+class HomeViewController: UIViewController {
     
     @IBOutlet weak var outerBlurView: UIView!
     
@@ -24,10 +22,10 @@ class FirstScreenTableViewController: UIViewController {
     
     @IBOutlet weak var headerView: UIView!
     
-    var firstScreenTableViewCell : Screen1TableViewCell!
+//    var firstScreenTableViewCell : Screen1TableViewCell!
     var blurEffectView : UIVisualEffectView?
     var reusableHeader : ReusableHeader?
-
+    
     var redHeader = UIColor(red: 1, green: 179 / 255.0, blue: 179 / 255.0, alpha: 1)
     var greenHeader = UIColor(red: 179 / 255.0, green: 1, blue: 179 / 255.0, alpha: 1)
     var spinner = UIActivityIndicatorView(style: .large)
@@ -42,24 +40,16 @@ class FirstScreenTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setInitialDelegates()
-        
         backgroundView = BackgroundView()
         screen1TableView.backgroundView = backgroundView
         
         setupInitialTableView()
-        
         blurViewSetup()
-        
         checkNetworkConnectionStatus()
-        
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
-        
         setupHeaderAndSwitchView()
-        
         setupSearchBarView()
-        
         spinnerSetup(spinner: spinner, parentView: view)
     }
     
@@ -72,7 +62,7 @@ class FirstScreenTableViewController: UIViewController {
     }
 }
 
-extension FirstScreenTableViewController : WeatherApiDelegate{
+extension HomeViewController : WeatherApiDelegate{
     func updateUIforFirstScreen() {
         if self.screen1TableView != nil {
             DispatchQueue.main.async {
@@ -107,7 +97,7 @@ extension FirstScreenTableViewController : WeatherApiDelegate{
         }
     }
 }
-extension FirstScreenTableViewController {
+extension HomeViewController {
     func getBindedModel(weatherData : WeatherDataModel) -> Screen1DataModel{
         
         let city : String = weatherData.city.name

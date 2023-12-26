@@ -1,20 +1,19 @@
 //
-//  SecondScreenView.swift
+//  ForecastViewController.swift
 //  weatherApp
 //
-//  Created by Pranav Pratap on 11/07/23.
+//  Created by Pranav Pratap on 25/12/23.
 //
 
 import UIKit
 
 var screen2DataForBinding = [Screen2DataModel]()
 
-class SecondScreenTableViewController : UIViewController{
+class ForecastViewController : UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var headerView: UIView!
-    
     
     var backgroundView: BackgroundView!
     
@@ -37,6 +36,9 @@ class SecondScreenTableViewController : UIViewController{
         backgroundView.imageWithName(as: "empty-box")
         tableView.backgroundView = backgroundView
         
+        tableView.register(UINib(nibName: "SecondScreenTableViewCell", bundle: nil), forCellReuseIdentifier: "SecondScreenTableViewCell")
+        
+        
         setupHeaderView()
     }
     
@@ -48,11 +50,11 @@ class SecondScreenTableViewController : UIViewController{
     }
 }
 
-extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataSource{
+extension ForecastViewController : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         let rowCount = screen2DataForBinding.count
-       
+        
         tableView.backgroundView?.isHidden = rowCount > 0
         
         return rowCount
@@ -98,7 +100,7 @@ extension SecondScreenTableViewController : UITableViewDelegate,UITableViewDataS
     
 }
 
-extension SecondScreenTableViewController : WeatherApiDelegate {
+extension ForecastViewController : WeatherApiDelegate {
     
     func updateUIforSecondScreen() {
         expandedIndexSet.removeAll()
@@ -158,7 +160,7 @@ extension SecondScreenTableViewController : WeatherApiDelegate {
     }
 }
 
-extension SecondScreenTableViewController {
+extension ForecastViewController {
     private func bindCellData(forRow row : SecondScreenTableViewCell, withData data : Screen2DataModel){
         row.weatherLogo.image = UIImage(named: data.icon )
         row.dayLabel.text = data.day

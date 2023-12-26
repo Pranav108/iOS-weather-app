@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension FirstScreenTableViewController : UISearchBarDelegate{
+extension HomeViewController : UISearchBarDelegate{
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         return true

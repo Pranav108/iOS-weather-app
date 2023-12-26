@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-extension FirstScreenTableViewController {
+extension HomeViewController {
     func checkNetworkConnectionStatus(){
         DispatchQueue.main.async {
             self.reachability.whenReachable = {

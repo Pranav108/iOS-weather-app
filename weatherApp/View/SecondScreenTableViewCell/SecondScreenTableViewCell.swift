@@ -37,6 +37,8 @@ class SecondScreenTableViewCell: UITableViewCell {
         // Initialization code
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        collectionView.register(UINib(nibName: "SecondScreenCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SecondScreenCollectionViewCell")
        
         collectionView.layer.borderColor = CGColor(gray: 0.32, alpha: 1)
         collectionView.layer.borderWidth = 3

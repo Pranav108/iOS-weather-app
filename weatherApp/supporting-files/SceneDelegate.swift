@@ -16,21 +16,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        guard let tabBarController = window?.rootViewController as? UITabBarController, let viewControllers = tabBarController.viewControllers else {
-            print("UNABLE TO GET VIEWCONTROLLERS IN SCENE_DELEGATE")
-            return 
-        }
-        for viewController in viewControllers{
-           print("VIEWCONTROLLERS IN SCENE_DELEGATE")
-            if let screen1ViewController = viewController as? FirstScreenTableViewController{
-                screen1ViewController.urlMaker = urlMaker
-            }
-            if let screen2ViewController = viewController as? SecondScreenTableViewController{
-                screen2ViewController.urlMaker = urlMaker
-            }
-        }
+        window = UIWindow(windowScene: windowScene)
+        let customTabBarController = TabBarController()
+        
+        // Set the custom tab bar controller as the root view controller
+        window?.rootViewController = customTabBarController
+        window?.makeKeyAndVisible()
         
     }
 

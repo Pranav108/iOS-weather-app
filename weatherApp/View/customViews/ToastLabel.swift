@@ -22,5 +22,4 @@ class ToastLabel : UILabel {
         let height = superSizeThatFits.height + padding.top + padding.bottom
         return CGSize(width: width, height: height)
     }
-    
 }

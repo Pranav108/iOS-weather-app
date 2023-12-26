@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension FirstScreenTableViewController {
+extension HomeViewController {
     func applyBlurEffect() {
         screen1TableView.isUserInteractionEnabled = false
         

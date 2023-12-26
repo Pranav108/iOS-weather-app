@@ -48,10 +48,10 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmC-rH-HEK" userLabel="outerBlurView">
-                                <rect key="frame" x="0.0" y="199" width="393" height="570"/>
+                                <rect key="frame" x="0.0" y="199" width="393" height="619"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3IR-Yj-QYB">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="570"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="619"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>
                                 </subviews>
@@ -80,13 +80,6 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="search" id="oXh-Kj-3Ae"/>
-                    <connections>
-                        <outlet property="headerView" destination="94m-xr-QS9" id="0Cn-hu-42Y"/>
-                        <outlet property="outerBlurView" destination="dmC-rH-HEK" id="xqS-zS-DQe"/>
-                        <outlet property="screen1TableView" destination="3IR-Yj-QYB" id="VsF-DK-faa"/>
-                        <outlet property="searchBar" destination="VB4-pR-fG7" id="CN2-7S-b77"/>
-                        <outlet property="switchButton" destination="2p5-HG-lF9" id="atg-fh-Rzx"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fnX-y9-0hY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -110,10 +103,6 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </tabBar>
-                    <connections>
-                        <segue destination="5dM-kH-ybj" kind="relationship" relationship="viewControllers" id="3hh-6W-3PA"/>
-                        <segue destination="ATl-Jz-kIL" kind="relationship" relationship="viewControllers" id="j6h-FE-1uz"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V8d-EG-x0y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -128,10 +117,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WZF-iR-YRU">
-                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="cVn-dI-ONR">
-                                        <rect key="frame" x="0.0" y="80" width="393" height="630"/>
+                                        <rect key="frame" x="0.0" y="80" width="393" height="679"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SecondScreenTableViewCell" rowHeight="260" id="0gN-zT-flS" customClass="SecondScreenTableViewCell" customModule="Weather_Debug" customModuleProvider="target">
@@ -293,10 +282,6 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="mostRecent" id="HJL-C4-QFx"/>
-                    <connections>
-                        <outlet property="headerView" destination="VRR-cS-NjT" id="vUU-bE-mrH"/>
-                        <outlet property="tableView" destination="cVn-dI-ONR" id="rkZ-G6-vF9"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vm1-JS-Y1Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
