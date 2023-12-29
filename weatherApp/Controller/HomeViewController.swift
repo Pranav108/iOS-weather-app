@@ -62,7 +62,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController : WeatherApiDelegate{
+extension HomeViewController : WeatherApiDelegate {
     func updateUIforFirstScreen() {
         if self.screen1TableView != nil {
             DispatchQueue.main.async {
@@ -97,6 +97,8 @@ extension HomeViewController : WeatherApiDelegate{
         }
     }
 }
+
+// MARK: - EXTENSION FOR HomeViewController
 extension HomeViewController {
     func getBindedModel(weatherData : WeatherDataModel) -> Screen1DataModel{
         
@@ -116,6 +118,106 @@ extension HomeViewController {
         row.infoLabel?.text = currentWeatherData.description
         row.tempRangeLabel?.text = currentWeatherData.max_min
         row.backgroundView = UIImageView(image: UIImage(named: currentWeatherData.imageName))
+    }
+
+    func setupInitialTableView(){
+        let defaults = UserDefaults.standard
+        if let savedData = defaults.data(forKey: "favouritePlaces") {
+            do {
+                let decoder = JSONDecoder()
+                
+                let decodedData = try decoder.decode([WeatherDataModel].self, from: savedData)
+                
+                fetchedDataList = decodedData
+                
+                for index in stride(from: fetchedDataList.count - 1, through: 0, by: -1) {
+                    favouriteWeatherList.selectFavourite(havingIndex: index)
+                }
+            } catch {
+                print("Error decoding data: \(error)")
+            }
+        } else {
+            print("CANNOT GET ANY DATA FROM USER_DEFAULT")
+        }
+        
+        DispatchQueue.main.async {
+            self.screen1TableView.reloadData()
+        }
+    }
+    
+    @objc func switchStateChanged(_ sender: UISwitch) {
+        if sender.isOn {
+            isDegreeCelsius = true
+        } else {
+            isDegreeCelsius = false
+        }
+        screen1TableView.reloadData()
+    }
+    
+    func showToast(message: String, seconds: Double,withBackroundColor bgColor : UIColor = .darkGray) {
+        self.spinner.stopAnimating()
+        let toast = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        toast.view.backgroundColor = bgColor
+        toast.view.layer.cornerRadius = 20
+        self.present(toast, animated: true)
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + seconds){
+            toast.dismiss(animated: true)
+        }
+    }
+    
+    func setInitialDelegates(){
+        screen1TableView.delegate = self
+        screen1TableView.dataSource = self
+        searchBar.delegate = self
+        locationManager.delegate = self
+        urlMaker.delegates[0] = self
+    }
+    
+    func setupHeaderAndSwitchView(){
+        switchButton.isOn = true
+        switchButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        switchButton.addTarget(self, action: #selector(switchStateChanged(_:)), for: .valueChanged)
+        
+        reusableHeader = ReusableHeader(frame:headerView.bounds)
+        headerView.addSubview(reusableHeader!)
+    }
+    func setupSearchBarView(){
+        self.searchBar.placeholder = "Search here"
+        
+        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UISearchTextField
+        let imageV = textFieldInsideSearchBar?.leftView as! UIImageView
+        imageV.image = imageV.image?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+        imageV.tintColor = UIColor.purple
+    }
+    
+    func setRowLayouts(for row : Screen1TableViewCell, withIndex indexPath: IndexPath){
+        if selectedIndexSet.contains(indexPath.row) {
+            row.layer.borderColor = CGColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.9)
+            row.layer.borderWidth = 15
+        }else{
+            row.layer.borderWidth = 0
+        }
+    }
+    
+    // MARK: - THIS SHOULD BE COMMON THROUGH THE APP
+    func showAlert(forPromptTitle title : String,withMessage message : String){
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Give permission", style: .destructive,handler: { _ in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                    self.spinner.stopAnimating()
+                })
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
+            self.spinner.stopAnimating()
+        }))
+        present(alertController, animated: true)
     }
     
 }

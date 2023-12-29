@@ -18,6 +18,16 @@
 		2F61B1B72AD4200C001C5B68 /* Weather-Debug-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F61B1B62AD4200C001C5B68 /* Weather-Debug-Info.plist */; };
 		2F61B1B92AD421DB001C5B68 /* ServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F61B1B82AD421DB001C5B68 /* ServerConfig.swift */; };
 		2F6E28CA2A67B56200E508C8 /* ToastLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6E28C92A67B56200E508C8 /* ToastLabel.swift */; };
+		2F77286D2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F77286B2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.swift */; };
+		2F77286E2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F77286C2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.xib */; };
+		2F7728702B3F5E9200C5AB24 /* SettingModals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F77286F2B3F5E9200C5AB24 /* SettingModals.swift */; };
+		2F7728742B3F61FC00C5AB24 /* SettingInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7728722B3F61FC00C5AB24 /* SettingInfoTableViewCell.swift */; };
+		2F7728752B3F61FC00C5AB24 /* SettingInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F7728732B3F61FC00C5AB24 /* SettingInfoTableViewCell.xib */; };
+		2F8F9D422B6D4324004A5572 /* AppInfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F9D412B6D4324004A5572 /* AppInfoCardView.swift */; };
+		2F90A28D2B6D47B500F6B6A2 /* AppInfoCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F90A28C2B6D47B500F6B6A2 /* AppInfoCardView.xib */; };
+		2F90A2982B6D4A6000F6B6A2 /* weather-app-icon-with-mobile.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F90A2952B6D4A6000F6B6A2 /* weather-app-icon-with-mobile.png */; };
+		2F90A2992B6D4A6000F6B6A2 /* weather-app-icon-with-mobile2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F90A2962B6D4A6000F6B6A2 /* weather-app-icon-with-mobile2.png */; };
+		2F90A29A2B6D4A6000F6B6A2 /* weather-app-with-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F90A2972B6D4A6000F6B6A2 /* weather-app-with-shadow.png */; };
 		2FB414A62B3B3E850052895C /* SecondScreenCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FB414A52B3B3E850052895C /* SecondScreenCollectionViewCell.xib */; };
 		2FB414A82B3B3EF60052895C /* SecondScreenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FB414A72B3B3EF60052895C /* SecondScreenTableViewCell.xib */; };
 		2FB414AD2B3B494D0052895C /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FB414AC2B3B494D0052895C /* HomeViewController.xib */; };
@@ -47,12 +57,11 @@
 		2FD266E82A713C6C00F569DB /* FavouriteQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD266E72A713C6C00F569DB /* FavouriteQueue.swift */; };
 		2FD8941F2B3982F900052806 /* weatherTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD8941E2B3982F900052806 /* weatherTest.swift */; };
 		2FE4C3152A5F315800A19784 /* WeatherApiHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE4C3142A5F315800A19784 /* WeatherApiHandler.swift */; };
-		2FE5A8092AA084D600FDA21F /* LocationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A8082AA084D600FDA21F /* LocationExtension.swift */; };
-		2FE5A80B2AA0861100FDA21F /* BlurViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A80A2AA0861100FDA21F /* BlurViewExtension.swift */; };
-		2FE5A80D2AA0869A00FDA21F /* ReachabilityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A80C2AA0869A00FDA21F /* ReachabilityExtension.swift */; };
-		2FE5A80F2AA0877700FDA21F /* SetupExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A80E2AA0877700FDA21F /* SetupExtension.swift */; };
-		2FE5A8112AA0A0C300FDA21F /* SearchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A8102AA0A0C300FDA21F /* SearchBarExtension.swift */; };
-		2FE5A8132AA0A1CB00FDA21F /* TableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A8122AA0A1CB00FDA21F /* TableViewExtension.swift */; };
+		2FE5A8092AA084D600FDA21F /* HomeViewController+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A8082AA084D600FDA21F /* HomeViewController+Location.swift */; };
+		2FE5A80B2AA0861100FDA21F /* Common+BlurViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A80A2AA0861100FDA21F /* Common+BlurViewExtension.swift */; };
+		2FE5A80D2AA0869A00FDA21F /* Common+ReachabilityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A80C2AA0869A00FDA21F /* Common+ReachabilityExtension.swift */; };
+		2FE5A8112AA0A0C300FDA21F /* HomeViewController+SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A8102AA0A0C300FDA21F /* HomeViewController+SearchBar.swift */; };
+		2FE5A8132AA0A1CB00FDA21F /* HomeViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE5A8122AA0A1CB00FDA21F /* HomeViewController+TableView.swift */; };
 		2FE5A8152AA0ADFC00FDA21F /* no-internet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FE5A8142AA0ADFC00FDA21F /* no-internet.png */; };
 		2FE9D5B42A5FDB69000D67DF /* WeatherElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE9D5B32A5FDB69000D67DF /* WeatherElement.swift */; };
 		2FE9D5B62A5FDBF3000D67DF /* MainWeatherContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE9D5B52A5FDBF3000D67DF /* MainWeatherContent.swift */; };
@@ -99,6 +108,16 @@
 		2F61B1B62AD4200C001C5B68 /* Weather-Debug-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Weather-Debug-Info.plist"; sourceTree = "<group>"; };
 		2F61B1B82AD421DB001C5B68 /* ServerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerConfig.swift; sourceTree = "<group>"; };
 		2F6E28C92A67B56200E508C8 /* ToastLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastLabel.swift; sourceTree = "<group>"; };
+		2F77286B2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleSettingTableViewCell.swift; sourceTree = "<group>"; };
+		2F77286C2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToggleSettingTableViewCell.xib; sourceTree = "<group>"; };
+		2F77286F2B3F5E9200C5AB24 /* SettingModals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModals.swift; sourceTree = "<group>"; };
+		2F7728722B3F61FC00C5AB24 /* SettingInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingInfoTableViewCell.swift; sourceTree = "<group>"; };
+		2F7728732B3F61FC00C5AB24 /* SettingInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingInfoTableViewCell.xib; sourceTree = "<group>"; };
+		2F8F9D412B6D4324004A5572 /* AppInfoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoCardView.swift; sourceTree = "<group>"; };
+		2F90A28C2B6D47B500F6B6A2 /* AppInfoCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppInfoCardView.xib; sourceTree = "<group>"; };
+		2F90A2952B6D4A6000F6B6A2 /* weather-app-icon-with-mobile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-app-icon-with-mobile.png"; sourceTree = "<group>"; };
+		2F90A2962B6D4A6000F6B6A2 /* weather-app-icon-with-mobile2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-app-icon-with-mobile2.png"; sourceTree = "<group>"; };
+		2F90A2972B6D4A6000F6B6A2 /* weather-app-with-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather-app-with-shadow.png"; sourceTree = "<group>"; };
 		2FB414A52B3B3E850052895C /* SecondScreenCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondScreenCollectionViewCell.xib; sourceTree = "<group>"; };
 		2FB414A72B3B3EF60052895C /* SecondScreenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondScreenTableViewCell.xib; sourceTree = "<group>"; };
 		2FB414AC2B3B494D0052895C /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
@@ -131,12 +150,11 @@
 		2FE4C3142A5F315800A19784 /* WeatherApiHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApiHandler.swift; sourceTree = "<group>"; };
 		2FE52F822AD464A1006E8DA5 /* weather-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "weather-Release.xcconfig"; sourceTree = "<group>"; };
 		2FE52F832AD4650A006E8DA5 /* weather-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "weather-Debug.xcconfig"; sourceTree = "<group>"; };
-		2FE5A8082AA084D600FDA21F /* LocationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationExtension.swift; sourceTree = "<group>"; };
-		2FE5A80A2AA0861100FDA21F /* BlurViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurViewExtension.swift; sourceTree = "<group>"; };
-		2FE5A80C2AA0869A00FDA21F /* ReachabilityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityExtension.swift; sourceTree = "<group>"; };
-		2FE5A80E2AA0877700FDA21F /* SetupExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupExtension.swift; sourceTree = "<group>"; };
-		2FE5A8102AA0A0C300FDA21F /* SearchBarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarExtension.swift; sourceTree = "<group>"; };
-		2FE5A8122AA0A1CB00FDA21F /* TableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExtension.swift; sourceTree = "<group>"; };
+		2FE5A8082AA084D600FDA21F /* HomeViewController+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Location.swift"; sourceTree = "<group>"; };
+		2FE5A80A2AA0861100FDA21F /* Common+BlurViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Common+BlurViewExtension.swift"; sourceTree = "<group>"; };
+		2FE5A80C2AA0869A00FDA21F /* Common+ReachabilityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Common+ReachabilityExtension.swift"; sourceTree = "<group>"; };
+		2FE5A8102AA0A0C300FDA21F /* HomeViewController+SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+SearchBar.swift"; sourceTree = "<group>"; };
+		2FE5A8122AA0A1CB00FDA21F /* HomeViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+TableView.swift"; sourceTree = "<group>"; };
 		2FE5A8142AA0ADFC00FDA21F /* no-internet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-internet.png"; sourceTree = "<group>"; };
 		2FE9D5B32A5FDB69000D67DF /* WeatherElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherElement.swift; sourceTree = "<group>"; };
 		2FE9D5B52A5FDBF3000D67DF /* MainWeatherContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWeatherContent.swift; sourceTree = "<group>"; };
@@ -219,15 +237,88 @@
 		2F612CD92A5C38EC00562080 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2FB414A92B3B45160052895C /* Screen1TableViewCell */,
-				2FB414AA2B3B451F0052895C /* SecondScreenTableViewCell */,
-				2FB414AB2B3B45280052895C /* SecondScreenCollectionViewCell */,
+				2F8F9D3F2B6D4285004A5572 /* Home */,
+				2F8F9D3E2B6D4275004A5572 /* Forecast */,
+				2F8F9D3D2B6D426D004A5572 /* Setting */,
 				2FE025962B3B4BEC00282F16 /* customViews */,
-				2FF334562B39B99700EE3F34 /* SettingsViewController.xib */,
-				2FF3345A2B39B9C000EE3F34 /* ForecastViewController.xib */,
-				2FB414AC2B3B494D0052895C /* HomeViewController.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		2F7728692B3F4C5900C5AB24 /* SettingScreenCells */ = {
+			isa = PBXGroup;
+			children = (
+				2F7728712B3F61CA00C5AB24 /* SettingInfoCell */,
+				2F77286A2B3F4C6700C5AB24 /* ToggleableCell */,
+				2F77286F2B3F5E9200C5AB24 /* SettingModals.swift */,
+			);
+			path = SettingScreenCells;
+			sourceTree = "<group>";
+		};
+		2F77286A2B3F4C6700C5AB24 /* ToggleableCell */ = {
+			isa = PBXGroup;
+			children = (
+				2F77286B2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.swift */,
+				2F77286C2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.xib */,
+			);
+			path = ToggleableCell;
+			sourceTree = "<group>";
+		};
+		2F7728712B3F61CA00C5AB24 /* SettingInfoCell */ = {
+			isa = PBXGroup;
+			children = (
+				2F7728722B3F61FC00C5AB24 /* SettingInfoTableViewCell.swift */,
+				2F7728732B3F61FC00C5AB24 /* SettingInfoTableViewCell.xib */,
+			);
+			path = SettingInfoCell;
+			sourceTree = "<group>";
+		};
+		2F8F9D3D2B6D426D004A5572 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				2F8F9D402B6D42C9004A5572 /* AboutApp */,
+				2F7728692B3F4C5900C5AB24 /* SettingScreenCells */,
+				2FF334562B39B99700EE3F34 /* SettingsViewController.xib */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		2F8F9D3E2B6D4275004A5572 /* Forecast */ = {
+			isa = PBXGroup;
+			children = (
+				2FF3345A2B39B9C000EE3F34 /* ForecastViewController.xib */,
+				2FB414AB2B3B45280052895C /* SecondScreenCollectionViewCell */,
+				2FB414AA2B3B451F0052895C /* SecondScreenTableViewCell */,
+			);
+			path = Forecast;
+			sourceTree = "<group>";
+		};
+		2F8F9D3F2B6D4285004A5572 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2FB414AC2B3B494D0052895C /* HomeViewController.xib */,
+				2FB414A92B3B45160052895C /* Screen1TableViewCell */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		2F8F9D402B6D42C9004A5572 /* AboutApp */ = {
+			isa = PBXGroup;
+			children = (
+				2F90A28C2B6D47B500F6B6A2 /* AppInfoCardView.xib */,
+				2F8F9D412B6D4324004A5572 /* AppInfoCardView.swift */,
+			);
+			path = AboutApp;
+			sourceTree = "<group>";
+		};
+		2F90A28E2B6D4A2400F6B6A2 /* app-icons */ = {
+			isa = PBXGroup;
+			children = (
+				2F90A2952B6D4A6000F6B6A2 /* weather-app-icon-with-mobile.png */,
+				2F90A2962B6D4A6000F6B6A2 /* weather-app-icon-with-mobile2.png */,
+				2F90A2972B6D4A6000F6B6A2 /* weather-app-with-shadow.png */,
+			);
+			path = "app-icons";
 			sourceTree = "<group>";
 		};
 		2FB414A92B3B45160052895C /* Screen1TableViewCell */ = {
@@ -260,6 +351,7 @@
 		2FD006052A6437AA0029640E /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				2F90A28E2B6D4A2400F6B6A2 /* app-icons */,
 				2FD266E22A7134D900F569DB /* Empty_heart.png */,
 				2FD266E42A7134DF00F569DB /* Filled_heart.png */,
 				2FD005FD2A6437860029640E /* Clear.png */,
@@ -370,12 +462,11 @@
 		2FE5A8072AA084B800FDA21F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				2FE5A8082AA084D600FDA21F /* LocationExtension.swift */,
-				2FE5A80A2AA0861100FDA21F /* BlurViewExtension.swift */,
-				2FE5A80C2AA0869A00FDA21F /* ReachabilityExtension.swift */,
-				2FE5A80E2AA0877700FDA21F /* SetupExtension.swift */,
-				2FE5A8102AA0A0C300FDA21F /* SearchBarExtension.swift */,
-				2FE5A8122AA0A1CB00FDA21F /* TableViewExtension.swift */,
+				2FE5A8082AA084D600FDA21F /* HomeViewController+Location.swift */,
+				2FE5A80A2AA0861100FDA21F /* Common+BlurViewExtension.swift */,
+				2FE5A80C2AA0869A00FDA21F /* Common+ReachabilityExtension.swift */,
+				2FE5A8102AA0A0C300FDA21F /* HomeViewController+SearchBar.swift */,
+				2FE5A8122AA0A1CB00FDA21F /* HomeViewController+TableView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -522,6 +613,8 @@
 				2FD006112A645E7C0029640E /* Snow_Img.jpg in Resources */,
 				2FD006182A6463100029640E /* Thunderstorm_Img.jpg in Resources */,
 				2FD266E52A7134DF00F569DB /* Filled_heart.png in Resources */,
+				2F90A29A2B6D4A6000F6B6A2 /* weather-app-with-shadow.png in Resources */,
+				2F90A2992B6D4A6000F6B6A2 /* weather-app-icon-with-mobile2.png in Resources */,
 				2F612CDD2A5C398000562080 /* Screen1TableViewCell.xib in Resources */,
 				2FB414A82B3B3EF60052895C /* SecondScreenTableViewCell.xib in Resources */,
 				2FD0061C2A6464C10029640E /* Else_Img.jpg in Resources */,
@@ -530,7 +623,11 @@
 				2FD006032A6437860029640E /* Drizzle.png in Resources */,
 				2FBBE93C2A76E0700033A609 /* find-weather.png in Resources */,
 				2FD006042A6437860029640E /* Clear.png in Resources */,
+				2F90A2982B6D4A6000F6B6A2 /* weather-app-icon-with-mobile.png in Resources */,
+				2F90A28D2B6D47B500F6B6A2 /* AppInfoCardView.xib in Resources */,
+				2F77286E2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.xib in Resources */,
 				2FB414A62B3B3E850052895C /* SecondScreenCollectionViewCell.xib in Resources */,
+				2F7728752B3F61FC00C5AB24 /* SettingInfoTableViewCell.xib in Resources */,
 				2FB414AD2B3B494D0052895C /* HomeViewController.xib in Resources */,
 				2FD006222A64706F0029640E /* Hourly_Forecast.png in Resources */,
 				2FBBE9402A76EBE40033A609 /* empty-box.png in Resources */,
@@ -612,7 +709,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FE5A8092AA084D600FDA21F /* LocationExtension.swift in Sources */,
+				2FE5A8092AA084D600FDA21F /* HomeViewController+Location.swift in Sources */,
+				2F7728702B3F5E9200C5AB24 /* SettingModals.swift in Sources */,
 				2FF3345E2B39BC4600EE3F34 /* TabBarController.swift in Sources */,
 				2FE9E1762A6D512F009CB409 /* Screen2DataModel.swift in Sources */,
 				2FE9D5B62A5FDBF3000D67DF /* MainWeatherContent.swift in Sources */,
@@ -622,7 +720,7 @@
 				2FE9E17C2A6D7B02009CB409 /* Screen1DataModel.swift in Sources */,
 				2FE4C3152A5F315800A19784 /* WeatherApiHandler.swift in Sources */,
 				2FBBE93E2A76E4A30033A609 /* placeholderImage.swift in Sources */,
-				2FE5A80D2AA0869A00FDA21F /* ReachabilityExtension.swift in Sources */,
+				2FE5A80D2AA0869A00FDA21F /* Common+ReachabilityExtension.swift in Sources */,
 				2FF2230E2AF7A1370043FEC3 /* NotificationController.swift in Sources */,
 				2FE9D5C12A60807A000D67DF /* City.swift in Sources */,
 				2FD266E82A713C6C00F569DB /* FavouriteQueue.swift in Sources */,
@@ -631,17 +729,19 @@
 				2F0163922A5D65C000D853F6 /* SecondScreenController.swift in Sources */,
 				2F612CAC2A5BEA6E00562080 /* AppDelegate.swift in Sources */,
 				2F6E28CA2A67B56200E508C8 /* ToastLabel.swift in Sources */,
-				2FE5A80F2AA0877700FDA21F /* SetupExtension.swift in Sources */,
 				2FF334532B39B87B00EE3F34 /* HomeViewController.swift in Sources */,
-				2FE5A8132AA0A1CB00FDA21F /* TableViewExtension.swift in Sources */,
+				2FE5A8132AA0A1CB00FDA21F /* HomeViewController+TableView.swift in Sources */,
 				2F612CD12A5C322500562080 /* FirstScreenController.swift in Sources */,
 				2FCEB84C2A63001700A32D82 /* ReusableHeader.swift in Sources */,
 				2FF334572B39B99700EE3F34 /* SettingsViewController.swift in Sources */,
-				2FE5A8112AA0A0C300FDA21F /* SearchBarExtension.swift in Sources */,
+				2FE5A8112AA0A0C300FDA21F /* HomeViewController+SearchBar.swift in Sources */,
 				2FF3345B2B39B9C000EE3F34 /* ForecastViewController.swift in Sources */,
 				2FE9D5B42A5FDB69000D67DF /* WeatherElement.swift in Sources */,
+				2F7728742B3F61FC00C5AB24 /* SettingInfoTableViewCell.swift in Sources */,
+				2F8F9D422B6D4324004A5572 /* AppInfoCardView.swift in Sources */,
 				2F612CAE2A5BEA6E00562080 /* SceneDelegate.swift in Sources */,
-				2FE5A80B2AA0861100FDA21F /* BlurViewExtension.swift in Sources */,
+				2F77286D2B3F4CE100C5AB24 /* ToggleSettingTableViewCell.swift in Sources */,
+				2FE5A80B2AA0861100FDA21F /* Common+BlurViewExtension.swift in Sources */,
 				2FE9D5BA2A6079D4000D67DF /* Utilities.swift in Sources */,
 				2F612CDC2A5C398000562080 /* Screen1TableViewCell.swift in Sources */,
 			);

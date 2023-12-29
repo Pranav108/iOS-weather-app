@@ -48,25 +48,4 @@ extension HomeViewController : CLLocationManagerDelegate {
             self.showToast(message: "Internet Connection Needed", seconds: 2,withBackroundColor: .red)
         }
     }
-    func showAlert(forPromptTitle title : String,withMessage message : String){
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        alertController.addAction(UIAlertAction(title: "Give permission", style: .destructive,handler: { _ in
-            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                return
-            }
-            
-            if UIApplication.shared.canOpenURL(settingsUrl) {
-                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                    self.spinner.stopAnimating()
-                })
-            }
-        }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel,handler: { _ in
-            self.spinner.stopAnimating()
-        }))
-        
-        present(alertController, animated: true)
-    }
-    
 }
