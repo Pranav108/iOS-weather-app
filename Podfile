@@ -3,8 +3,10 @@
 
 target 'weatherApp' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+  #  use_frameworks!
 
-pod 'ReachabilitySwift'
+  pod 'ReachabilitySwift'
 
+  target :weatherTest
+  
 end

@@ -10,49 +10,38 @@ import UIKit
 
 class WeatherApiHandler{
     
-    var city : String?
-    var lat : String?
-    var lon : String?
-    var isInitalLocationCallDone = false
-    
     var delegates : [WeatherApiDelegate?] = [nil,nil]
+    private var isApiCallForCurrentLocation : Bool = false
     
-    func getApiData(){
-        var urlString = API_URL
-        print("urlString = \(urlString)")
-        if (city != nil) && isInitalLocationCallDone{
-            urlString += "&q=\(city ?? "")"
-            performRequest(urlString: urlString)
-        }else if lat == nil || lon == nil{
-            print("CANNOT get LAT and LON")
-        }else{
-            urlString += "&lat=" + (lat ?? "LAT") + "&lon=" + (lon ?? "LON")
-            performRequest(urlString: urlString)
-            isInitalLocationCallDone = true
-        }
+    func makeApiCallForCordinate(lat : String, lon : String){
+        isApiCallForCurrentLocation = true
+        let urlWithCordinates = API_URL + "&lat=" + (lat) + "&lon=" + (lon)
+        performRequest(urlString: urlWithCordinates)
     }
     
-    func performRequest(urlString : String){
+    func makeApiCall(for cityName : String){
+        isApiCallForCurrentLocation = false
+        let urlWithCityName = API_URL + "&q=\(cityName)"
+        performRequest(urlString: urlWithCityName)
+    }
+    
+    private func performRequest(urlString : String){
         
         // 1. Create a url
-        
         if let url = URL(string: urlString) {
             
             // 2. Create a url session
-            
             let session = URLSession.shared
             // 3. Give the session a task
             
             let task = session.dataTask(with: url, completionHandler:  handler(data:urlResponse:error:))
-            // I THINK THIS IS JUST ESCAPING, BUT I'M EXPECTING TO COMPLETE
             
             // 4. Start the task
-            
             task.resume()
         }
     }
     
-    func handler(data : Data?, urlResponse : URLResponse?, error : Error?){
+    private func handler(data : Data?, urlResponse : URLResponse?, error : Error?){
         if let apiData = data {
             if let actualData = parseJson(weatherData: apiData){
                 // BIND THE DATA TO THE UI, WHEN DATA RECIEVED
@@ -60,14 +49,14 @@ class WeatherApiHandler{
                 delegates[0]?.updateUIforFirstScreen()
                 delegates[1]?.updateUIforSecondScreen()
             }else{
-                print("CANNOT GET PARSED_DATA")
+                showToastMessage(forMessage: "CANNOT GET PARSED_DATA")
             }
         }else {
-            print("ERROR FROM HANDLER : ",error!)
+            showToastMessage(forMessage: "\(String(describing: error?.localizedDescription))")
         }
-        
     }
-    func parseJson(weatherData : Data) -> WeatherDataModel?{
+    
+    private func parseJson(weatherData : Data) -> WeatherDataModel?{
         let decoder = JSONDecoder()
         do {
             let decodedWeatherData = try decoder.decode(WeatherDataModel.self, from: weatherData)
@@ -78,13 +67,14 @@ class WeatherApiHandler{
         }
     }
     
-    private func showToastMessage(forMessage msg : String, forSeconds sec : Double, withBackroundColor bgColor: UIColor = .darkGray){
+    private func showToastMessage(forMessage msg : String, forSeconds sec : Double = 1.2, withBackroundColor bgColor: UIColor = .darkGray){
         DispatchQueue.main.async {
             self.delegates[0]?.showToast(message: msg, seconds: sec, withBackroundColor: bgColor)
         }
     }
     
-    func addWeatherUniquely(forData currentData : WeatherDataModel){
+    // TODO: - Have to remove this function from WeatherApiHandler
+    private func addWeatherUniquely(forData currentData : WeatherDataModel){
         
         let currentCityID = currentData.city.id
         for (index, data) in fetchedDataList.enumerated(){
@@ -106,6 +96,19 @@ class WeatherApiHandler{
         }
         favouriteWeatherList.slideFavList()
         fetchedDataList.insert(currentData, at: 0)
-    }
+        
+        // the below block is at inappro
+        if (isApiCallForCurrentLocation) {
+            let manager = NotificationHandler()
+            
+            let sunriseDateComponent = giveDateComponent(fromInt: currentData.city.sunset)
+            let sunsetDateComponent = giveDateComponent(fromInt: currentData.city.sunset)
+            
+            manager.addNotification(title: "Heyy, see the Sunrise ",body: "This is sunrise time in \(currentData.city.name)",dateComponent: sunriseDateComponent)
+             manager.addNotification(title: "Heyy, see the Sunset",body: "This is sunset time in \(currentData.city.name)",dateComponent: sunsetDateComponent)
+            
+            manager.schedule()
     
+        }
+    }
 }

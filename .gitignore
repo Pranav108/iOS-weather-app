@@ -5,6 +5,7 @@
 *~
 .project
 *.xcuserstate
+*.xcconfig
 xcuserdata/
 
 # Build products
