@@ -6,100 +6,78 @@
 //
 
 import Foundation
+import UIKit
 
 class WeatherApiHandler{
     
-    var city : String?
-    var lat : String?
-    var lon : String?
-    
-    private var deleteRowFrom : Int?
-    
     var delegates : [WeatherApiDelegate?] = [nil,nil]
+    private var isApiCallForCurrentLocation : Bool = false
     
-    func getApiData(){
-        print(#function, "__START")
-        var urlString = API_URL
-        if let city = city {
-            urlString += "&q=\(city)"
-        }else if lat == nil || lon == nil{
-            print("CANNOT get LAT and LON")
-        }else{
-            urlString += "&lat=" + (lat ?? "LAT") + "&lon=" + (lon ?? "LON")
-        }
-        print(urlString)
-        performRequest(urlString: urlString)
-        print(#function, "__END")
+    func makeApiCallForCordinate(lat : String, lon : String){
+        isApiCallForCurrentLocation = true
+        let urlWithCordinates = API_URL + "&lat=" + (lat) + "&lon=" + (lon)
+        performRequest(urlString: urlWithCordinates)
     }
     
-    func performRequest(urlString : String){
+    func makeApiCall(for cityName : String){
+        isApiCallForCurrentLocation = false
+        let urlWithCityName = API_URL + "&q=\(cityName)"
+        performRequest(urlString: urlWithCityName)
+    }
+    
+    private func performRequest(urlString : String){
         
         // 1. Create a url
-        
         if let url = URL(string: urlString) {
             
             // 2. Create a url session
-            
             let session = URLSession.shared
-            print(#function,"__START")
             // 3. Give the session a task
             
             let task = session.dataTask(with: url, completionHandler:  handler(data:urlResponse:error:))
-            // I THINK THIS IS JUST ESCAPING, BUT I'M EXPECTING TO COMPLETE
             
-            print(#function,"__END")
             // 4. Start the task
-            
             task.resume()
         }
     }
     
-    func handler(data : Data?, urlResponse : URLResponse?, error : Error?){
+    private func handler(data : Data?, urlResponse : URLResponse?, error : Error?){
         if let apiData = data {
-            print(#function)
             if let actualData = parseJson(weatherData: apiData){
                 // BIND THE DATA TO THE UI, WHEN DATA RECIEVED
-                print(#function)
-                deleteRowFrom = nil
                 addWeatherUniquely(forData: actualData)
-                delegates[0]?.updateUIforFirstScreen(deleteRowFrom : deleteRowFrom)
+                delegates[0]?.updateUIforFirstScreen()
                 delegates[1]?.updateUIforSecondScreen()
             }else{
-                print("CANNOT GET PARSED_DATA")
+                showToastMessage(forMessage: "CANNOT GET PARSED_DATA")
             }
         }else {
-            showToastMessage(forMessage: "Internet  connection needed", forSeconds: 1.2)
-            print("ERROR FROM HANDLER : ",error!)
+            showToastMessage(forMessage: "\(String(describing: error?.localizedDescription))")
         }
-        
     }
-    func parseJson(weatherData : Data) -> WeatherDataModel?{
+    
+    private func parseJson(weatherData : Data) -> WeatherDataModel?{
         let decoder = JSONDecoder()
-        print(#function)
         do {
             let decodedWeatherData = try decoder.decode(WeatherDataModel.self, from: weatherData)
-            print(#function)
             return decodedWeatherData
         } catch{
-            
-            print("calling showToast")
             showToastMessage(forMessage: "City NOT found", forSeconds: 1.2)
-            print(error)
             return nil
         }
     }
     
-    private func showToastMessage(forMessage msg : String,forSeconds sec : Double) {
+    private func showToastMessage(forMessage msg : String, forSeconds sec : Double = 1.2, withBackroundColor bgColor: UIColor = .darkGray){
         DispatchQueue.main.async {
-            self.delegates[0]?.showToast(message: msg, seconds: sec)
+            self.delegates[0]?.showToast(message: msg, seconds: sec, withBackroundColor: bgColor)
         }
     }
     
-    func addWeatherUniquely(forData currentData : WeatherDataModel) {
+    // TODO: - Have to remove this function from WeatherApiHandler
+    private func addWeatherUniquely(forData currentData : WeatherDataModel){
         
         let currentCityID = currentData.city.id
-        print(currentData.city.name)
-        for (index, data) in fetchedDataList.enumerated() {
+        for (index, data) in fetchedDataList.enumerated(){
             
             if currentCityID == data.city.id {
                 
@@ -108,16 +86,29 @@ class WeatherApiHandler{
                 
                 deleteRowFrom = index
                 favouriteWeatherList.swapFavouriteWeather(forIndex : index)
-                break
+                if index == 0 {
+                    showToastMessage(forMessage: "Weather updated for \(currentData.city.name)",forSeconds: 1,withBackroundColor: .green)
+                }
+                return
             }else{
                 print("city name is \(data.city.name)")
             }
         }
-        if deleteRowFrom == nil {
-            favouriteWeatherList.slideFavList()
-            fetchedDataList.insert(currentData, at: 0)
-        }
+        favouriteWeatherList.slideFavList()
+        fetchedDataList.insert(currentData, at: 0)
         
-    }
+        // the below block is at inappro
+        if (isApiCallForCurrentLocation) {
+            let manager = NotificationHandler()
+            
+            let sunriseDateComponent = giveDateComponent(fromInt: currentData.city.sunset)
+            let sunsetDateComponent = giveDateComponent(fromInt: currentData.city.sunset)
+            
+            manager.addNotification(title: "Heyy, see the Sunrise ",body: "This is sunrise time in \(currentData.city.name)",dateComponent: sunriseDateComponent)
+             manager.addNotification(title: "Heyy, see the Sunset",body: "This is sunset time in \(currentData.city.name)",dateComponent: sunsetDateComponent)
+            
+            manager.schedule()
     
+        }
+    }
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="SecondScreenCollectionViewCell" reuseIdentifier="SecondScreenCollectionViewCell" id="l2d-Kr-Dlp" customClass="SecondScreenCollectionViewCell" customModule="Weather_Debug" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mNw-SP-EAe">
+                <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="vhQ-TD-jYQ">
+                        <rect key="frame" x="10" y="10" width="120" height="120"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tempLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Use-C2-Ip1">
+                                <rect key="frame" x="0.0" y="0.0" width="120" height="60"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="sOZ-1t-brC"/>
+                                    <constraint firstAttribute="height" constant="60" id="zYn-Ic-ivv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="timeLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfN-e7-mzr">
+                                <rect key="frame" x="0.0" y="60" width="120" height="60"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="OOr-VL-HwV"/>
+                                    <constraint firstAttribute="height" constant="60" id="Z34-ZK-jCU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="vhQ-TD-jYQ" firstAttribute="top" secondItem="mNw-SP-EAe" secondAttribute="top" constant="10" id="eah-hZ-s0L"/>
+                    <constraint firstAttribute="trailing" secondItem="vhQ-TD-jYQ" secondAttribute="trailing" constant="10" id="goP-ea-kFR"/>
+                    <constraint firstAttribute="bottom" secondItem="vhQ-TD-jYQ" secondAttribute="bottom" constant="10" id="hhf-rW-nSK"/>
+                    <constraint firstItem="vhQ-TD-jYQ" firstAttribute="leading" secondItem="mNw-SP-EAe" secondAttribute="leading" constant="10" id="tJ6-2d-0vf"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="140" height="140"/>
+            <connections>
+                <outlet property="tempLabel" destination="Use-C2-Ip1" id="AZ2-fC-jPb"/>
+                <outlet property="timeLabel" destination="FfN-e7-mzr" id="tiW-ye-onz"/>
+            </connections>
+            <point key="canvasLocation" x="-466" y="-165"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

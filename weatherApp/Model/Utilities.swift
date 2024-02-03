@@ -8,16 +8,26 @@
 import Foundation
 import UIKit
 
-let API_KEY = "c79b6cb39826aca9755ade5999cd13bd"
-let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=\(API_KEY)&units=metric"
+let API_ID = ServerConfig.shared.WEATHER_API_ID
 
+let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=\(API_ID)&units=metric"
+
+var deleteRowFrom : Int?
+var isDegreeCelsius : Bool = true
 var fetchedDataList = [WeatherDataModel]()
 var favouriteWeatherList = FavouriteQueue(size: 3)
+
+func getTemperatureStringBasedOnScale(forTemp temp : Float) -> String {
+    if (!isDegreeCelsius) {
+        return String(Int((temp * 9/5) + 32)) + "˚F"
+    }
+    return String(Int(temp)) + "˚C"
+}
 
 protocol WeatherApiDelegate{
     func updateUIforFirstScreen(deleteRowFrom : Int?)
     func updateUIforSecondScreen()
-    func showToast(message : String, seconds : Double)
+    func showToast(message : String, seconds : Double, withBackroundColor bgColor : UIColor)
 }
 
 extension WeatherApiDelegate{
@@ -27,20 +37,11 @@ extension WeatherApiDelegate{
     func updateUIforSecondScreen(){
         print("Default Inplementation of updateUIforSecondScreen")
     }
-    func showToast(message : String, seconds : Double){
+    func showToast(message : String, seconds : Double, withBackroundColor bgColor : UIColor = .darkGray){
         print("Default Inplementation of showToast")
     }
     func showSpinner(){
         print("Default Inplementation of showSpinner")
-    }
-}
-
-extension UIViewController {
-    func hideKeyboardWhenTappedAround() {
-        print(#function)
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
     }
 }
 
@@ -54,4 +55,14 @@ func spinnerSetup(spinner : UIActivityIndicatorView, parentView : UIView){
         spinner.widthAnchor.constraint(equalTo: parentView.widthAnchor, multiplier: 0.8),
     ])
     spinner.color = .darkGray
+}
+
+
+func giveDateComponent(fromInt timeInterval : Int64) -> DateComponents{
+    
+    let dateFromInterval = Date(timeIntervalSince1970: TimeInterval(timeInterval))
+    
+    let dateComponentFromInterval = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: dateFromInterval)
+    return dateComponentFromInterval
+    
 }
