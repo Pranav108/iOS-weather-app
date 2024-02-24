@@ -13,10 +13,13 @@ class SettingsViewController: UIViewController{
     
     let headerHeightInTableView : Double =  35
     let cellHeightInTableView : Double =  50
+    
+    var appInfoPupup : AppInfoCardView?
+    
     var settingModalArray : [SettingSectionProtocol] {
         let locationCell = ToggleSettingCell(cellLabel: .locationPermissionSwitch, switchStatus: true)
         let themeCell = ToggleSettingCell(cellLabel: .themeSwitch, switchStatus: false)
-        let temperatureScaleCell = ToggleSettingCell(cellLabel: .temperatureScaleSwitch, switchStatus: true)
+        let temperatureScaleCell = ToggleSettingCell(cellLabel: .temperatureScaleSwitch, switchStatus: Variable.isDegreeFahrenheit) // HERE THE STATUS WILL BE TAKEN FROM CONFIG
         let basicSection = ToggleSwitchSectionModal(headerString: "Basics", toggelableCells: [locationCell, themeCell,temperatureScaleCell ])
         
         let aboutApp = InfoSettingCell(cellLabel: .aboutApp)
@@ -80,35 +83,51 @@ extension SettingsViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return cellHeightInTableView
     }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return headerHeightInTableView
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let currentSectionValue = settingModalArray[indexPath.section]
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: ToggleSettingTableViewCell.identifier, for: indexPath) as! ToggleSettingTableViewCell
-            cell.switchCallBackDelegate = self
+            cell.switchCallBackDelegate = self // MARK: DELEGATE SET
             let toggleSwitchSectionModal = currentSectionValue as! ToggleSwitchSectionModal, toggelableCells = toggleSwitchSectionModal.toggelableCells
             cell.configureToggelableCell(for: toggelableCells[indexPath.row].cellLabel , with: toggelableCells[indexPath.row].switchStatus)
             return cell
             
         case 1 :
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingInfoTableViewCell.identifier, for: indexPath) as! SettingInfoTableViewCell
-            cell.settInfoCallBackDelegate = self
+            cell.settInfoCallBackDelegate = self // MARK: DELEGATE SET
             let moreInfoSectionModal = currentSectionValue as! InfoSettingSectionModal, moreInfoCells = moreInfoSectionModal.moreInfoCells
             cell.configureMoreInfoLableCell(for: moreInfoCells[indexPath.row].cellLabel)
             return cell
-        default:break        }
+        default:break
+        }
         return UITableViewCell()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        appInfoPupup?.removeFromSuperview()
     }
 }
 
+// Instead of delegates, callback can be used
 extension SettingsViewController : SettingSwitchDelegateProtocol {
     func didSwitchTapped(for toggleType: ToggleType, changedTo isSwitchOn: Bool) {
         print("Button with label :\(toggleType.rawValue) is changed to \(isSwitchOn)")
+        switch toggleType {
+            
+        case .themeSwitch:
+            print("Button with label :\(toggleType.rawValue) is changed to \(isSwitchOn)")
+        case .temperatureScaleSwitch:
+            Variable.isDegreeFahrenheit = isSwitchOn
+        case .locationPermissionSwitch:
+            print("Button with label :\(toggleType.rawValue) is changed to \(isSwitchOn)")
+        case .none:
+            print("Button with label :\(toggleType.rawValue) is changed to \(isSwitchOn)")
+        }
     }
 }
 
@@ -119,15 +138,31 @@ extension SettingsViewController : SettingMoreInfoDelegateProtocol {
         case .aboutApp:
             setupAppInfoView()
         case .contactSupport:
-            setupAppInfoView()
+            openContactSupport()
         }
     }
     
     private func setupAppInfoView(){
-        let appInfoPupup = AppInfoCardView(frame: view.frame)
-        view.addSubview(appInfoPupup)
-        appInfoPupup.crossedCallBack = {
-            appInfoPupup.removeFromSuperview()
+        appInfoPupup = AppInfoCardView(frame: view.frame)
+        view.addSubview(appInfoPupup!)
+        appInfoPupup?.crossedCallBack = {
+            self.appInfoPupup?.removeFromSuperview()
+        }
+        
+        appInfoPupup?.openWebViewCallBack = { webViewType in
+            let commonWebViewController = CommonWebViewController()
+            commonWebViewController.webViewType = webViewType
+            self.present(commonWebViewController, animated: true)
+        }
+    }
+    
+    private func openContactSupport(){
+        let email = "pranav.nit.vns@gmail.com"
+        if let url = URL(string: "mailto:\(email)?subject=Weather%20app%20Query") {
+                UIApplication.shared.canOpenURL(url)
+                UIApplication.shared.open(url)
+        }else{
+//           globl toast for something went wrong
         }
     }
 }

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2F0163922A5D65C000D853F6 /* SecondScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0163912A5D65C000D853F6 /* SecondScreenController.swift */; };
+		2F074C232B8A22B30051254B /* GlobalValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F074C222B8A22B30051254B /* GlobalValues.swift */; };
+		2F4A256C2B88F87F006A3978 /* CommonWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4A256A2B88F87F006A3978 /* CommonWebViewController.swift */; };
+		2F4A256D2B88F87F006A3978 /* CommonWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F4A256B2B88F87F006A3978 /* CommonWebViewController.xib */; };
 		2F612CAC2A5BEA6E00562080 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F612CAB2A5BEA6E00562080 /* AppDelegate.swift */; };
 		2F612CAE2A5BEA6E00562080 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F612CAD2A5BEA6E00562080 /* SceneDelegate.swift */; };
 		2F612CB52A5BEA6F00562080 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F612CB42A5BEA6F00562080 /* Assets.xcassets */; };
@@ -99,6 +102,9 @@
 
 /* Begin PBXFileReference section */
 		2F0163912A5D65C000D853F6 /* SecondScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondScreenController.swift; sourceTree = "<group>"; };
+		2F074C222B8A22B30051254B /* GlobalValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalValues.swift; sourceTree = "<group>"; };
+		2F4A256A2B88F87F006A3978 /* CommonWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonWebViewController.swift; sourceTree = "<group>"; };
+		2F4A256B2B88F87F006A3978 /* CommonWebViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonWebViewController.xib; sourceTree = "<group>"; };
 		2F612CA82A5BEA6E00562080 /* Weather-Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather-Debug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F612CAB2A5BEA6E00562080 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F612CAD2A5BEA6E00562080 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -204,6 +210,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F074C212B8A229A0051254B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				2FD266E72A713C6C00F569DB /* FavouriteQueue.swift */,
+				2FE9D5B92A6079D4000D67DF /* Utilities.swift */,
+				2F074C222B8A22B30051254B /* GlobalValues.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		2F4A25692B88F840006A3978 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				2F4A256A2B88F87F006A3978 /* CommonWebViewController.swift */,
+				2F4A256B2B88F87F006A3978 /* CommonWebViewController.xib */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
 		2F612C9F2A5BEA6E00562080 = {
 			isa = PBXGroup;
 			children = (
@@ -228,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				2FF3344F2B39B3DE00EE3F34 /* supporting-files */,
+				2F074C212B8A229A0051254B /* Utilities */,
 				2FE4C3132A5F310100A19784 /* Model */,
 				2F612CD92A5C38EC00562080 /* View */,
 				2FE5A8072AA084B800FDA21F /* Extension */,
@@ -239,6 +265,7 @@
 		2F612CD92A5C38EC00562080 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2F4A25692B88F840006A3978 /* WebView */,
 				2F8F9D3F2B6D4285004A5572 /* Home */,
 				2F8F9D3E2B6D4275004A5572 /* Forecast */,
 				2F8F9D3D2B6D426D004A5572 /* Setting */,
@@ -444,8 +471,6 @@
 		2FE4C3132A5F310100A19784 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				2FE9D5B92A6079D4000D67DF /* Utilities.swift */,
-				2FD266E72A713C6C00F569DB /* FavouriteQueue.swift */,
 				2FE9E17D2A6D7CE0009CB409 /* ScreenDataModel */,
 				2FD266E62A713C2A00F569DB /* ApiDataModel */,
 			);
@@ -642,6 +667,7 @@
 				2FD006242A6470750029640E /* Find_Weather.png in Resources */,
 				2FF0CCF62A6FABCC00F06705 /* Rain.png in Resources */,
 				2FD266E32A7134DA00F569DB /* Empty_heart.png in Resources */,
+				2F4A256D2B88F87F006A3978 /* CommonWebViewController.xib in Resources */,
 				2FE5A8152AA0ADFC00FDA21F /* no-internet.png in Resources */,
 				2FF334582B39B99700EE3F34 /* SettingsViewController.xib in Resources */,
 				2F61B1B12AD41A5F001C5B68 /* Weather-Release-Info.plist in Resources */,
@@ -718,6 +744,7 @@
 				2FF3345E2B39BC4600EE3F34 /* TabBarController.swift in Sources */,
 				2FE9E1762A6D512F009CB409 /* Screen2DataModel.swift in Sources */,
 				2FE9D5B62A5FDBF3000D67DF /* MainWeatherContent.swift in Sources */,
+				2F074C232B8A22B30051254B /* GlobalValues.swift in Sources */,
 				2FE9E17A2A6D71FE009CB409 /* SecondScreenCollectionViewCell.swift in Sources */,
 				2FE9E1782A6D71E3009CB409 /* SecondScreenTableViewCell.swift in Sources */,
 				2FE9E1742A6D47BA009CB409 /* WeatherDataModel.swift in Sources */,
@@ -727,6 +754,7 @@
 				2FE5A80D2AA0869A00FDA21F /* Common+ReachabilityExtension.swift in Sources */,
 				2FF2230E2AF7A1370043FEC3 /* NotificationController.swift in Sources */,
 				2FE9D5C12A60807A000D67DF /* City.swift in Sources */,
+				2F4A256C2B88F87F006A3978 /* CommonWebViewController.swift in Sources */,
 				2FD266E82A713C6C00F569DB /* FavouriteQueue.swift in Sources */,
 				2FE9D5BF2A60805E000D67DF /* ForeCastDataElement.swift in Sources */,
 				2F61B1B92AD421DB001C5B68 /* ServerConfig.swift in Sources */,
@@ -821,7 +849,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -877,7 +905,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";

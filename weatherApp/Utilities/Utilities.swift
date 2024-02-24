@@ -1,37 +1,30 @@
 //
-//  ApiRequestType.swift
+//  Utilities.swift
 //  weatherApp
 //
 //  Created by Pranav Pratap on 13/07/23.
 //
 
-import Foundation
 import UIKit
 
-let API_ID = ServerConfig.shared.WEATHER_API_ID
-
-let API_URL = "https://api.openweathermap.org/data/2.5/forecast?appid=\(API_ID)&units=metric"
-
-var deleteRowFrom : Int?
-var isDegreeCelsius : Bool = true
 var fetchedDataList = [WeatherDataModel]()
 var favouriteWeatherList = FavouriteQueue(size: 3)
 
 func getTemperatureStringBasedOnScale(forTemp temp : Float) -> String {
-    if (!isDegreeCelsius) {
+    if (Variable.isDegreeFahrenheit) {
         return String(Int((temp * 9/5) + 32)) + "˚F"
     }
     return String(Int(temp)) + "˚C"
 }
 
 protocol WeatherApiDelegate{
-    func updateUIforFirstScreen(deleteRowFrom : Int?)
+    func updateUIforFirstScreen()
     func updateUIforSecondScreen()
     func showToast(message : String, seconds : Double, withBackroundColor bgColor : UIColor)
 }
 
 extension WeatherApiDelegate{
-    func updateUIforFirstScreen(deleteRowFrom : Int? = nil){
+    func updateUIforFirstScreen(){
         print("Default Inplementation of updateUIforFirstScreen")
     }
     func updateUIforSecondScreen(){

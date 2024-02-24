@@ -15,13 +15,13 @@ class WeatherApiHandler{
     
     func makeApiCallForCordinate(lat : String, lon : String){
         isApiCallForCurrentLocation = true
-        let urlWithCordinates = API_URL + "&lat=" + (lat) + "&lon=" + (lon)
+        let urlWithCordinates = Constant.API_URL + "&lat=" + (lat) + "&lon=" + (lon)
         performRequest(urlString: urlWithCordinates)
     }
     
     func makeApiCall(for cityName : String){
         isApiCallForCurrentLocation = false
-        let urlWithCityName = API_URL + "&q=\(cityName)"
+        let urlWithCityName = Constant.API_URL + "&q=\(cityName)"
         performRequest(urlString: urlWithCityName)
     }
     
@@ -84,7 +84,7 @@ class WeatherApiHandler{
                 fetchedDataList.remove(at: index)
                 fetchedDataList.insert(currentData, at: 0)
                 
-                deleteRowFrom = index
+                Variable.deleteRowFrom = index
                 favouriteWeatherList.swapFavouriteWeather(forIndex : index)
                 if index == 0 {
                     showToastMessage(forMessage: "Weather updated for \(currentData.city.name)",forSeconds: 1,withBackroundColor: .green)

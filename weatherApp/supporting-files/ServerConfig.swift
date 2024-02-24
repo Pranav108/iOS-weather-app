@@ -2,7 +2,7 @@
 //  ServerConfig.swift
 //  weatherApp
 //
-//  Created by Pranav Pratap on 09/10/23.
+//  Created by Pranav Pratap on 02/02/24.
 //
 
 import Foundation

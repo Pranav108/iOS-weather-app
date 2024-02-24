@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-       
+        readValuesFromUserDefault()
         return true
     }
 
@@ -32,7 +32,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // Added my me
     func applicationWillTerminate(_ application: UIApplication) {
-        
+        setValuesInUSerDefault()
+    }
+
+    // MARK: Custom properties
+    private enum UserDefaultKeys: String {
+        case favouritePlaces = "favouritePlaces"
+        case isDegreeFahrenheit = "isDegreeFahrenheit"
+    }
+    
+    // MARK: Custom methods
+    private func setValuesInUSerDefault(){
+        // For favouriteWeatherList
         let favList = favouriteWeatherList.getFavouriteList()
         var favouritePlaces = [WeatherDataModel]()
         
@@ -41,11 +52,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         if let encoded = try? JSONEncoder().encode(favouritePlaces) {
-            UserDefaults.standard.set(encoded, forKey: "favouritePlaces" )
+            UserDefaults.standard.set(encoded, forKey: UserDefaultKeys.favouritePlaces.rawValue )
         }else{
-            print("cannot set userDefault values")
+            print("cannot set favouritePlaces values")
         }
+        
+        // For isDegreeFahrenheit
+        UserDefaults.standard.set(Variable.isDegreeFahrenheit, forKey: UserDefaultKeys.isDegreeFahrenheit.rawValue)
+        
     }
-
+    
+    private func readValuesFromUserDefault(){
+        let defaults = UserDefaults.standard
+        if let savedData = defaults.data(forKey: UserDefaultKeys.favouritePlaces.rawValue) {
+            do {
+                let decoder = JSONDecoder()
+                
+                let decodedData = try decoder.decode([WeatherDataModel].self, from: savedData)
+                
+                fetchedDataList = decodedData
+                
+                for index in stride(from: fetchedDataList.count - 1, through: 0, by: -1) {
+                    favouriteWeatherList.selectFavourite(havingIndex: index)
+                }
+            } catch {
+                print("Error decoding data: \(error)")
+            }
+        } else {
+            print("CANNOT GET favouritePlaces DATA FROM USER_DEFAULT")
+        }
+        
+        Variable.isDegreeFahrenheit = defaults.bool(forKey: UserDefaultKeys.isDegreeFahrenheit.rawValue)
+        
+    }
 
 }

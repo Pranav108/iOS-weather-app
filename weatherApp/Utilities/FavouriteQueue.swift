@@ -1,5 +1,5 @@
 //
-//  MyStack.swift
+//  FavouriteQueue.swift
 //  weatherApp
 //
 //  Created by Pranav Pratap on 26/07/23.

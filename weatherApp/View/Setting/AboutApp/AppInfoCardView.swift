@@ -20,6 +20,7 @@ class AppInfoCardView: UIView {
     
     // MARK: class properties
     var crossedCallBack : (() -> Void)?
+    var openWebViewCallBack : ((_ webViewType : WebViewType) -> Void)?
     private var blurViewHideCallBack : (() -> Void)?
     private var contentViewFrame : CGRect {
         let width: CGFloat  = 340
@@ -91,7 +92,7 @@ class AppInfoCardView: UIView {
         
         // SourceCodeLabel
         sourceCodeLabel.backgroundColor = .blue
-        sourceCodeLabel.setTitle("BUY-SOURCE-CODE", for: .normal)
+        sourceCodeLabel.setTitle("SEE-SOURCE-CODE", for: .normal)
     }
     
     // MARK: IB-Actions
@@ -108,8 +109,11 @@ class AppInfoCardView: UIView {
     }
     
     @IBAction func openSourceCode(_ sender: UIButton) {
-        print(#function)
+        self.openWebViewCallBack?(.sourceCodeRepo)
     }
     
+    @IBAction func openAuthorInfo(_ sender: UIButton) {
+        self.openWebViewCallBack?(.autherGithubInfo)
+    }
     
 }

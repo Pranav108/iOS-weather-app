@@ -44,17 +44,17 @@ class HomeViewController: UIViewController {
         backgroundView = BackgroundView()
         screen1TableView.backgroundView = backgroundView
         
-        setupInitialTableView()
         blurViewSetup()
         checkNetworkConnectionStatus()
         screen1TableView.register(UINib(nibName: "Screen1TableViewCell", bundle: nil), forCellReuseIdentifier: "Screen1TableViewCell")
-        setupHeaderAndSwitchView()
+        setupHeaderAndInfoView()
         setupSearchBarView()
         spinnerSetup(spinner: spinner, parentView: view)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         searchBar.resignFirstResponder()
+        screen1TableView.reloadData() // DUE TO TEMPERATURE SCALE CHANGE
     }
     
     deinit{
@@ -69,16 +69,16 @@ extension HomeViewController : WeatherApiDelegate {
                 
                 self.screen1TableView.beginUpdates()
                 
-                if let moveFrom = deleteRowFrom {
+                if let moveFrom = Variable.deleteRowFrom {
                     guard moveFrom < fetchedDataList.count, moveFrom > 0 else {
                         self.spinner.stopAnimating()
                         self.screen1TableView.endUpdates()
-                        deleteRowFrom = nil
+                        Variable.deleteRowFrom = nil
                         return
                     }
                     self.screen1TableView.moveRow(at: IndexPath(item: moveFrom, section: 0), to: IndexPath(row: 0, section: 0))
                     
-                    deleteRowFrom = nil
+                    Variable.deleteRowFrom = nil
                     
                 }else{
                     let indexPathToBeAdded = IndexPath(row: 0, section: 0)
@@ -119,40 +119,6 @@ extension HomeViewController {
         row.tempRangeLabel?.text = currentWeatherData.max_min
         row.backgroundView = UIImageView(image: UIImage(named: currentWeatherData.imageName))
     }
-
-    func setupInitialTableView(){
-        let defaults = UserDefaults.standard
-        if let savedData = defaults.data(forKey: "favouritePlaces") {
-            do {
-                let decoder = JSONDecoder()
-                
-                let decodedData = try decoder.decode([WeatherDataModel].self, from: savedData)
-                
-                fetchedDataList = decodedData
-                
-                for index in stride(from: fetchedDataList.count - 1, through: 0, by: -1) {
-                    favouriteWeatherList.selectFavourite(havingIndex: index)
-                }
-            } catch {
-                print("Error decoding data: \(error)")
-            }
-        } else {
-            print("CANNOT GET ANY DATA FROM USER_DEFAULT")
-        }
-        
-        DispatchQueue.main.async {
-            self.screen1TableView.reloadData()
-        }
-    }
-    
-    @objc func switchStateChanged(_ sender: UISwitch) {
-        if sender.isOn {
-            isDegreeCelsius = true
-        } else {
-            isDegreeCelsius = false
-        }
-        screen1TableView.reloadData()
-    }
     
     func showToast(message: String, seconds: Double,withBackroundColor bgColor : UIColor = .darkGray) {
         self.spinner.stopAnimating()
@@ -173,11 +139,9 @@ extension HomeViewController {
         urlMaker.delegates[0] = self
     }
     
-    func setupHeaderAndSwitchView(){
-        switchButton.isOn = true
-        switchButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        switchButton.addTarget(self, action: #selector(switchStateChanged(_:)), for: .valueChanged)
-        
+    func setupHeaderAndInfoView(){
+        // Configure the info button here
+       
         reusableHeader = ReusableHeader(frame:headerView.bounds)
         headerView.addSubview(reusableHeader!)
     }
